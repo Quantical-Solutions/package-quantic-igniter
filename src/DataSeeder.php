@@ -2,7 +2,7 @@
 
 namespace Quantic\Igniter\Seeder;
 
-class Dataseeder
+class DataSeeder
 {
     protected $seed = (object) [
         'description' => 'The Quantic framework represents the new advance of Quantical Solutions in terms of innovation.
