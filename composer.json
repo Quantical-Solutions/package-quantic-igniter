@@ -1,0 +1,30 @@
+{
+  "name": "quantic/igniter",
+  "type": "library",
+  "description": "Quantic Framework igniter",
+  "keywords": ["quantic","igniter"],
+  "homepage": "https://github.com/Quantical-Solutions/package-quantic-igniter",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Frédéric Geffray",
+      "email": "in-touch-fg@quanticalsolutions.com",
+      "homepage": "https://quanticalsolutions.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Quantic\\Igniter\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Quantic\\Igniter\\Tests": "tests/"
+    }
+  },
+  "minimum-stability": "stable"
+}
