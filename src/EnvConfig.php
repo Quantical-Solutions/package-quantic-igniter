@@ -1,6 +1,6 @@
 <?php
 
-namespace Quantic\Igniter\Config;
+namespace Quantic\Igniter;
 
 class EnvConfig
 {

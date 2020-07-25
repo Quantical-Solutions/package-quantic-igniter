@@ -1,6 +1,6 @@
 <?php
 
-namespace Quantic\Igniter\Seeder;
+namespace Quantic\Igniter;
 
 class DataSeeder
 {
