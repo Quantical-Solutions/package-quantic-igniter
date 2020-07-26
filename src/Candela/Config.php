@@ -1,8 +1,8 @@
 <?php
 
-namespace Quantic\Igniter;
+namespace Quantic\Igniter\Candela;
 
-class EnvConfig
+class Config
 {
     public static function ConvertEnvConstants()
     {

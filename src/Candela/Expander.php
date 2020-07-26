@@ -1,8 +1,8 @@
 <?php
 
-namespace Quantic\Igniter;
+namespace Quantic\Igniter\Candela;
 
-class DataSeeder
+class Expander
 {
     public static function Seeder()
     {

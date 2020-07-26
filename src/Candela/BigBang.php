@@ -1,6 +1,6 @@
 <?php
 
-namespace Quantic\Igniter;
+namespace Quantic\Igniter\Candela;
 
 class BigBang
 {
