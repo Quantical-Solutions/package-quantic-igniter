@@ -2,90 +2,52 @@
 
 namespace Quantic\Igniter\Candela;
 
+use ReflectionException;
+
 class BigBang
 {
     /**
-     * L'objet unique Quantic
-     *
-     * @var Quantic
-     * @access private
-     * @static
-     */
-    private static $_instance = null;
-
-    /**
-     * Le nom du Président
+     * Environment root directory
      *
      * @var string
      * @access private
      */
-    private $_nom='';
+    private $env = '';
 
     /**
-     * Le prénom du Président
+     * Class Constructor
      *
-     * @var string
-     * @access private
-     */
-    private $_prenom='';
-
-    /**
-     * Représentation chainée de l'objet
-     *
-     * @param void
-     * @return string
-     */
-    public function __toString() {
-
-        return $this->getPrenom() .' '. strtoupper($this->getNom());
-    }
-
-    /**
-     * Constructeur de la classe
-     *
-     * @param string $nom Nom du Président
-     * @param string $prenom Prénom du Président
+     * @param string $env environment variable
      * @return void
-     * @access private
+     * @access public
      */
-    private function __construct($nom, $prenom) {
-
-        $this->_nom = $nom;
-        $this->_prenom = $prenom;
+    public function __construct($env)
+    {
+        $this->env = $env;
     }
 
     /**
-     * Méthode qui crée l'unique instance de la classe
-     * si elle n'existe pas encore puis la retourne.
+     * Singleton method
      *
-     * @param string $nom Nom du Président
-     * @param string $prenom Prénom du Président
-     * @return Quantic
+     * @param mixed $interface Interface
+     * @param mixed $concrete Implement Interface to concrete Class
+     * @return bool
+     * @throws ReflectionException
+     * @access public
      */
-    public static function singleton($nom, $prenom) {
+    public function singleton($interface = false, $concrete = false)
+    {
+        $response = false;
 
-        if(is_null(self::$_instance)) {
-            self::$_instance = new Quantic($nom, $prenom);
+        if ($interface != false && $concrete != false) {
+
+            $reflect = new \ReflectionClass($concrete);
+
+            if ($reflect && $reflect->implementsInterface($interface)) {
+                $response = true;
+            }
         }
 
-        return self::$_instance;
-    }
-
-    /**
-     * Retourne le nom du Président
-     *
-     * @return string
-     */
-    public function getNom() {
-        return $this->_nom;
-    }
-
-    /**
-     * Retourne le prénom du Président
-     *
-     * @return string
-     */
-    public function getPrenom() {
-        return $this->_prenom;
+        return $response;
     }
 }
