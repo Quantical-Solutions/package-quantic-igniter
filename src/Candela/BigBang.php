@@ -2,8 +2,6 @@
 
 namespace Quantic\Igniter\Candela;
 
-use ReflectionException;
-
 class BigBang
 {
     /**
@@ -32,7 +30,6 @@ class BigBang
      * @param mixed $interface Interface
      * @param mixed $concrete Implement Interface to concrete Class
      * @return bool
-     * @throws ReflectionException
      * @access public
      */
     public function singleton($interface = false, $concrete = false)
@@ -41,10 +38,10 @@ class BigBang
 
         if ($interface != false && $concrete != false) {
 
-            $reflect = new \ReflectionClass($concrete);
+            if (class_exists($concrete) && in_array($interface, class_implements($concrete))) {
 
-            if ($reflect && $reflect->implementsInterface($interface)) {
                 $response = true;
+                new $concrete;
             }
         }
 
