@@ -35,7 +35,7 @@ class BigBang
      * @throws ReflectionException
      * @access public
      */
-    public function singleton($interface = false, $concrete = false)
+    public function singleton($concrete = false, $interface = false)
     {
         $response = false;
 
