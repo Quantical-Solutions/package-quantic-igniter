@@ -1,6 +1,6 @@
 <?php
 
-namespace Quantic\Covalent\Debug;
+namespace Quantic\Igniter\Covalent\Debug;
 
 class ExceptionHandler
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Quantic\Covalent\Http;
+namespace Quantic\Igniter\Covalent\Http;
 
 class Renderer
 {

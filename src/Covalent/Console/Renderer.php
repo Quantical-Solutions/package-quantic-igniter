@@ -1,6 +1,6 @@
 <?php
 
-namespace Quantic\Covalent\Console;
+namespace Quantic\Igniter\Covalent\Console;
 
 class Renderer
 {
