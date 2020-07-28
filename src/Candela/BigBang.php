@@ -41,7 +41,7 @@ class BigBang
             if (class_exists($concrete) && in_array($interface, class_implements($concrete))) {
 
                 $response = true;
-                new $concrete;
+                $concrete::getInstance();
             }
         }
 
