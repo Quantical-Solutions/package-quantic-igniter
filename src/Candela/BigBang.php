@@ -61,7 +61,10 @@ class BigBang
                 && defined('DB_DATABASE')
                 && defined('DB_USERNAME')
                 && defined('DB_PASSWORD')
-                && defined('DB_PORT'))
+                && defined('DB_PORT')
+                && defined('DB_CHARSET')
+                && defined('DB_COLLATION')
+                && defined('DB_PREFIX'))
             {
 
                 $eloquent = new Eloquent;
@@ -71,7 +74,10 @@ class BigBang
                     "database" => DB_DATABASE,
                     "username" => DB_USERNAME,
                     "password" => DB_PASSWORD,
-                    "port" => DB_PORT
+                    "port" => DB_PORT,
+                    'charset'   => DB_CHARSET,
+                    'collation' => DB_COLLATION,
+                    'prefix'    => DB_PREFIX,
                 ]);
                 $eloquent->setAsGlobal();
                 $eloquent->bootEloquent();
