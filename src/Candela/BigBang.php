@@ -3,6 +3,8 @@
 namespace Quantic\Igniter\Candela;
 
 use Illuminate\Database\Capsule\Manager as Eloquent;
+use Illuminate\Events\Dispatcher;
+use Illuminate\Container\Container;
 
 class BigBang
 {
@@ -79,6 +81,7 @@ class BigBang
                     'collation' => DB_COLLATION,
                     'prefix'    => DB_PREFIX,
                 ]);
+                $eloquent->setEventDispatcher(new Dispatcher(new Container));
                 $eloquent->setAsGlobal();
                 $eloquent->bootEloquent();
 
