@@ -26,6 +26,7 @@ class BigBang
     public function __construct($env)
     {
         $this->env = $env;
+        $this->eloquentIgniter();
     }
 
     /**
@@ -54,8 +55,6 @@ class BigBang
 
     public function eloquentIgniter()
     {
-
-
         try {
 
             if (defined('DB_CONNECTION')
