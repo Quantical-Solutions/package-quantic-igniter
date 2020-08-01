@@ -1,6 +1,6 @@
 <?php
 
-namespace Quantic\Atom\Origins;
+namespace Quantic\Igniter\Origins;
 
 class MatrixExpander
 {
