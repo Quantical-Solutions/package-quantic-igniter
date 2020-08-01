@@ -2,6 +2,8 @@
 
 namespace Quantic\Igniter\Candela;
 
+use Illuminate\Database\Capsule\Manager as Eloquent;
+
 class BigBang
 {
     /**
@@ -46,5 +48,46 @@ class BigBang
         }
 
         return $response;
+    }
+
+    public function eloquentIgniter()
+    {
+
+
+        try {
+
+            if (defined('DB_CONNECTION')
+                && defined('DB_HOST')
+                && defined('DB_DATABASE')
+                && defined('DB_USERNAME')
+                && defined('DB_PASSWORD')
+                && defined('DB_PORT'))
+            {
+
+                $eloquent = new Eloquent;
+                $eloquent->addConnection([
+                    "driver" => DB_CONNECTION,
+                    "host" => DB_HOST,
+                    "database" => DB_DATABASE,
+                    "username" => DB_USERNAME,
+                    "password" => DB_PASSWORD,
+                    "port" => DB_PORT
+                ]);
+                $eloquent->setAsGlobal();
+                $eloquent->bootEloquent();
+
+            } else {
+
+                throw new \Exception('Some constants aren\'t defined in the .env file... Please fill them to connect BDD.');
+            }
+
+        } catch (\Exception $e) {
+
+            echo 'Message: ' . $e->getMessage();
+        }
+
+
+
+
     }
 }
