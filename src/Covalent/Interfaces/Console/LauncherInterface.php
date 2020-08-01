@@ -2,7 +2,7 @@
 
 namespace Quantic\Igniter\Covalent\Interfaces\Console;
 
-interface RendererInterface
+interface LauncherInterface
 {
     public function save($data);
     public static function getInstance();
