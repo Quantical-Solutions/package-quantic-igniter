@@ -4,7 +4,7 @@ namespace Quantic\Igniter\Workers;
 
 use Quantic\Igniter\Workers\Request;
 
-class Constellation
+class Constellation extends Request
 {
     public static function group()
     {
