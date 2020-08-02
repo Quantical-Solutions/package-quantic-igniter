@@ -4,6 +4,31 @@ namespace Quantic\Igniter\Workers;
 
 class Request
 {
+    /**
+     * constructor method
+     * Check POST and GET incomes
+     *
+     * @return array
+     */
+    public function __construct()
+    {
+        $post = $this->getPostRequest();
+        $get = $this->getGetRequest();
+        $data = [];
+
+        if ($post != false) { $data = $post; }
+        if ($get != false) { $data = $get; }
+
+        return $data;
+    }
+
+    /**
+     * input method
+     * Check POST and GET by input
+     *
+     * @param $options // input name
+     * @return mixed
+     */
     public function input($options)
     {
         $response = 'Error : option argument(s) passed in "$request->input()" method doesn\'t exist.';
@@ -29,6 +54,12 @@ class Request
         return $response;
     }
 
+    /**
+     * getPostRequest method
+     * Preserve POST inputs from XSS issues
+     *
+     * @return mixed
+     */
     private function getPostRequest()
     {
         $response = false;
@@ -41,6 +72,12 @@ class Request
         return $response;
     }
 
+    /**
+     * getGetRequest method
+     * Preserve GET inputs from XSS issues
+     *
+     * @return mixed
+     */
     private function getGetRequest()
     {
         $response = false;
@@ -53,6 +90,13 @@ class Request
         return $response;
     }
 
+    /**
+     * stringTreatments method
+     *
+     * @param $options
+     * @param $data
+     * @return mixed
+     */
     public function stringTreatments($options, $data)
     {
         $response = false;
@@ -62,6 +106,13 @@ class Request
         return $response;
     }
 
+    /**
+     * arrayTreatments method
+     *
+     * @param $options
+     * @param $data
+     * @return mixed
+     */
     public function arrayTreatments($options, $data)
     {
         $response = [];
