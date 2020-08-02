@@ -1,6 +1,8 @@
 <?php
 
-use Quantic\Igniter\Workers;
+namespace Quantic\Igniter\Workers;
+
+use Quantic\Igniter\Workers\Request;
 
 class Constellation
 {
