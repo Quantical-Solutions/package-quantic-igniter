@@ -5,21 +5,22 @@ namespace Quantic\Igniter\Workers;
 class Request
 {
     /**
-     * constructor method
-     * Check POST and GET incomes
+     * all method
+     * Get POST and GET incomes
      *
      * @return array
      */
-    public function __construct()
+    public function all()
     {
         $post = $this->getPostRequest();
         $get = $this->getGetRequest();
         $data = [];
+        $method = '';
 
-        if ($post != false) { $data = $post; }
-        if ($get != false) { $data = $get; }
+        if ($post != false) { $data = $post; $method = 'POST'; }
+        if ($get != false) { $data = $get; $method = 'GET'; }
 
-        return $data;
+        return [$data, $method];
     }
 
     /**
@@ -32,13 +33,9 @@ class Request
     public function input($options)
     {
         $response = 'Error : option argument(s) passed in "$request->input()" method doesn\'t exist.';
-        $post = $this->getPostRequest();
-        $get = $this->getGetRequest();
-        $data = [];
-        $method = '';
-
-        if ($post != false) { $data = $post; $method = 'POST'; }
-        if ($get != false) { $data = $get; $method = 'GET'; }
+        $capture = $this->capture();
+        $data = $capture[0];
+        $method = $capture[1];
 
         if (is_string($options) && $method != '' && !empty($data)) {
 
