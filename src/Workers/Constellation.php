@@ -21,36 +21,42 @@ class Constellation
 
     public static function get($uri, $array)
     {
-        $url = self::analyseUri($uri);
+        if (!defined('VIEWINIT')) {
 
-        if (!defined('VIEWINIT') && $url != false) {
+            $url = self::analyseUri($uri);
 
-            $segments = $url[0];
-            $options = $url[1];
+            if ($url != false) {
 
-            $type = Request::all();
+                $segments = $url[0];
+                $options = $url[1];
 
-            if ($type[1] != 'POST' || $type[1] == 'GET') {
+                $type = Request::all();
 
-                self::splitString($array, $options);
+                if ($type[1] != 'POST' || $type[1] == 'GET') {
+
+                    self::splitString($array, $options);
+                }
             }
         }
     }
 
     public static function post($uri, $array)
     {
-        $url = self::analyseUri($uri);
+        if (!defined('VIEWINIT')) {
 
-        if (!defined('VIEWINIT') && $url != false) {
+            $url = self::analyseUri($uri);
 
-            $segments = $url[0];
-            $options = $url[1];
+            if ($url != false) {
 
-            $type = Request::all();
+                $segments = $url[0];
+                $options = $url[1];
 
-            if ($type[1] == 'POST') {
+                $type = Request::all();
 
-                self::splitString($array, $options);
+                if ($type[1] == 'POST') {
+
+                    self::splitString($array, $options);
+                }
             }
         }
     }
@@ -65,6 +71,7 @@ class Constellation
 
     private static function execute($class, $method, $options)
     {
+        define('VIEWINIT', true);
         $controller = 'App\\Http\\Controllers\\' . $class;
 
         if (class_exists($controller) && method_exists($controller, $method)) {
@@ -152,7 +159,6 @@ class Constellation
 
         if ($class != false && $method != false) {
 
-            define('VIEWINIT', true);
             self::execute($class, $method, $options);
         }
     }
