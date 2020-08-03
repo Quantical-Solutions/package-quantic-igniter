@@ -10,10 +10,10 @@ class Request
      *
      * @return array
      */
-    public function all()
+    public static function all()
     {
-        $post = $this->getPostRequest();
-        $get = $this->getGetRequest();
+        $post = self::getPostRequest();
+        $get = self::getGetRequest();
         $data = [];
         $method = '';
 
@@ -30,21 +30,21 @@ class Request
      * @param $options // input name
      * @return mixed
      */
-    public function input($options)
+    public static function input($options)
     {
         $response = 'Error : option argument(s) passed in "$request->input()" method doesn\'t exist.';
-        $capture = $this->capture();
+        $capture = self::all();
         $data = $capture[0];
         $method = $capture[1];
 
         if (is_string($options) && $method != '' && !empty($data)) {
 
-            $inspector = $this->stringTreatments($options, $data);
+            $inspector = self::stringTreatments($options, $data);
             $response = ($inspector != false) ? $inspector : $response;
 
         } else if (is_array($options) && $method != '' && !empty($data)) {
 
-            $inspector = $this->arrayTreatments($options, $data);
+            $inspector = self::arrayTreatments($options, $data);
             $response = ($inspector != false) ? $inspector : $response;
         }
 
@@ -57,7 +57,7 @@ class Request
      *
      * @return mixed
      */
-    private function getPostRequest()
+    private static function getPostRequest()
     {
         $response = false;
         if (!empty($_POST)) {
@@ -75,7 +75,7 @@ class Request
      *
      * @return mixed
      */
-    private function getGetRequest()
+    private static function getGetRequest()
     {
         $response = false;
         if (!empty($_GET)) {
@@ -94,7 +94,7 @@ class Request
      * @param $data
      * @return mixed
      */
-    public function stringTreatments($options, $data)
+    public static function stringTreatments($options, $data)
     {
         $response = false;
         if (isset($data[$options])) {
@@ -110,7 +110,7 @@ class Request
      * @param $data
      * @return mixed
      */
-    public function arrayTreatments($options, $data)
+    public static function arrayTreatments($options, $data)
     {
         $response = [];
         foreach ($data as $key => $opt) {
