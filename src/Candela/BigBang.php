@@ -10,7 +10,7 @@ class BigBang
      * @var string
      * @access private
      */
-    private $env = '';
+    private string $env = '';
 
     /**
      * Class Constructor
