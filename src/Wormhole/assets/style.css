@@ -3,3 +3,12 @@
 * ====================== Wormhole Stylesheet ======================
 * =================================================================
 */
+
+#wormhole {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
