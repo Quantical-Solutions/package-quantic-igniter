@@ -1,5 +1,5 @@
 <div id="wormholeBottomBar">
-    <style><?php echo file_get_contents('./assets/style.css') ?></style>
-    Wormhole
-    <script><?php echo file_get_contents('./assets/script.js') ?></script>
+    <style><?php echo file_get_contents( dirname(__DIR__) . '/assets/style.css') ?></style>
+    Wormhole BottomBar
+    <script><?php echo file_get_contents( dirname(__DIR__) . '/assets/script.js') ?></script>
 </div>
