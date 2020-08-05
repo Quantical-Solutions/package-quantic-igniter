@@ -4,7 +4,16 @@
 * =================================================================
 */
 
-#wormhole {
+#wormholeBottomBar {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+#wormholeStandAlone {
     width: 100%;
     display: flex;
     justify-content: flex-start;
