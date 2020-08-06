@@ -61,7 +61,7 @@ switch (mode) {
             'DESC': '<span class="code_red">DESC</span>',
             'ASC': '<span class="code_red">ASC</span>',
             'LIMIT': '<span class="code_red">LIMIT</span>'
-        }, key;
+        };
         break;
 
     case 'pr':
@@ -97,7 +97,7 @@ switch (mode) {
             'DESC': '<span class="code_red">DESC</span>',
             'ASC': '<span class="code_red">ASC</span>',
             'LIMIT': '<span class="code_red">LIMIT</span>'
-        }, key;
+        };
         break;
 
     default:
@@ -115,23 +115,23 @@ for (key in dBugInserter) {
 
 elmt.innerHTML = pre.trim();
 
-let here = document.querySelector('#my_debugger');
+let here = document.querySelector('#wormholeStandAlone');
 let append = document.createElement('DIV');
 
-append.setAttribute('id', 'my_debugger');
+append.setAttribute('id', 'wormholeStandAlone');
 append.innerHTML = here.innerHTML;
 document.body.appendChild(append);
 here.parentElement.removeChild(here);
 
 setTimeout(function(){
 
-    document.querySelector('#my_debugger').classList.add('display_my_debugger');
-    dragElement(document.querySelector("#my_debugger"));
+    document.querySelector('#wormholeStandAlone').classList.add('display_wormholeStandAlone');
+    dragElement(document.querySelector("#wormholeStandAlone"));
 
     function dragElement(elmt) {
 
         let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-        document.querySelector("#my_debugger h3").onmousedown = dragMouseDown;
+        document.querySelector("#wormholeStandAlone h3").onmousedown = dragMouseDown;
 
         function dragMouseDown(event) {
 

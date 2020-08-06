@@ -29,7 +29,7 @@
     transition: transform linear 0.2s, opacity linear 0.2s, visibility linear 0.2s;
 }
 
-.display_my_debugger {
+.display_wormholeStandAlone {
     transform: scale(1)!important;
     opacity: 1!important;
     visibility: visible!important;
