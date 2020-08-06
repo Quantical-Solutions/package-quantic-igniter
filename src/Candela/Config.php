@@ -12,10 +12,10 @@ class Config
      */
     public static function ConvertEnvConstants()
     {
-        if (file_exists(ROOTDIR . '/.env')
-            && strpos(file_get_contents(ROOTDIR . '/.env'), '=') !== false) {
+        if (file_exists(ROOTDIR . '/.init')
+            && strpos(file_get_contents(ROOTDIR . '/.init'), '=') !== false) {
 
-            $env_file = file_get_contents(ROOTDIR . '/.env');
+            $env_file = file_get_contents(ROOTDIR . '/.init');
             $lines = explode("\n", $env_file);
 
             foreach ($lines as $line) {
