@@ -104,7 +104,7 @@
     min-height: 1px;
     cursor: default;
     width: calc(100% - 40px);
-    margin: 0 20px 5px 20px;
+    margin: 0 20px 20px 20px;
 }
 
 #debug_replace_tag_container::-webkit-scrollbar {
@@ -139,8 +139,8 @@
 #debug_replace_tag li {
     line-height: 20px;
     width: 100%;
-    padding: 0px 0 14px 0;
-    margin: 8px 0;
+    padding: 0px 0 10px 0;
+    margin: 5px 0;
     word-break: break-all!important;
     border-bottom: 1px solid #3C3C3C;
 }
