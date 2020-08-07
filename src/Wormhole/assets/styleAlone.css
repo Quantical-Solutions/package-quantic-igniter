@@ -5,6 +5,7 @@
 */
 
 #wormholeStandAlone {
+    font-family: 'ralewayregular', sans-serif;
     position: fixed;
     z-index: 9999999;
     background-color: rgba(0, 0, 0, 0.85);
@@ -36,6 +37,7 @@
 }
 
 #wormholeStandAlone h3 {
+    font-family: 'ralewayblack', sans-serif;
     width: calc(100% - 80px);
     cursor: move;
     color: #fff;
@@ -119,7 +121,7 @@
 }
 
 #debug_replace_tag, #debug_replace_tag span, #debug_replace_tag li {
-    font-family: 'Lato';
+    font-family: 'ralewaythin', sans-serif;
     font-size: 12px;
     word-break: break-all;
     cursor: default;

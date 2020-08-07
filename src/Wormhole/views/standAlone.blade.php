@@ -1,5 +1,4 @@
 <div id="wormholeStandAlone" data-mode="{{ config('wormhole.mode') }}">
-    <style>{!! file_get_contents( dirname(__DIR__) . '/assets/styleAlone.css')  !!}</style>
     <h3 style="color: #fff;">Config Debugger</h3>
     <span id="debugger_desc" style="color: #fff;">Debugger Mode : <b class="code_blue"><i>{{ $debugMethod }}</i></b></span>
     <hr>
@@ -25,5 +24,4 @@
     <div id="debug_replace_tag_container">
         <div id="debug_replace_tag"></div>
     </div>
-    <script>{!! file_get_contents( dirname(__DIR__) . '/assets/scriptAlone.js')  !!}</script>
 </div>
