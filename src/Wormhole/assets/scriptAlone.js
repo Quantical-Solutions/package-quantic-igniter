@@ -16,27 +16,29 @@ switch (mode) {
     case 'vd':
 
         dBugInserter = {
-            '\\]=>\\n': ']<span class="code_red"> =></span>',
-            '\\["': '[<span class="code_green">"',
+            '\\]=>\\n': ']<span class="code_red code_bold"> =></span>',
+            '\\["': '[<span class="code_green code_bold">"',
             '"\\]': '"</span>]',
-            '\\("': '(<span class="code_green">"',
+            '\\("': '(<span class="code_green code_bold">"',
             '"\\)': '"</span>)',
-            '\\{"': '{<span class="code_green">"',
+            '\\{"': '{<span class="code_green code_bold">"',
             '"\\}': '"</span>}',
-            '\\[': '</li><li><span class="code_orange">[</span>',
-            '\\]': '<span class="code_orange">]</span>',
-            '\\(': '<span class="code_orange lil_braces">(</span>',
-            '\\)': '<span class="code_orange lil_braces">)</span>',
-            '\\{': '<span class="code_orange">{</span><ul>',
-            '\\}': '</ul><span class="code_orange close_braces">}</span>',
-            'array': '<span class="code_blue"><b><i>Array</i></b></span>',
-            'Array': '<span class="code_blue"><b><i>Array</i></b></span>',
-            'string': '<span class="code_blue"><b><i>String</i></b></span>',
-            'String': '<span class="code_blue"><b><i>String</i></b></span>',
-            'int': '<span class="code_blue"><b><i>Int</i></b></span>',
-            'Int': '<span class="code_blue"><b><i>Int</i></b></span>',
-            'float': '<span class="code_blue"><b><i>Float</i></b></span>',
-            'Float': '<span class="code_blue"><b><i>Float</i></b></span>',
+            '\\[': '</li><li><span class="code_orange code_bold">[</span>',
+            '\\]': '<span class="code_orange code_bold">]</span>',
+            '\\(': '<span class="code_orange code_bold lil_braces">(</span>',
+            '\\)': '<span class="code_orange code_bold lil_braces">)</span>',
+            '\\{': '<span class="code_orange code_bold">{</span><ul>',
+            '\\}': '</ul><span class="code_orange code_bold close_braces">}</span>',
+            'array': '<span class="code_blue code_bold"><b><i>Array</i></b></span>',
+            'Array': '<span class="code_blue code_bold"><b><i>Array</i></b></span>',
+            'string': '<span class="code_blue code_bold"><b><i>String</i></b></span>',
+            'String': '<span class="code_blue code_bold"><b><i>String</i></b></span>',
+            'object': '<span class="code_blue code_bold"><b><i>Object</i></b></span>',
+            'Object': '<span class="code_blue code_bold"><b><i>Object</i></b></span>',
+            'int': '<span class="code_blue code_bold"><b><i>Int</i></b></span>',
+            'Int': '<span class="code_blue code_bold"><b><i>Int</i></b></span>',
+            'float': '<span class="code_blue code_bold"><b><i>Float</i></b></span>',
+            'Float': '<span class="code_blue code_bold"><b><i>Float</i></b></span>',
             ' ORDER BY ': ' <span class="code_red">ORDER BY</span> ',
             ' OFFSET ': ' <span class="code_red">OFFSET</span> ',
             ' ON ': ' <span class="code_red">ON</span> ',
@@ -67,12 +69,12 @@ switch (mode) {
     case 'pr':
 
         dBugInserter = {
-            '\\[': '</li><li><span class="code_orange">[</span><span class="code_green">',
-            '\\]': '</span><span class="code_orange">]</span>',
-            '\\(': '<span class="code_orange">(</span><ul>',
-            '\\)': '</ul><span class="code_orange close_braces">)</span>',
-            'array': '<span class="code_blue"><b><i>Array</i></b></span>',
-            'Array': '<span class="code_blue"><b><i>Array</i></b></span>',
+            '\\[': '</li><li><span class="code_orange code_bold">[</span><span class="code_green">',
+            '\\]': '</span><span class="code_orange code_bold">]</span>',
+            '\\(': '<span class="code_orange code_bold">(</span><ul>',
+            '\\)': '</ul><span class="code_orange code_bold close_braces">)</span>',
+            'array': '<span class="code_blue code_bold"><b><i>Array</i></b></span>',
+            'Array': '<span class="code_blue code_bold"><b><i>Array</i></b></span>',
             ' ORDER BY ': ' <span class="code_red">ORDER BY</span> ',
             ' OFFSET ': ' <span class="code_red">OFFSET</span> ',
             ' ON ': ' <span class="code_red">ON</span> ',
@@ -125,7 +127,7 @@ here.parentElement.removeChild(here);
 
 setTimeout(function(){
 
-    document.querySelector('#wormholeStandAlone').classList.add('display_wormholeStandAlone');
+    //document.querySelector('#wormholeStandAlone').classList.add('display_wormholeStandAlone');
     dragElement(document.querySelector("#wormholeStandAlone"));
 
     function dragElement(elmt) {
@@ -162,3 +164,22 @@ setTimeout(function(){
     }
 
 }, 1500);
+
+var debugAloneBtn = document.querySelector('#wormStandAlonebtn');
+if (debugAloneBtn) {
+    debugAloneBtn.addEventListener('click', displayStandAloneDebugger);
+}
+
+function displayStandAloneDebugger(ev) {
+
+    var debug = document.querySelector('#wormholeStandAlone');
+
+    if (debug.classList.contains('display_wormholeStandAlone')) {
+
+        debug.classList.remove('display_wormholeStandAlone');
+
+    } else {
+
+        debug.classList.add('display_wormholeStandAlone');
+    }
+}

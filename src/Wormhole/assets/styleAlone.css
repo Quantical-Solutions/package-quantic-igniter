@@ -4,6 +4,48 @@
 * =================================================================
 */
 
+#wormStandAlonebtn {
+    cursor: pointer;
+    padding: 10px;
+    position: fixed;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 100px;
+    z-index: 9999999;
+    top: 20px;
+    right: 20px;
+    transform-origin: 50% 50%;
+    transform: scale(1);
+    background-color: #1c3859;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+    transition: all ease-in-out 0.3s;
+}
+
+#wormStandAlonebtn:hover {
+    transform: scale(1.1);
+    background-color: #6600cc;
+}
+
+#wormStandAlonebtn svg {
+    width: 30px;
+    height: 30px;
+    transform-origin: 50% 50%;
+    transform: rotate(0deg);
+    transition: all ease-in-out 0.5s;
+}
+
+#wormStandAlonebtn:hover svg {
+    transform: rotate(90deg);
+}
+
+#wormStandAlonebtn svg path {
+    fill: rgba(255, 255, 255, 0.5);
+    transition: all ease-in-out 0.5s;
+}
+
+#wormStandAlonebtn:hover svg path {
+    fill: rgba(255, 255, 255, 1);
+}
+
 #wormholeStandAlone {
     font-family: 'ralewayregular', sans-serif;
     position: fixed;
@@ -52,7 +94,7 @@
 #debugger_desc {
     width: 100%;
     text-align: center;
-    padding: 2px 0;
+    padding: 10px 0;
     cursor: default;
 }
 
@@ -95,14 +137,12 @@
 }
 
 #debug_replace_tag li {
-    display: flex;
-    justify-content: flex-start;
-    align-items: baseline;
     line-height: 20px;
     width: 100%;
-    flex-wrap: wrap;
-    cursor: default;
-    word-break: break-all;
+    padding: 0px 0 14px 0;
+    margin: 8px 0;
+    word-break: break-all!important;
+    border-bottom: 1px solid #3C3C3C;
 }
 
 #debug_pre_tag {
@@ -110,7 +150,7 @@
 }
 
 #debug_replace_tag_container {
-    max-height: 400px;
+    max-height: 60vh;
     overflow-y: scroll;
     overflow-x: hidden;
     padding: 0 20px 10px 20px;
@@ -169,3 +209,4 @@
 .code_green {color: #66cc66;}
 .code_red {color: #ff531a;}
 .code_gold {color: #e6b800;}
+.code_bold {font-family: 'ralewaybold', sans-serif; font-weight: bold}
