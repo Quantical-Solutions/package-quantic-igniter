@@ -58,11 +58,11 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    top: 100px;
-    right: 20px;
+    top: 17px;
+    right: 100px;
     border-radius: 5px;
-    width: calc(100% - 86px);
-    max-width: 600px;
+    width: 600px;
+    max-width: 80vw;
     word-break: break-all;
     cursor: default;
     transform-origin: 50% 50%;
