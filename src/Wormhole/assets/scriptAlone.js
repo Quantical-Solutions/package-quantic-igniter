@@ -173,13 +173,16 @@ if (debugAloneBtn) {
 function displayStandAloneDebugger(ev) {
 
     var debug = document.querySelector('#wormholeStandAlone');
+    var target = ev.currentTarget;
 
     if (debug.classList.contains('display_wormholeStandAlone')) {
 
         debug.classList.remove('display_wormholeStandAlone');
+        target.classList.remove('display_wormholeStandAloneBtn');
 
     } else {
 
         debug.classList.add('display_wormholeStandAlone');
+        target.classList.add('display_wormholeStandAloneBtn');
     }
 }

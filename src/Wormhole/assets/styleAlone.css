@@ -8,21 +8,21 @@
     cursor: pointer;
     padding: 10px;
     position: fixed;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 3px solid #FFF;
     border-radius: 100px;
     z-index: 9999999;
     top: 20px;
     right: 20px;
     transform-origin: 50% 50%;
     transform: scale(1);
-    background-color: #1c3859;
-    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+    background-color: #d8b478;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.8);
     transition: all ease-in-out 0.3s;
 }
 
-#wormStandAlonebtn:hover {
-    transform: scale(1.1);
-    background-color: #6600cc;
+#wormStandAlonebtn:hover, .display_wormholeStandAloneBtn {
+    transform: scale(1.1)!important;
+    background-color: #6600cc!important;
 }
 
 #wormStandAlonebtn svg {
@@ -33,17 +33,17 @@
     transition: all ease-in-out 0.5s;
 }
 
-#wormStandAlonebtn:hover svg {
-    transform: rotate(90deg);
+#wormStandAlonebtn:hover svg, .display_wormholeStandAloneBtn svg {
+    transform: rotate(90deg)!important;
 }
 
 #wormStandAlonebtn svg path {
-    fill: rgba(255, 255, 255, 0.5);
+    fill: rgba(0, 0, 0, 0.5);
     transition: all ease-in-out 0.5s;
 }
 
-#wormStandAlonebtn:hover svg path {
-    fill: rgba(255, 255, 255, 1);
+#wormStandAlonebtn:hover svg path, .display_wormholeStandAloneBtn svg path {
+    fill: rgba(255, 255, 255, 1)!important;
 }
 
 #wormholeStandAlone {
@@ -51,9 +51,9 @@
     position: fixed;
     z-index: 9999999;
     background-color: rgba(0, 0, 0, 0.85);
-    border: 2px solid #66b3ff;
+    border: 2px solid #FFF;
     color: #e6b800;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.8);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -86,9 +86,9 @@
     text-transform: uppercase;
     letter-spacing: 4px;
     text-align: center;
-    background-image: linear-gradient(to right, transparent, rgba(102, 179, 255, 0.7), transparent);
+    background-image: linear-gradient(to right, transparent, rgba(102, 0, 204, 0.7), transparent);
     margin: 0 20px;
-    padding: 12px 20px;
+    padding: 20px 20px;
 }
 
 #debugger_desc {
@@ -206,6 +206,7 @@
 
 .code_orange {color: #ff9933;}
 .code_blue {color: #66b3ff; padding: 0 2px}
+.code_purple {color: #6600cc}
 .code_green {color: #66cc66;}
 .code_red {color: #ff531a;}
 .code_gold {color: #e6b800;}

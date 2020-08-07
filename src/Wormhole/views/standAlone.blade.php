@@ -1,6 +1,6 @@
 <div id="wormholeStandAlone" data-mode="{{ config('wormhole.mode') }}">
     <h3 style="color: #fff;">Config Debugger</h3>
-    <span id="debugger_desc" style="color: #fff;">Debugging Mode : <b class="code_blue"><i>{{ $debugMethod
+    <span id="debugger_desc" style="color: #fff;">Debugging Mode : <b class="code_purple"><i>{{ $debugMethod
     }}</i></b></span>
     <hr>
     <pre id="debug_pre_tag">
