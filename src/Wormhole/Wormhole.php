@@ -13,18 +13,7 @@ class Wormhole
         if ($state == 'show') {
 
             $blade = new Blade(__DIR__ . '/views', __DIR__ . '/cache');
-            $render = $blade->render('bottomBar');
-        }
-        return $render;
-    }
-
-    public static function StandAlone($state, $method)
-    {
-        $render = '';
-        if ($state == 'show') {
-
-            $blade = new Blade(__DIR__ . '/views', __DIR__ . '/cache');
-            $render = $blade->render('standAlone', ['debugMethod' => $method]);
+            $render = $blade->render('debugBar');
         }
         return $render;
     }

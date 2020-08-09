@@ -32,7 +32,13 @@ class Constellation
 
                 $type = Request::all();
 
-                if ($type[1] != 'POST' || $type[1] == 'GET') {
+                if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+
+                    $_ENV['constellation'] = [
+                        'request_string' => '/' . $segments,
+                        'request_type' => $_SERVER['REQUEST_METHOD'],
+                        'request_url' => $_SERVER['REQUEST_URI']
+                    ];
 
                     self::splitString($array, $options);
                 }
@@ -53,7 +59,63 @@ class Constellation
 
                 $type = Request::all();
 
-                if ($type[1] == 'POST') {
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+                    $_ENV['constellation'] = [
+                        'request_string' => '/' . $segments,
+                        'request_type' => $_SERVER['REQUEST_METHOD'],
+                        'request_url' => $_SERVER['REQUEST_URI']
+                    ];
+
+                    self::splitString($array, $options);
+                }
+            }
+        }
+    }
+
+    public static function put($uri, $array)
+    {
+        if (!defined('VIEWINIT')) {
+
+            $url = self::analyseUri($uri);
+
+            if ($url != false) {
+
+                $segments = $url[0];
+                $options = $url[1];
+
+                if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+
+                    $_ENV['constellation'] = [
+                        'request_string' => '/' . $segments,
+                        'request_type' => $_SERVER['REQUEST_METHOD'],
+                        'request_url' => $_SERVER['REQUEST_URI']
+                    ];
+
+                    self::splitString($array, $options);
+                }
+            }
+        }
+    }
+
+    public static function delete($uri, $array)
+    {
+        if (!defined('VIEWINIT')) {
+
+            $url = self::analyseUri($uri);
+
+            if ($url != false) {
+
+                $segments = $url[0];
+                $options = $url[1];
+
+                if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+
+                    $_ENV['constellation'] = [
+                        'request_string' => '/' . $segments,
+                        'request_type' => $_SERVER['REQUEST_METHOD'],
+                        'request_url' => $_SERVER['REQUEST_URI']
+                    ];
 
                     self::splitString($array, $options);
                 }
