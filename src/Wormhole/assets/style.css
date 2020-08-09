@@ -4,6 +4,23 @@
 * =================================================================
 */
 
+.wormholeBottomBarBodyParts::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.wormholeBottomBarBodyParts::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.wormholeBottomBarBodyParts::-webkit-scrollbar-thumb {
+    background-color: #3c3c3c;
+}
+
+.wormholeBottomBarBodyParts::-webkit-scrollbar-thumb:hover {
+    background-color: #0099cc;
+}
+
 .logo-st0 {
     fill:none;
     stroke:#DEB671;
@@ -32,9 +49,10 @@
     z-index: 9999998;
     background-color: #191919;
     border-top: 3px solid;
-    padding: 2px;
+    padding: 2px 3px 2px 2px;
     cursor: pointer;
     display: none;
+    height: 31px;
 }
 
 #wormholeBottomBarBtn2 {
@@ -47,17 +65,45 @@
 }
 
 #resize-wormholeBottomBar {
-    height: 3px;
+    height: 2px;
     width: 100%;
+    border-top: 1px solid #FFF;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
     background-color: #FFF;
+    font-family: Tahoma, Geneva, sans-serif;
     cursor: ns-resize;
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    transition: all linear 0.15s;
+}
+
+#resize-wormholeBottomBar span {
+    line-height: 3px;
+    font-size: 10px;
+    font-family: Tahoma, Geneva, sans-serif;
+    color: #FFF;
+    position: relative;
+    top: -5px;
+    font-weight: bold;
+
+}
+
+#resize-wormholeBottomBar:hover {
+    background-color: #6600cc;
+    height: 13px;
 }
 
 #wormholeBottomBarHeader {
     display: flex;
     justify-content: space-between;
     align-content: center;
+    flex-wrap: wrap;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 #wormholeBottomBarHeaderLeft {
@@ -65,6 +111,7 @@
     justify-content: flex-start;
     align-items: stretch;
     color: #FFF;
+    flex-wrap: wrap;
 }
 
 .wormholeBottomBarHeaderRightParts, #wormholeBottomBarHeaderLeft p {
@@ -73,10 +120,13 @@
     justify-content: center;
     align-items: center;
     position: relative;
+    height: 35px;
 }
 
 .wormholeBottomBarHeaderRightParts:not(.noBordersRightParts), #wormholeBottomBarHeaderLeft p {
     border-left: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 12px;
 }
 
 .noBordersRightParts svg {
@@ -94,12 +144,12 @@
 
 .wormholeBottomBarHeaderLeftSelected, #wormholeBottomBarHeaderLeft p:hover {
     background-color: #FFF!important;
-    color: #191919!important;
+    color: #6600cc!important;
 }
 
 .wormholeBottomBarHeaderLeftSelected .wormholeBottomBarCounter,
 #wormholeBottomBarHeaderLeft p:hover .wormholeBottomBarCounter {
-    background-color: #191919!important;
+    background-color: #6600cc!important;
     color: #FFF!important;
 }
 
@@ -110,7 +160,7 @@
     color: #191919;
     width: max-content;
     border-radius: 3px;
-    font-family: 'ralewaybold', sans-serif;
+    font-family: Tahoma, Geneva, sans-serif;
     font-weight: bold;
     font-size: 12px;
     cursor: default;
@@ -129,6 +179,7 @@
     justify-content: flex-end;
     align-items: stretch;
     color: #FFF;
+    flex-wrap: wrap;
 }
 
 .wormholeBottomBarHeaderRightSvg {
@@ -150,12 +201,12 @@
     justify-content: flex-start;
     align-content: flex-start;
     flex-direction: column;
-    flex-wrap: wrap;
     position: fixed;
     bottom: 0;
     left: 0;
     z-index: 9999999;
     background-color: #191919;
+    transition: height ease-in-out 0.15s;
 }
 
 .display_wormholeBottomBar, .display_wormholeBottomBarBtn {
@@ -171,15 +222,15 @@
 .wormholeBottomBarCounter {
     background-color: #FFF;
     color: #191919;
-    padding: 2px 5px;
+    padding: 3px 5px;
     min-width: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 13px;
     margin-left: 5px;
-    font-size: 14px;
-    font-family: 'ralewaybold', sans-serif;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 10px;
     font-weight: bold;
     transition: all linear 0.15s;
 }
@@ -189,7 +240,7 @@
 }
 
 .noBordersRightParts:hover svg path {
-    fill: #191919;
+    fill: #6600cc;
 }
 
 .noBordersRightParts {
@@ -200,4 +251,48 @@
 #wormholeBottomBarHeaderChevron {
     width: 25px;
     height: 25px;
+    transform-origin: 50% 50%;
+    transform: rotate(0deg);
+}
+
+.wormholeBottomBarHeaderRightParts:first-child {
+    border-left: unset;
+}
+
+#wormholeBottomBarHeaderRightSvgVersion {
+    width: 17px;
+    height: 17px;
+}
+
+#debugRoute {
+    color: #DEB671;
+}
+
+#wormholeBottomBarBody {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background-color: #2D2D2D;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5) inset;
+}
+
+.wormholeBottomBarBodyParts:not(.selectedWormholeBottomBarBodyPart) {
+    display: none;
+}
+
+.wormholeBottomBarBodyParts {
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    margin: 10px;
+    width: calc(100% - 20px);
+    height: calc(100% - 21px);
+    overflow-y: scroll;
+}
+
+.selectedWormholeBottomBarBodyPart {
+    display: flex;
 }

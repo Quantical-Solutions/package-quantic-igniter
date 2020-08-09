@@ -11,7 +11,12 @@
     </svg>
 </div>
 <div id="wormholeBottomBar">
-    <div id="resize-wormholeBottomBar"></div>
+    <style>{!! file_get_contents(dirname(__DIR__) . '/assets/style.css') !!}</style>
+    <div id="resize-wormholeBottomBar">
+        <span>___</span>
+        <span>___</span>
+        <span>___</span>
+    </div>
     <div id="wormholeBottomBarHeader">
         <div id="wormholeBottomBarHeaderLeft">
             <div id="wormholeBottomBarBtn2">
@@ -26,24 +31,24 @@
                     <path class="logo-st2" d="M424.9,415.5c12.9-15,20.6-34.6,20.6-55.9c0-25.2-10.8-47.9-28.1-63.6"/>
                 </svg>
             </div>
-            <p class="wormholeBottomBarHeaderLeftSelected">Messages</p>
-            <p>Timeline</p>
-            <p>Exceptions</p>
-            <p>Views<span class="wormholeBottomBarCounter">3</span></p>
-            <p>Constellation</p>
-            <p>Queries</p>
-            <p>Models</p>
-            <p>Mails</p>
-            <p>Gate</p>
-            <p>Session</p>
-            <p>Request</p>
+            <p data-id="wormhole-message" class="wormholeBottomBarHeaderLeftSelected">Messages</p>
+            <p data-id="wormhole-timeline">Timeline</p>
+            <p data-id="wormhole-exceptions">Exceptions</p>
+            <p data-id="wormhole-views">Views<span class="wormholeBottomBarCounter">3</span></p>
+            <p data-id="wormhole-constellation">Constellation</p>
+            <p data-id="wormhole-queries">Queries</p>
+            <p data-id="wormhole-models">Models</p>
+            <p data-id="wormhole-mails">Mails</p>
+            <p data-id="wormhole-gate">Gate</p>
+            <p data-id="wormhole-session">Session</p>
+            <p data-id="wormhole-request">Request</p>
         </div>
         <div id="wormholeBottomBarHeaderRight">
             <div class="wormholeBottomBarHeaderRightParts">
                 <svg class="wormholeBottomBarHeaderRightSvg" viewBox="0 0 32 32">
                     <path d="M17.987 3h-5v3h5v-3zM17.987 15v-2h-5v2h5zM12.987 30h5v-8h-5v8zM24.987 12l-2.187-2.5 2.187-2.5h-16l-2.6 2.5 2.6 2.5h16zM22.987 16h-16l2.188 2.5-2.188 2.5h16l2.625-2.5-2.625-2.5z"></path>
                 </svg>
-                <p>{{ $_ENV['constellation']['request_type'] }} {{ $_ENV['constellation']['request_string'] }}</p>
+                <p>{{ $_ENV['constellation']['request_type'] }} <span id="debugRoute">{{ $_ENV['constellation']['request_string'] }}</span></p>
                 <title>Constellation</title>
             </div>
             <div class="wormholeBottomBarHeaderRightParts">
@@ -93,4 +98,40 @@
             </div>
         </div>
     </div>
+    <div id="wormholeBottomBarBody">
+        <div id="wormhole-message" class="wormholeBottomBarBodyParts selectedWormholeBottomBarBodyPart">
+            @include('includes.message')
+        </div>
+        <div id="wormhole-timeline" class="wormholeBottomBarBodyParts">
+            @include('includes.timeline')
+        </div>
+        <div id="wormhole-exceptions" class="wormholeBottomBarBodyParts">
+            @include('includes.exceptions')
+        </div>
+        <div id="wormhole-views" class="wormholeBottomBarBodyParts">
+            @include('includes.views')
+        </div>
+        <div id="wormhole-constellation" class="wormholeBottomBarBodyParts">
+            @include('includes.constellation')
+        </div>
+        <div id="wormhole-queries" class="wormholeBottomBarBodyParts">
+            @include('includes.queries')
+        </div>
+        <div id="wormhole-models" class="wormholeBottomBarBodyParts">
+            @include('includes.models')
+        </div>
+        <div id="wormhole-mails" class="wormholeBottomBarBodyParts">
+            @include('includes.mails')
+        </div>
+        <div id="wormhole-gate" class="wormholeBottomBarBodyParts">
+            @include('includes.gate')
+        </div>
+        <div id="wormhole-session" class="wormholeBottomBarBodyParts">
+            @include('includes.session')
+        </div>
+        <div id="wormhole-request" class="wormholeBottomBarBodyParts">
+            @include('includes.request')
+        </div>
+    </div>
+    <script type="text/javascript">{!! file_get_contents(dirname(__DIR__) . '/assets/script.js') !!}</script>
 </div>

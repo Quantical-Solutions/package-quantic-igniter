@@ -6,9 +6,22 @@
 
 // BAR MODE
 
+var referenceBaseHeight = 88;
+var referebceBaseMinSize = 35;
+
 var wormholeBottomBarBtn = document.querySelector('#wormholeBottomBarBtn');
 if (wormholeBottomBarBtn) {
     wormholeBottomBarBtn.addEventListener('click', displayWormholeBottomBar);
+}
+
+var wormholeBottomBarHeaderDirectory = document.querySelector('#wormholeBottomBarHeaderDirectory');
+if (wormholeBottomBarHeaderDirectory) {
+    wormholeBottomBarHeaderDirectory.addEventListener('click', displayFolderWormholeBottomBar);
+}
+
+var wormholeBottomBarHeaderChevron = document.querySelector('#wormholeBottomBarHeaderChevron');
+if (wormholeBottomBarHeaderChevron) {
+    wormholeBottomBarHeaderChevron.addEventListener('click', sizeDownWormholeBottomBar);
 }
 
 var wormholeBottomBarClose = document.querySelector('#wormholeBottomBarHeaderClose');
@@ -20,9 +33,13 @@ function displayWormholeBottomBar(ev) {
 
     var target = ev.currentTarget;
     var bar = document.querySelector('#wormholeBottomBar');
+    var body = document.querySelector('#wormholeBottomBar');
+    var chevron = document.querySelector('#wormholeBottomBarHeaderChevron');
 
     target.classList.remove('display_wormholeBottomBarBtn');
     bar.classList.add('display_wormholeBottomBar');
+    body.style.height = referenceBaseHeight + 'px';
+    chevron.style.transform = 'rotate(0deg)';
 }
 
 function hideWormholeBottomBar(ev) {
@@ -32,6 +49,106 @@ function hideWormholeBottomBar(ev) {
 
     btn.classList.add('display_wormholeBottomBarBtn');
     bar.classList.remove('display_wormholeBottomBar');
+}
+
+function displayFolderWormholeBottomBar(ev) {
+
+    var target = ev.currentTarget;
+    var body = document.querySelector('#wormholeBottomBar');
+    var chevron = document.querySelector('#wormholeBottomBarHeaderChevron');
+    body.style.height = referenceBaseHeight + 'px';
+
+    if (referenceBaseHeight > 0) {
+        chevron.style.transform = 'rotate(0deg)';
+    } else {
+        chevron.style.transform = 'rotate(180deg)';
+    }
+}
+
+function sizeDownWormholeBottomBar(ev) {
+
+    var target = ev.currentTarget;
+    var body = document.querySelector('#wormholeBottomBar');
+    var chevron = document.querySelector('#wormholeBottomBarHeaderChevron');
+
+    if (body.style.height != referebceBaseMinSize + 'px') {
+        chevron.style.transform = 'rotate(180deg)';
+        body.style.height = referebceBaseMinSize + 'px';
+    } else {
+        chevron.style.transform = 'rotate(0deg)';
+        body.style.height = referenceBaseHeight + 'px';
+    }
+}
+
+const BORDER_SIZE = 49;
+const wormholeBody = document.querySelector('#wormholeBottomBar');
+const wormholeHandle = document.querySelector('#resize-wormholeBottomBar');
+
+if (wormholeBody) {
+
+    var chevron = document.querySelector('#wormholeBottomBarHeaderChevron');
+    let m_pos;
+    function resize(e){
+
+        const dx = m_pos - e.y;
+        m_pos = e.y;
+        if (m_pos > window.innerHeight/3) {
+            var height = (parseInt(getComputedStyle(wormholeBody, '').height) + dx);
+            if (height > referebceBaseMinSize) {
+                wormholeBody.style.height = height + 'px';
+                chevron.style.transform = 'rotate(0deg)';
+                referenceBaseHeight = height;
+            } else {
+                wormholeBody.style.height = referebceBaseMinSize + 'px';
+                chevron.style.transform = 'rotate(180deg)';
+                referenceBaseHeight = referebceBaseMinSize;
+            }
+        }
+    }
+
+    wormholeHandle.addEventListener("mousedown", function(e){
+
+        if (e.offsetY < BORDER_SIZE) {
+            m_pos = e.y;
+            document.addEventListener("mousemove", resize, false);
+            document.querySelector('#wormholeBottomBar').style.transition = 'none';
+        }
+    }, false);
+
+    document.addEventListener("mouseup", function(){
+        document.removeEventListener("mousemove", resize, false);
+        document.querySelector('#wormholeBottomBar').style.transition = 'height ease-in-out 0.15s';
+    }, false);
+}
+
+
+
+var wormholeOnglets = document.querySelectorAll('#wormholeBottomBarHeaderLeft p');
+if (wormholeOnglets) {
+    for (var i = 0; i < wormholeOnglets.length; i++) {
+        wormholeOnglets[i].addEventListener('click', displayWormholeContainers);
+    }
+}
+
+function displayWormholeContainers(ev) {
+
+    var target = ev.currentTarget;
+
+    var onglets = document.querySelectorAll('#wormholeBottomBarHeaderLeft p');
+    for (var i = 0; i < onglets.length; i++) {
+        onglets[i].classList.remove('wormholeBottomBarHeaderLeftSelected');
+    }
+    target.classList.add('wormholeBottomBarHeaderLeftSelected');
+
+    var containers = document.querySelectorAll('.wormholeBottomBarBodyParts');
+    for (var i = 0; i < containers.length; i++) {
+        var cont = containers[i];
+        if (cont.id == target.dataset.id) {
+            cont.style.display = 'flex';
+        } else {
+            cont.style.display = 'none';
+        }
+    }
 }
 
 // STAND ALONE MODE
