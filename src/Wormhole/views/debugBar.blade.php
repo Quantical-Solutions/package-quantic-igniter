@@ -13,11 +13,11 @@
 <div id="wormholeBottomBarFolderOpen">
     @include('includes.window')
 </div>
-@isset($ux)
+@if($ux != false)
     <div id="wormholeBottomBarUXOpen">
         @include('includes.ux')
     </div>
-@endisset
+@endif
 <div id="wormholeBottomBar">
     <style>{!! file_get_contents(dirname(__DIR__) . '/assets/style.css') !!}</style>
     <div id="resize-wormholeBottomBar">

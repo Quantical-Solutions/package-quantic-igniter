@@ -45,3 +45,11 @@ var wormholeBottomBarClose = document.querySelector('#wormholeBottomBarHeaderClo
 if (wormholeBottomBarClose) {
     wormholeBottomBarClose.addEventListener('click', hideWormholeBottomBar);
 }
+
+// Get Archives
+var debuggerShowSession = document.querySelectorAll('.debuggerShowSession');
+if (debuggerShowSession) {
+    for (var i = 0; i < debuggerShowSession.length; i++) {
+        debuggerShowSession[i].addEventListener('click', wormholeGetArchives);
+    }
+}
