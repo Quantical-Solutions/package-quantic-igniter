@@ -20,6 +20,18 @@ function displayWormholeBottomBar(ev) {
     chevron.style.transform = 'rotate(0deg)';
 }
 
+function closeUXWormholeBottomBar(ev) {
+
+    var window = document.querySelector('#wormholeBottomBarUXOpen');
+    window.classList.remove('display_wormholeBottomBarUXOpen');
+}
+
+function closeFolderWormholeBottomBar(ev) {
+
+    var window = document.querySelector('#wormholeBottomBarFolderOpen');
+    window.classList.remove('display_wormholeBottomBarFolderOpen');
+}
+
 function hideWormholeBottomBar(ev) {
 
     var btn = document.querySelector('#wormholeBottomBarBtn');
@@ -31,16 +43,14 @@ function hideWormholeBottomBar(ev) {
 
 function displayFolderWormholeBottomBar(ev) {
 
-    var target = ev.currentTarget;
-    var body = document.querySelector('#wormholeBottomBar');
-    var chevron = document.querySelector('#wormholeBottomBarHeaderChevron');
-    body.style.height = referenceBaseHeight + 'px';
+    var window = document.querySelector('#wormholeBottomBarFolderOpen');
+    window.classList.add('display_wormholeBottomBarFolderOpen');
+}
 
-    if (referenceBaseHeight > 0) {
-        chevron.style.transform = 'rotate(0deg)';
-    } else {
-        chevron.style.transform = 'rotate(180deg)';
-    }
+function displayUXWormholeBottomBar(ev) {
+
+    var window = document.querySelector('#wormholeBottomBarUXOpen');
+    window.classList.add('display_wormholeBottomBarUXOpen');
 }
 
 function sizeDownWormholeBottomBar(ev) {
@@ -78,7 +88,7 @@ if (wormholeBody) {
                 referenceBaseHeight = height;
             } else {
                 wormholeBody.style.height = referebceBaseMinSize + 'px';
-                chevron.style.transform = 'rotate(180deg)';
+                chevron.style.transform = 'rotate(0deg)';
                 referenceBaseHeight = referebceBaseMinSize;
             }
         }

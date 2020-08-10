@@ -32,27 +32,15 @@
             </tr>
             </thead>
             <tbody>
-            <tr data-id="2">
-                <td>2020-08-10 09:43:23</td>
-                <td>GET</td>
-                <td class="debuggerShowSession">/admin/posts</td>
-                <td class="debuggerIP">176.152.18.54</td>
-                <td class="debuggerShowUrl">SHOW URL</td>
-            </tr>
-            <tr data-id="1">
-                <td>2020-08-10 09:35:54</td>
-                <td>POST</td>
-                <td class="debuggerShowSession">/admin/voyager-assets?path=images%2Fbg.jpg</td>
-                <td class="debuggerIP">176.152.18.54</td>
-                <td class="debuggerShowUrl">SHOW URL</td>
-            </tr>
-            <tr data-id="3">
-                <td>2020-08-08 22:25:12</td>
-                <td>POST</td>
-                <td class="debuggerShowSession">/admin/testimonies</td>
-                <td class="debuggerIP">176.152.18.54</td>
-                <td class="debuggerShowUrl">SHOW URL</td>
-            </tr>
+            @foreach($data as $info)
+                <tr data-infos="{{ json_encode($info) }}">
+                    <td>{{ $info['date'] }}</td>
+                    <td>{{ $info['method'] }}</td>
+                    <td class="debuggerShowSession">{{ $info['url'] }}</td>
+                    <td class="debuggerIP">{{ $info['ip'] }}</td>
+                    <td class="debuggerShowUrl">SHOW URL</td>
+                </tr>
+            @endforeach
             </tbody>
         </table>
     </div>
@@ -65,6 +53,7 @@
         <div id="wormholeBottomBarFolderOpenFooterBottom">
             <label>METHOD:</label>
             <select>
+                <option value="" selected></option>
                 <option value="get">GET</option>
                 <option value="post">POST</option>
                 <option value="put">PUT</option>

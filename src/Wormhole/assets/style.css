@@ -303,7 +303,7 @@
     display: flex;
 }
 
-#wormholeBottomBarFolderOpen {
+#wormholeBottomBarFolderOpen, #wormholeBottomBarUXOpen {
     position: fixed;
     top: 0;
     left: 0;
@@ -319,12 +319,12 @@
     transition: all linear 0.2s;
 }
 
-.display_wormholeBottomBarFolderOpen {
+.display_wormholeBottomBarFolderOpen, .display_wormholeBottomBarUXOpen {
     visibility: visible!important;
     opacity: 1!important;
 }
 
-#wormholeBottomBarFolderOpenContainer {
+#wormholeBottomBarFolderOpenContainer, #wormholeBottomBarUXOpenContainer {
     width: 900px;
     max-width: 90%;
     display: flex;
@@ -340,7 +340,7 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-#wormholeBottomBarFolderOpenHeader {
+#wormholeBottomBarFolderOpenHeader, #wormholeBottomBarUXOpenHeader {
     display: flex;
     justify-content: space-between;
     align-items: stretch;
@@ -351,29 +351,29 @@
     background-color: #191919;
 }
 
-#wormholeBottomBarFolderOpenHeaderRight {
+#wormholeBottomBarFolderOpenHeaderRight, #wormholeBottomBarUXOpenHeaderRight {
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
 }
 
-#wormholeBottomBarFolderOpenHeaderRightClose {
+#wormholeBottomBarFolderOpenHeaderRightClose, #wormholeBottomBarUXOpenHeaderRightClose {
     width: 20px;
     height: 20px;
 }
 
-#wormholeBottomBarFolderOpenHeaderRightClose path {
+#wormholeBottomBarFolderOpenHeaderRightClose path, #wormholeBottomBarUXOpenHeaderRightClose path {
     fill: #FFF;
 }
 
-#wormholeBottomBarFolderOpenHeaderLeft p {
+#wormholeBottomBarFolderOpenHeaderLeft p, #wormholeBottomBarUXOpenHeaderLeft p {
     padding-right: 10px;
     margin-right: 10px;
     border-right: 1px solid #FFF;
 }
 
-#wormholeBottomBarFolderOpenHeaderLeft {
+#wormholeBottomBarFolderOpenHeaderLeft, #wormholeBottomBarUXOpenHeaderLeft {
     display: flex;
     height: 25px;
     justify-content: flex-start;
@@ -381,13 +381,13 @@
     width: max-content;
 }
 
-#wormholeBottomBarFolderOpenHeaderLeft svg {
+#wormholeBottomBarFolderOpenHeaderLeft svg, #wormholeBottomBarUXOpenHeaderLeft svg {
     width: 25px;
     height: 25px;
     margin-right: 5px;
 }
 
-#wormholeBottomBarFolderOpenBody {
+#wormholeBottomBarFolderOpenBody, #wormholeBottomBarUXOpenBody {
     margin: 10px 0 10px 10px;
     width: calc(100% - 18px);
     padding: 0 4px 0 2px;
