@@ -324,3 +324,44 @@ function displayStandAloneDebugger(ev) {
         target.classList.add('display_wormholeStandAloneBtn');
     }
 }
+
+function wormholeGetArchives(ev) {
+
+    var target = ev.currentTarget,
+        windowOpen = document.querySelector('#wormholeBottomBarFolderOpen'),
+        parent = target.closest('tr'),
+        data = JSON.parse(parent.dataset.infos),
+        select = document.querySelector('#wormholeBottomBarHeaderRightSelect'),
+        debugBar = document.querySelector('#wormholeBottomBar'),
+        optionsCounter = select.children.length + 1,
+        options = select.children,
+        selectChild = 1,
+        check = false,
+        time = (data.date) ? '(' + data.date.split(' ')[1] + ')' : '(Unknown date)';
+
+    debugBar.classList.add('wormholeArchivesDisplay');
+
+    for (var i = 0; i < options.length; i++) {
+        if (options[i].dataset.id == data.id) {
+            check = true;
+            selectChild = i;
+            break;
+        }
+    }
+
+    if (check == false) {
+
+        var option = document.createElement('option');
+        option.setAttribute('value', parent.dataset.infos);
+        option.setAttribute('data-id', data.id);
+        option.innerHTML = '#' + optionsCounter + ' (opened) ' + time;
+        select.appendChild(option);
+        option.selected = true;
+
+    } else {
+
+        options[selectChild].selected = true;
+    }
+
+    windowOpen.classList.remove('display_wormholeBottomBarFolderOpen');
+}
