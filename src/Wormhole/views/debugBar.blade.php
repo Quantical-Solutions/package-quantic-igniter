@@ -10,6 +10,9 @@
         <path class="logo-st2" d="M424.9,415.5c12.9-15,20.6-34.6,20.6-55.9c0-25.2-10.8-47.9-28.1-63.6"/>
     </svg>
 </div>
+<div id="wormholeBottomBarFolderOpen">
+    @include('includes.window')
+</div>
 <div id="wormholeBottomBar">
     <style>{!! file_get_contents(dirname(__DIR__) . '/assets/style.css') !!}</style>
     <div id="resize-wormholeBottomBar">
@@ -31,17 +34,60 @@
                     <path class="logo-st2" d="M424.9,415.5c12.9-15,20.6-34.6,20.6-55.9c0-25.2-10.8-47.9-28.1-63.6"/>
                 </svg>
             </div>
-            <p data-id="wormhole-message" class="wormholeBottomBarHeaderLeftSelected">Messages</p>
-            <p data-id="wormhole-timeline">Timeline</p>
-            <p data-id="wormhole-exceptions">Exceptions</p>
-            <p data-id="wormhole-views">Views<span class="wormholeBottomBarCounter">3</span></p>
-            <p data-id="wormhole-constellation">Constellation</p>
-            <p data-id="wormhole-queries">Queries</p>
-            <p data-id="wormhole-models">Models</p>
-            <p data-id="wormhole-mails">Mails</p>
-            <p data-id="wormhole-gate">Gate</p>
-            <p data-id="wormhole-session">Session</p>
-            <p data-id="wormhole-request">Request</p>
+            <p data-id="wormhole-message" class="wormholeBottomBarHeaderLeftSelected">
+                Messages
+                @if(false)
+                    <span class="wormholeBottomBarCounter">3</span>
+                @endif
+            </p>
+            <p data-id="wormhole-timeline">
+                Timeline
+            </p>
+            <p data-id="wormhole-exceptions">
+                Exceptions
+                @if(false)
+                    <span class="wormholeBottomBarCounter">3</span>
+                @endif
+            </p>
+            <p data-id="wormhole-views">
+                Views
+                @if(true)
+                    <span class="wormholeBottomBarCounter">3</span>
+                @endif
+            </p>
+            <p data-id="wormhole-constellation">
+                Constellation
+            </p>
+            <p data-id="wormhole-queries">
+                Queries
+                @if(false)
+                    <span class="wormholeBottomBarCounter">3</span>
+                @endif
+            </p>
+            <p data-id="wormhole-models">
+                Models
+                @if(false)
+                    <span class="wormholeBottomBarCounter">3</span>
+                @endif
+            </p>
+            <p data-id="wormhole-mails">
+                Mails
+                @if(false)
+                    <span class="wormholeBottomBarCounter">3</span>
+                @endif
+            </p>
+            <p data-id="wormhole-gate">
+                Gate
+                @if(false)
+                    <span class="wormholeBottomBarCounter">3</span>
+                @endif
+            </p>
+            <p data-id="wormhole-session">
+                Session
+            </p>
+            <p data-id="wormhole-request">
+                Request
+            </p>
         </div>
         <div id="wormholeBottomBarHeaderRight">
             <div class="wormholeBottomBarHeaderRightParts">
@@ -100,7 +146,7 @@
     </div>
     <div id="wormholeBottomBarBody">
         <div id="wormhole-message" class="wormholeBottomBarBodyParts selectedWormholeBottomBarBodyPart">
-            @include('includes.message')
+            @include('includes.messages')
         </div>
         <div id="wormhole-timeline" class="wormholeBottomBarBodyParts">
             @include('includes.timeline')
@@ -133,5 +179,7 @@
             @include('includes.request')
         </div>
     </div>
+    <script type="text/javascript">{!! file_get_contents(dirname(__DIR__) . '/assets/listeners.js') !!}</script>
     <script type="text/javascript">{!! file_get_contents(dirname(__DIR__) . '/assets/script.js') !!}</script>
+    <script type="text/javascript">{!! file_get_contents(dirname(__DIR__) . '/assets/timer.js') !!}</script>
 </div>

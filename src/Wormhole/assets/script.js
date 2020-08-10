@@ -4,30 +4,8 @@
 * =================================================================
 */
 
-// BAR MODE
-
 var referenceBaseHeight = 88;
 var referebceBaseMinSize = 35;
-
-var wormholeBottomBarBtn = document.querySelector('#wormholeBottomBarBtn');
-if (wormholeBottomBarBtn) {
-    wormholeBottomBarBtn.addEventListener('click', displayWormholeBottomBar);
-}
-
-var wormholeBottomBarHeaderDirectory = document.querySelector('#wormholeBottomBarHeaderDirectory');
-if (wormholeBottomBarHeaderDirectory) {
-    wormholeBottomBarHeaderDirectory.addEventListener('click', displayFolderWormholeBottomBar);
-}
-
-var wormholeBottomBarHeaderChevron = document.querySelector('#wormholeBottomBarHeaderChevron');
-if (wormholeBottomBarHeaderChevron) {
-    wormholeBottomBarHeaderChevron.addEventListener('click', sizeDownWormholeBottomBar);
-}
-
-var wormholeBottomBarClose = document.querySelector('#wormholeBottomBarHeaderClose');
-if (wormholeBottomBarClose) {
-    wormholeBottomBarClose.addEventListener('click', hideWormholeBottomBar);
-}
 
 function displayWormholeBottomBar(ev) {
 
@@ -335,17 +313,4 @@ function displayStandAloneDebugger(ev) {
         debug.classList.add('display_wormholeStandAlone');
         target.classList.add('display_wormholeStandAloneBtn');
     }
-}
-
-// TimeStamp
-
-var microTimer = document.querySelector('#microTime');
-
-if (microTimer) {
-
-    var microTime = parseInt(microTimer.dataset.time)*1000;
-    var microTimeDate = new Date();
-    var microTimeTotal = parseInt(microTimeDate.getTime()) - microTime;
-    var totalMicrotime = Math.round(microTimeTotal);
-    microTimer.innerHTML = (totalMicrotime < 1200) ? totalMicrotime + 'ms' : (totalMicrotime/1000).toFixed(2) + 's';
 }
