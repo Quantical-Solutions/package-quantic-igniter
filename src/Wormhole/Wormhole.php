@@ -2,8 +2,7 @@
 
 namespace Quantic\Igniter\Wormhole;
 
-use namespace Quantic\Igniter\Spectral\ViewsCollector;
-
+use Quantic\Igniter\Spectral\ViewsCollector;
 use Carbon\Carbon;
 use Jenssegers\Blade\Blade;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
@@ -16,17 +15,13 @@ use Symfony\Component\VarDumper\VarDumper;
 
 class Wormhole
 {
-    protected $allViews;
-
     public static function BottomBar($state, $ux, $array = [])
     {
         $render = '';
         if ($state == 'show') {
 
-            $analyse = ViewsCollector::viewParser($array);
-            $wormhole = new self;
-            $wormhole->allViews = $analyse;
-            dump($wormhole->allViews);
+            $activeView = ViewsCollector::viewParser($array);
+            dump($activeView);
 
             $data = [
                 [

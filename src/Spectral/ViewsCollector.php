@@ -4,7 +4,8 @@ namespace Quantic\Igniter\Spectral;
 
 class ViewsCollector
 {
-    protected function viewParser($data)
+
+    public static function viewParser($data)
     {
         $view = $data['view'];
         $paths = $data['paths'] . '/' . $view . '.blade.php';
@@ -14,15 +15,15 @@ class ViewsCollector
 
         $views = [
             [
-                'name' => str_replace('.', '/', $view),
+                'name' => str_replace('/', '.', $view),
                 'view' => $view,
                 'paths' => $paths,
-                'params' => $this->getUsedParams($file),
+                'params' => (new self)->getUsedParams($file),
                 'allParams' => $params
             ]
         ];
 
-        $subber = $this->subViewsParser($file, $params, ROOTDIR . $data['paths']);
+        $subber = (new self)->subViewsParser($file, $params, ROOTDIR . $data['paths']);
         foreach ($subber as $sub) {
             array_push($views, $sub);
         }
@@ -79,7 +80,8 @@ class ViewsCollector
 
             if (false === $contentEnd) { break; }
 
-            $contents[] = trim(substr($str, $contentStart, $contentEnd - $contentStart));
+            $trimmed = trim(substr($str, $contentStart, $contentEnd - $contentStart));
+            $contents[] = $trimmed;
             $startFrom = $contentEnd + $endDelimiterLength;
         }
 
@@ -95,43 +97,95 @@ class ViewsCollector
         foreach ($originalFile as $line) {
             $extends = $this->get_string_between($line, '@extends(', ')');
             if (!empty($extends)) array_push($views, $extends);
-        }
 
-        // Includes files
+            foreach ($extends as $view) {
 
-        foreach ($originalFile as $line) {
-            $this->includes(
-                'include',
-                $this->get_string_between($line, '@include(', ')')
-            );
-        }
+                $newPaths = $root . '/' . trim(str_replace('\'', '', str_replace('"', '', str_replace('.', '/', $view)))) . '.blade.php';
+                // Includes files
 
-        foreach ($originalFile as $line) {
-            $this->includes(
-                'includeIf',
-                $this->get_string_between($line, '@includeIf(', ','),
-            );
-        }
+                foreach (file($newPaths) as $line) {
 
-        foreach ($originalFile as $line) {
-            $this->includes(
-                'includeWhen',
-                $this->get_string_between($line, '@includeWhen(', ')')
-            );
-        }
+                    //====================================================
 
-        foreach ($originalFile as $line) {
-            $this->includes(
-                'includeUnless',
-                $this->get_string_between($line, '@includeUnless(', ')')
-            );
-        }
+                    // @include('view.name') directive parser
+                    $include = $this->includes(
+                        'include',
+                        $this->get_string_between($line, '@include(', ')')
+                    );
+                    if (!empty($include)) array_push($views, $include);
 
-        foreach ($originalFile as $line) {
-            $this->includes(
-                'includeFirst',
-                $this->get_string_between($line, '@includeFirst(', ')')
-            );
+                    // @include('view.name', ['some' => 'data']) directive parser
+                    $includeWithData = $this->includes(
+                        'include',
+                        $this->get_string_between($line, '@include(', ',')
+                    );
+                    if (!empty($includeWithData)) array_push($views, $includeWithData);
+
+                    //====================================================
+
+                    // @includeIf('view.name') directive parser
+                    $includeIf = $this->includes(
+                        'includeIf',
+                        $this->get_string_between($line, '@includeIf(', ')')
+                    );
+                    if (!empty($includeIf)) array_push($views, $includeIf);
+
+                    // @includeIf('view.name', ['some' => 'data']) directive parser
+                    $includeIfWithData = $this->includes(
+                        'includeIf',
+                        $this->get_string_between($line, '@includeIf(', ',')
+                    );
+                    if (!empty($includeIf)) array_push($views, $includeIfWithData);
+
+                    //====================================================
+
+                    // @includeWhen($boolean, 'view.name') directive parser
+                    $includeWhen = $this->includes(
+                        'includeWhen',
+                        $this->get_string_between($line, '@includeWhen(', ')')
+                    );
+                    if (!empty($includeWhen)) array_push($views, $includeWhen);
+
+                    // @includeWhen($boolean, 'view.name', ['some' => 'data']) directive parser
+                    $includeWhenWithData = $this->includes(
+                        'includeWhen',
+                        $this->get_string_between($line, '@includeWhen(', ')')
+                    );
+                    if (!empty($includeWhenWithData)) array_push($views, $includeWhenWithData);
+
+                    //====================================================
+
+                    // @includeUnless($boolean, 'view.name') directive parser
+                    $includeUnless = $this->includes(
+                        'includeUnless',
+                        $this->get_string_between($line, '@includeUnless(', ')')
+                    );
+                    if (!empty($includeUnless)) array_push($views, $includeUnless);
+
+                    // @includeUnless($boolean, 'view.name', ['some' => 'data']) directive parser
+                    $includeUnlessWithData = $this->includes(
+                        'includeUnless',
+                        $this->get_string_between($line, '@includeUnless(', ')')
+                    );
+                    if (!empty($includeUnlessWithData)) array_push($views, $includeUnlessWithData);
+
+                    //====================================================
+
+                    // @includeFirst(['custom.admin', 'admin']) directive parser
+                    $includeFirst = $this->includes(
+                        'includeFirst',
+                        $this->get_string_between($line, '@includeFirst(', ')')
+                    );
+                    if (!empty($includeFirst)) array_push($views, $includeFirst);
+
+                    // @includeFirst(['custom.admin', 'admin'], ['some' => 'data']) directive parser
+                    $includeFirstWithData = $this->includes(
+                        'includeFirst',
+                        $this->get_string_between($line, '@includeFirst(', ',')
+                    );
+                    if (!empty($includeFirstWithData)) array_push($views, $includeFirstWithData);
+                }
+            }
         }
 
         return $this->collectViews($views, $root, $params);
@@ -139,29 +193,36 @@ class ViewsCollector
 
     protected function includes($mode, $data)
     {
-        switch ($mode) {
+        $final = [];
+        if (!empty($data)) {
+            switch ($mode) {
 
-            case 'include':
+                case 'include':
 
-                break;
+                    foreach ($data as $file) {
+                        array_push($final, $file);
+                    }
+                    break;
 
-            case 'includeIf':
+                case 'includeIf':
 
-                break;
+                    break;
 
-            case 'includeWhen':
+                case 'includeWhen':
 
-                break;
+                    break;
 
-            case 'includeUnless':
+                case 'includeUnless':
 
-                break;
+                    break;
 
-            case 'includeFirst':
+                case 'includeFirst':
 
-                break;
+                    break;
+            }
         }
-        return true;
+
+        return $final;
     }
 
     protected function collectViews($views, $root, $params)
@@ -169,9 +230,12 @@ class ViewsCollector
         $final = [];
         foreach ($views as $view) {
             foreach ($view as $vars) {
+
                 $vars = trim(str_replace('\'', '', $vars));
                 $vars = trim(str_replace('"', '', $vars));
+                $vars = trim(str_replace('.', '/', $vars));
                 $subFile = file($root . '/' . $vars . '.blade.php');
+
                 $sub = [
                     'name' => str_replace('.', '/', $vars),
                     'view' => $vars,
@@ -179,6 +243,7 @@ class ViewsCollector
                     'params' => $this->getUsedParams($subFile),
                     'allParams' => $params
                 ];
+
                 array_push($final, $sub);
             }
         }
