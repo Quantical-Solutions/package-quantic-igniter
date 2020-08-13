@@ -2,7 +2,7 @@
 
 namespace Quantic\Igniter\Wormhole;
 
-use Quantic\Igniter\Spectral\ViewsCollector;
+use Quantic\Igniter\Spectral\ViewsCollector as ViewsCollector;
 use Carbon\Carbon;
 use Jenssegers\Blade\Blade;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
@@ -20,8 +20,8 @@ class Wormhole
         $render = '';
         if ($state == 'show') {
 
-            $activeView = ViewsCollector::viewParser($array);
-            dump($activeView);
+            $viewCollector = new ViewsCollector;
+            $activeView = $viewCollector->viewParser($array);
 
             $data = [
                 [
