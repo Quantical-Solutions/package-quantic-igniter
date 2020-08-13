@@ -173,6 +173,27 @@ class ViewsCollector
 
                 case 'first':
 
+                    foreach ($data as $file) {
+                        $split = (isset(explode(',', $file)[0])) ? explode(',', $file)[0] : $file;
+                        $vars = trim(str_replace(
+                            'array(', '', str_replace(
+                                ')', '', str_replace(
+                                    '[', '', str_replace(
+                                        ']', '', str_replace(
+                                            '\'', '', str_replace(
+                                                '"', '', $split
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        ));
+                        $explode = explode(',', $vars);
+                        foreach ($explode as $item) {
+                            $clean = trim($item);
+                            array_push($final, $clean);
+                        }
+                    }
                     break;
             }
         }
