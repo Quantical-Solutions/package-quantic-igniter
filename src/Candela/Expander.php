@@ -18,28 +18,28 @@ class Expander
     {
         try {
 
-            if (defined('DB_CONNECTION')
-                && defined('DB_HOST')
-                && defined('DB_DATABASE')
-                && defined('DB_USERNAME')
-                && defined('DB_PASSWORD')
-                && defined('DB_PORT')
-                && defined('DB_CHARSET')
-                && defined('DB_COLLATION')
-                && defined('DB_PREFIX'))
+            if (config('database.default') !== null
+                && isset(config('database.connections')[config('database.default')]['host'])
+                && isset(config('database.connections')[config('database.default')]['database'])
+                && isset(config('database.connections')[config('database.default')]['username'])
+                && isset(config('database.connections')[config('database.default')]['password'])
+                && isset(config('database.connections')[config('database.default')]['port'])
+                && isset(config('database.connections')[config('database.default')]['charset'])
+                && isset(config('database.connections')[config('database.default')]['collation'])
+                && isset(config('database.connections')[config('database.default')]['prefix']))
             {
 
                 $eloquent = new Eloquent;
                 $eloquent->addConnection([
-                    "driver" => DB_CONNECTION,
-                    "host" => DB_HOST,
-                    "database" => DB_DATABASE,
-                    "username" => DB_USERNAME,
-                    "password" => DB_PASSWORD,
-                    "port" => DB_PORT,
-                    'charset'   => DB_CHARSET,
-                    'collation' => DB_COLLATION,
-                    'prefix'    => DB_PREFIX
+                    "driver" => config('database.default'),
+                    "host" => config('database.connections')[config('database.default')]['host'],
+                    "database" => config('database.connections')[config('database.default')]['database'],
+                    "username" => config('database.connections')[config('database.default')]['username'],
+                    "password" => config('database.connections')[config('database.default')]['password'],
+                    "port" => config('database.connections')[config('database.default')]['port'],
+                    'charset'   => config('database.connections')[config('database.default')]['charset'],
+                    'collation' => config('database.connections')[config('database.default')]['collation'],
+                    'prefix'    => config('database.connections')[config('database.default')]['prefix']
                 ]);
                 $eloquent->setEventDispatcher(new Dispatcher(new Container));
                 $eloquent->setAsGlobal();
@@ -47,7 +47,7 @@ class Expander
 
             } else {
 
-                throw new \Exception('Some constants aren\'t defined in the .env file... Please fill them to connect BDD.');
+                throw new \Exception('Some variables aren\'t defined in the .env file... Please fill them to connect BDD.');
             }
 
         } catch (\Exception $e) {

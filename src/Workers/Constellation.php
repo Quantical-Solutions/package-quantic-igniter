@@ -6,124 +6,136 @@ use Quantic\Igniter\Workers\Request;
 
 class Constellation
 {
-    public static function group($array, $callback)
+    protected array $page;
+
+    public function __construct($nav)
     {
-        $domain = self::checkDomain();
-
-        if (!empty($array)) {
-
-            if (isset($array['domain']) && $array['domain'] == $domain) {
-
-                $callback();
-            }
-        }
+        $this->parseNavigation($nav);
     }
 
-    public static function get($uri, $array)
+    private function parseNavigation($pages)
     {
-        if (!defined('VIEWINIT')) {
+        foreach ($pages as $page) {
 
-            $url = self::analyseUri($uri);
-
-            if ($url != false) {
-
-                $segments = $url[0];
-                $options = $url[1];
-
-                $type = Request::all();
-
-                if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-
-                    $_ENV['constellation'] = [
-                        'request_string' => '/' . $segments,
-                        'request_type' => $_SERVER['REQUEST_METHOD'],
-                        'request_url' => $_SERVER['REQUEST_URI']
-                    ];
-
-                    self::splitString($array, $options);
+            if ($this->group($page)) {
+                $requestType = strtoupper($page['request']);
+                $response = $this->requestType($page, $requestType);
+                if (is_string($response)) {
+                    echo $response;
                 }
             }
         }
     }
 
-    public static function post($uri, $array)
+    private function requestType($page, $requestType)
     {
+        $response = false;
         if (!defined('VIEWINIT')) {
 
-            $url = self::analyseUri($uri);
+            $url = $this->analyseUri($page['uri']);
 
             if ($url != false) {
 
                 $segments = $url[0];
                 $options = $url[1];
+                $controls = $url[2];
+                $check = $this->where($controls, $page);
 
-                $type = Request::all();
+                if (!is_string($check)) {
 
-                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    $type = Request::all();
 
-                    $_ENV['constellation'] = [
+                    $this->page = [
                         'request_string' => '/' . $segments,
-                        'request_type' => $_SERVER['REQUEST_METHOD'],
+                        'request_type' => ($_SERVER['REQUEST_METHOD'] == $requestType) ? $requestType : $_SERVER['REQUEST_METHOD'],
                         'request_url' => $_SERVER['REQUEST_URI']
                     ];
 
-                    self::splitString($array, $options);
+                    $this->splitString($page, $options);
+                    $response = true;
+
+                } else {
+
+                    $response = $check;
                 }
             }
         }
+
+        return $response;
     }
 
-    public static function put($uri, $array)
+    private function group($page)
     {
-        if (!defined('VIEWINIT')) {
+        $response = true;
+        $protocol = ($_SERVER['HTTPS']) ? 'https://' : 'http://';
+        $actualDomain = $protocol . $_SERVER['SERVER_NAME'];
 
-            $url = self::analyseUri($uri);
+        if (isset($page['group'])) {
 
-            if ($url != false) {
-
-                $segments = $url[0];
-                $options = $url[1];
-
-                if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
-
-                    $_ENV['constellation'] = [
-                        'request_string' => '/' . $segments,
-                        'request_type' => $_SERVER['REQUEST_METHOD'],
-                        'request_url' => $_SERVER['REQUEST_URI']
-                    ];
-
-                    self::splitString($array, $options);
-                }
+            if ($page['group'] == $actualDomain) {
+                $response = true;
+            } else {
+                $response = false;
             }
         }
+
+        return $response;
     }
 
-    public static function delete($uri, $array)
+    private function analyseUri($uri)
     {
-        if (!defined('VIEWINIT')) {
+        $response = false;
+        $cnt = 0;
 
-            $url = self::analyseUri($uri);
+        $controls = [];
+        $options = [];
+        $originalSegmentsArray = $this->cleanRequest_uri();
+        $originalSegmentsNumber = count($originalSegmentsArray);
 
-            if ($url != false) {
+        $url = (substr($uri, 0, 1) != '/') ? $uri : substr($uri, 1);
+        $url = (substr($url, -1) != '/') ? $url : substr($url, 0, strlen($url)-1);
+        $explode = explode('/', $url);
+        $segmentCounter = $this->segmentCounter($explode);
+        $urlCount = count($explode);
 
-                $segments = $url[0];
-                $options = $url[1];
+        if ($segmentCounter) {
 
-                if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+            if ($originalSegmentsArray[0] != '' && $originalSegmentsNumber == $urlCount) {
 
-                    $_ENV['constellation'] = [
-                        'request_string' => '/' . $segments,
-                        'request_type' => $_SERVER['REQUEST_METHOD'],
-                        'request_url' => $_SERVER['REQUEST_URI']
-                    ];
+                $open = '{';
+                $close = '}';
 
-                    self::splitString($array, $options);
+                foreach ($explode as $segment) {
+
+                    $lastIndex = strlen($segment) - 1;
+                    $firstChar = ($lastIndex >= 0) ? $segment[0] : '';
+                    $lastChar = ($lastIndex >= 0) ? $segment[$lastIndex] : '';
+
+                    if ($firstChar == $open && $lastChar == $close) {
+
+                        $control = substr($segment, 1, $lastIndex - 1);
+                        $var = $originalSegmentsArray[$cnt];
+                        array_push($options, $var);
+                        $controls[$control] = $var;
+                        $cnt++;
+
+                    } else if ($originalSegmentsArray[$cnt] == $explode[$cnt]) {
+
+                        $cnt++;
+                    }
                 }
             }
+
+            if ($cnt == $originalSegmentsNumber || $originalSegmentsArray[0] == '') {
+
+                $response = array($url, $options, $controls);
+            }
         }
+
+        return $response;
     }
 
-    private static function cleanRequest_uri()
+    private function cleanRequest_uri()
     {
         $clean = substr($_SERVER['REQUEST_URI'], 1);
         $clean = (substr($clean, -1) != '/') ? $clean : substr($clean, 0, strlen($clean)-1);
@@ -131,109 +143,103 @@ class Constellation
         return $explode;
     }
 
-    private static function execute($class, $method, $options)
-    {
-        define('VIEWINIT', true);
-        $controller = 'App\\Http\\Controllers\\' . $class;
-
-        if (class_exists($controller) && method_exists($controller, $method)) {
-
-            $exec = new $controller;
-
-            if (empty($options)) {
-
-                $exec->$method();
-
-            } else {
-
-                call_user_func_array(array($exec, $method), $options);
-            }
-        }
-    }
-
-    private static function analyseUri($uri)
+    private function segmentCounter($segments)
     {
         $response = false;
-        $cnt = 0;
+        $explode = explode('/', substr($_SERVER['REQUEST_URI'], 1));
 
-        $options = [];
-        $originalSegmentsArray = self::cleanRequest_uri();
-        $originalSegmentsNumber = count($originalSegmentsArray);
-
-        $url = (substr($uri, 0, 1) != '/') ? $uri : substr($uri, 1);
-        $url = (substr($url, -1) != '/') ? $url : substr($url, 0, strlen($url)-1);
-        $explode = explode('/', $url);
-        $urlCount = count($explode);
-
-        if ($originalSegmentsArray[0] != '' && $originalSegmentsNumber == $urlCount) {
-
-            $open = '{';
-            $close = '}';
-
-            foreach ($explode as $segment) {
-
-                $lastIndex = strlen($segment) - 1;
-                $firstChar = ($lastIndex >= 0) ? $segment[0] : '';
-                $lastChar = ($lastIndex >= 0) ? $segment[$lastIndex] : '';
-
-                if ($firstChar == $open && $lastChar == $close) {
-
-                    $control = substr($segment, 1, $lastIndex - 1);
-                    $var = $originalSegmentsArray[$cnt];
-                    array_push($options, $var);
-                    $cnt++;
-
-                } else if ($originalSegmentsArray[$cnt] == $explode[$cnt]) {
-
-                    $cnt++;
+        if (count($segments) == count($explode)) {
+            foreach ($segments as $key => $segment) {
+                if (strpos($segment, '{') === false && strpos($segment, '}') === false) {
+                    if ($segment == $explode[$key]) {
+                        $response = true;
+                    }
                 }
             }
-        }
-
-        if ($cnt == $originalSegmentsNumber || $originalSegmentsArray[0] == '') {
-
-            $response = array($url, $options);
         }
 
         return $response;
     }
 
-    private static function splitString($array, $options)
+    private function splitString($page, $options)
     {
         $class= false;
         $method = false;
 
-        if (!empty($array)) {
+        if (!empty($page)) {
 
-            if (isset($array['uses'])) {
-
-                $uses = $array['uses'];
-                $explode = explode('@', $uses);
-                $class = (isset($explode[0])) ? $explode[0] : false;
-                $method = (isset($explode[1])) ? $explode[1] : false;
-            }
-
-            if (isset($array['as']) && $array['as'] != '') {
-
-                $as = $array['as'];
-            }
+            $class = (isset($page['controller'])) ? $page['controller'] : false;
+            $method = (isset($page['method'])) ? $page['method'] : false;
+            $as = (isset($page['as'])) ? $page['as'] : false;;
+            $this->page['as'] = $as;
         }
 
         if ($class != false && $method != false) {
 
-            self::execute($class, $method, $options);
+            $this->execute($class, $method, $options);
         }
     }
 
-    private static function checkDomain()
+    private function checkDomain()
     {
         $protocol = ($_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://';
         $domain = $protocol . $_SERVER['SERVER_NAME'];
+
+        $this->page['protocol'] = $protocol;
+        $this->page['domain'] = $domain;
+
         return $domain;
     }
 
-    public function where($var)
+    public function where($controls, $page)
     {
-        var_dump($var);
+        $response = true;
+        if (isset($page['where']) && is_array($page['where']) && !empty($page['where'])) {
+
+            $where = $page['where'];
+            foreach ($where as $key => $item) {
+                $rule = $item;
+                $value = (isset($controls[$key])) ? $controls[$key] : false;
+                $confirm = '';
+                if ($value != false) {
+
+                    switch ($rule) {
+
+                        case 'alpha':
+                            $verif = ctype_alpha($value);
+                            $confirm = ($verif) ? $verif : 'Variable {' . $key . '} must only contains letters.';
+                            break;
+
+                        case 'numeric':
+                            $verif = ctype_digit($value);
+                            $confirm = ($verif) ? $verif : 'Variable {' . $key . '} must only contains numbers.';
+                            break;
+                    }
+                }
+                if (is_string($confirm) && $confirm != '') {
+
+                    $response = $confirm;
+                    break;
+                }
+            }
+        }
+        return $response;
+    }
+
+    private function execute($class, $method, $options)
+    {
+        define('VIEWINIT', true);
+        $controller = 'App\\Http\\Controllers\\' . $class;
+        $new = new $controller;
+
+        if (class_exists($controller) && method_exists($controller, $method)) {
+
+            $this->page['controller'] = $controller;
+            $this->page['method'] = $method;
+            $this->page['options'] = $options;
+
+            $_ENV['constellation'] = $this->page;
+            $new->$method(implode(',', $options));
+        }
     }
 }

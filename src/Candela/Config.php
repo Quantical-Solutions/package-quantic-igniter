@@ -8,10 +8,11 @@ class Config
      * ConvertEnvConstants method
      * Convert all .env parameters in constants
      *
-     * @return void
+     * @return array
      */
     public static function ConvertEnvConstants()
     {
+        $response = [];
         if (file_exists(ROOTDIR . '/.init')
             && strpos(file_get_contents(ROOTDIR . '/.init'), '=') !== false) {
 
@@ -30,16 +31,16 @@ class Config
 
                         $length = strlen($value) - 5;
                         $slice = substr($value, 3, $length);
-                        $variable = constant($slice);
-                        define($constant, $variable);
+                        $response[$constant] = $slice;
 
                     } else {
 
-                        define($constant, $value);
+                        $response[$constant] = $value;
                     }
                 }
             }
         }
+        return $response;
     }
 
     /**

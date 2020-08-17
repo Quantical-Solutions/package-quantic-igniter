@@ -23,8 +23,13 @@ class Wormhole
 
             $viewCollector = new ViewsCollector;
             $activeView = $viewCollector->viewParser($array);
+
+            //dump($activeView);
+
             $constellationCollector =  new ConstellationCollector;
-            $activeConstellation = $viewCollector->constellationParser();
+            $activeConstellation = $constellationCollector->constellationParser();
+
+            //dump($activeConstellation);
 
             $instant = [
                 'id' => 4,
@@ -60,11 +65,15 @@ class Wormhole
                 ]
             ];
 
-            $instant = $data[0];
             $instant['time'] = Carbon::parse($instant['date'], 'UTC')->isoFormat("HH:mm:ss");
 
             $blade = new Blade(__DIR__ . '/views', __DIR__ . '/cache');
-            $render = $blade->render('debugBar', ['data' => $data, 'instant' => $instant, 'ux' => $ux]);
+            $render = $blade->render('debugBar', [
+                'data' => $data,
+                'instant' => $instant,
+                'ux' => $ux,
+                'constellation' => $activeConstellation
+            ]);
         }
 
         return $render;
