@@ -15,6 +15,8 @@ class Constellation
 
     private function parseNavigation($pages)
     {
+        $cnt = 0;
+        $response = false;
         foreach ($pages as $page) {
 
             if ($this->group($page)) {

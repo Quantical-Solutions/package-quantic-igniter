@@ -19,7 +19,10 @@
     </div>
 @endif
 <div id="wormholeBottomBar">
-    <style>{!! file_get_contents(dirname(__DIR__) . '/assets/style.css') !!}</style>
+    <style>
+        {!! file_get_contents(dirname(__DIR__) . '/assets/debugFonts.css') !!}
+        {!! file_get_contents(dirname(__DIR__) . '/assets/style.css') !!}
+    </style>
     <div id="resize-wormholeBottomBar">
         <span>___</span>
         <span>___</span>

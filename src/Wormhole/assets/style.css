@@ -80,7 +80,7 @@
     flex-direction: column;
     overflow: hidden;
     background-color: #FFF;
-    font-family: Tahoma, Geneva, sans-serif;
+    font-family: 'robotoregular', Tahoma, Geneva, sans-serif;
     cursor: ns-resize;
     position: absolute;
     bottom: 100%;
@@ -91,7 +91,7 @@
 #resize-wormholeBottomBar span {
     line-height: 3px;
     font-size: 10px;
-    font-family: Tahoma, Geneva, sans-serif;
+    font-family: 'robotoregular', Tahoma, Geneva, sans-serif;
     color: #FFF;
     position: relative;
     top: -5px;
@@ -146,7 +146,7 @@
     color: #191919;
     width: max-content;
     border-radius: 3px;
-    font-family: Tahoma, Geneva, sans-serif;
+    font-family: 'robotoregular', Tahoma, Geneva, sans-serif;
     font-weight: bold;
     font-size: 12px;
     cursor: default;
@@ -186,7 +186,7 @@
 
 .wormholeBottomBarHeaderRightParts:not(.noBordersRightParts), #wormholeBottomBarHeaderLeft p {
     border-left: 1px solid rgba(255, 255, 255, 0.1);
-    font-family: Tahoma, Geneva, sans-serif;
+    font-family: 'robotoregular', Tahoma, Geneva, sans-serif;
     font-size: 12px;
 }
 
@@ -221,7 +221,7 @@
     color: #191919;
     width: max-content;
     border-radius: 3px;
-    font-family: Tahoma, Geneva, sans-serif;
+    font-family: 'robotoregular', Tahoma, Geneva, sans-serif;
     font-weight: bold;
     font-size: 12px;
     cursor: default;
@@ -290,7 +290,7 @@
     align-items: center;
     border-radius: 13px;
     margin-left: 5px;
-    font-family: Tahoma, Geneva, sans-serif;
+    font-family: 'robotoregular', Tahoma, Geneva, sans-serif;
     font-size: 10px;
     font-weight: bold;
     transition: all linear 0.15s;
@@ -401,7 +401,7 @@
     align-items: stretch;
     padding: 10px;
     width: calc(100% - 20px);
-    font-family: Tahoma, Geneva, sans-serif;
+    font-family: 'robotoregular', Tahoma, Geneva, sans-serif;
     font-size: 14px;
     background-color: #191919;
 }
@@ -450,7 +450,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    font-family: Tahoma, Geneva, sans-serif;
+    font-family: 'robotoregular', Tahoma, Geneva, sans-serif;
     font-size: 12px;
     min-height: 200px;
     max-height: 60vh;
@@ -505,7 +505,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    font-family: Tahoma, Geneva, sans-serif;
+    font-family: 'robotoregular', Tahoma, Geneva, sans-serif;
     font-size: 12px;
 }
 
