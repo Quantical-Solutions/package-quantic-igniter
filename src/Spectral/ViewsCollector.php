@@ -9,31 +9,38 @@ class ViewsCollector
 
     public function viewParser($data)
     {
-        $view = $data['view'];
-        $paths = $data['paths'] . '/' . $view . '.blade.php';
-        $realPaths = ROOTDIR . $paths;
-        $params = $data['params'];
-        $file = file($realPaths);
-        $views = [];
+        if (!empty($data)) {
 
-        $subber = $this->subViewsParser($file, $params, ROOTDIR . $data['paths'], $data['paths']);
-        foreach ($subber as $sub) {
-            if (isset($sub['name'])) {
-                array_push($views, $sub);
+            $view = $data['view'];
+            $paths = $data['paths'] . '/' . $view . '.blade.php';
+            $realPaths = ROOTDIR . $paths;
+            $params = $data['params'];
+            $file = file($realPaths);
+            $views = [];
+
+            $subber = $this->subViewsParser($file, $params, ROOTDIR . $data['paths'], $data['paths']);
+            foreach ($subber as $sub) {
+                if (isset($sub['name'])) {
+                    array_push($views, $sub);
+                }
             }
+
+            $origin = [
+                'name' => str_replace('/', '.', $view),
+                'view' => $view,
+                'paths' => $paths,
+                'params' => $this->getUsedParams($file),
+                'allParams' => $params
+            ];
+
+            array_push($views, $origin);
+
+            return array_reverse($views);
+
+        } else {
+
+            return [];
         }
-
-        $origin = [
-            'name' => str_replace('/', '.', $view),
-            'view' => $view,
-            'paths' => $paths,
-            'params' => $this->getUsedParams($file),
-            'allParams' => $params
-        ];
-
-        array_push($views, $origin);
-
-        return array_reverse($views);
     }
 
     protected function getUsedParams($file)

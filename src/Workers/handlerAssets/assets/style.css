@@ -1,0 +1,725 @@
+/*
+* ============================================================================
+* ========================== HandlerErrors Stylesheet ========================
+* ============================================================================
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote,
+a, abbr, acronym, address, big, cite,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li, textarea,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    vertical-align: baseline;
+    outline: none;
+    text-decoration: none;
+    resize: none;
+    list-style: none;
+    color: inherit;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+
+* {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.content::-webkit-scrollbar,
+#stackTrace #aside::-webkit-scrollbar,
+.stackRail::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    border-radius: 20px;
+}
+
+.content::-webkit-scrollbar-track,
+#stackTrace #aside::-webkit-scrollbar-track,
+.stackRail::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.stackRail::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    border-right: unset;
+    border-left: unset;
+}
+
+.content::-webkit-scrollbar-thumb,
+#stackTrace #aside::-webkit-scrollbar-thumb,
+.stackRail::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+}
+
+.content::-webkit-scrollbar-thumb:hover,
+#stackTrace #aside::-webkit-scrollbar-thumb:hover,
+.stackRail::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    background-color: #282828;
+    color: #FFF;
+    font-family: 'robotoregular', Tahoma, Geneva, sans-serif;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 8.33%;
+    width: 83.33%;
+    min-height: 100vh;
+}
+
+.mainSection {
+    margin-top: 50px;
+    box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+#bottom {
+    height: 100vh;
+}
+
+#top section:first-of-type .container {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#top section:last-of-type .container {
+    padding: 40px;
+    width: calc(100% - 80px);
+}
+
+#top section:first-of-type .container div p {
+    font-family: 'robotothin', Tahoma, Geneva, sans-serif;
+    opacity: 0.7;
+    font-size: 16px;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: stretch;
+    background-color: #191919;
+    color: #F7F7F7;
+}
+
+#titleLeft, #titleRight {
+    width: calc(50% - 20px);
+    display: flex;
+    padding: 10px;
+    align-items: center;
+}
+
+#titleLeft {
+    justify-content: flex-start;
+}
+
+#titleLeft svg {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+#titleRight {
+    justify-content: flex-end;
+}
+
+#titleRight p {
+    margin-right: 10px;
+}
+
+#middle .container {
+    padding: 8.33%;
+    width: calc(83.33%);
+    background-color: #7094db;
+    color: #3C3C3C;
+    font-family: 'robotobold', Tahoma, Geneva, sans-serif;
+    font-weight: bold;
+    font-size: 28px;
+    max-height: calc(200px - 16.66%);
+    min-height: calc(200px - 16.66%);
+}
+
+#header h1 {
+    font-size: 28px;
+    font-family: 'robotobold', Tahoma, Geneva, sans-serif;
+    font-weight: bold;
+    margin: 15px 0 30px 0;
+}
+
+#header p {
+    font-size: 22px;
+    font-family: 'robotothin', Tahoma, Geneva, sans-serif;
+}
+
+#header a {
+    font-size: 14px;
+    font-family: 'robotolight', Tahoma, Geneva, sans-serif;
+    text-decoration: underline;
+    opacity: 0.5;
+    transition: all linear 0.15s;
+}
+
+#header a:hover {
+    opacity: 1;
+}
+
+#onglets {
+    display: flex;
+    padding: 0 10px;
+    width: calc(100% - 20px);
+    justify-content: center;
+    align-items: center;
+}
+
+#onglets ul {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+}
+
+#onglets ul li {
+    font-family: 'robotolight', Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    transition: all linear 0.15s;
+}
+
+#onglets ul li:hover, .selectedLi {
+    background-color: #3C3C3C!important;
+}
+
+#onglets ul li:last-of-type {
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#onglets ul li:last-of-type svg {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+}
+
+#onglets ul li:last-of-type svg path {
+    fill: #FFF;
+}
+
+.dropDown {
+    position: relative;
+}
+
+.dropDown:hover #issuesBox {
+    opacity: 1;
+    visibility: visible;
+}
+
+#issuesBox {
+    width: max-content;
+    min-width: 100%;
+    position: absolute;
+    z-index: 2;
+    top: 100%;
+    left: 0;
+    background-color: transparent;
+    opacity: 0;
+    visibility: hidden;
+    transition: all linear 0.15s;
+}
+
+.square {
+    position: absolute;
+    width: 16px;
+    height: 15px;
+    transform-origin: 50% 50%;
+    transform: rotate(45deg);
+    top: 4px;
+    left: 26px;
+    z-index: 1;
+    background-color: #191919;
+}
+
+#issuesBoxContainer {
+    width: calc(100% - 40px);
+    padding: 10px 20px;
+    background-color: #191919;
+    margin-top: 10px;
+    border-radius: 3px;
+    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+#issuesBoxContainer p {
+    text-transform: uppercase;
+    font-family: 'robotobold', Tahoma, Geneva, sans-serif;
+    font-weight: bold;
+    margin: 10px 0;
+    color: #A1A1A1;
+}
+
+#issuesBoxContainer a {
+    padding: 8px 20px;
+    background-image: linear-gradient(to right, #cc3300, #e05c14, #f58529, #e05c14, #cc3300);
+    border-radius: 3px;
+    font-family: 'robotobold', Tahoma, Geneva, sans-serif;
+    color: #F7F7F7;
+    border: 1px solid #191919;
+    margin-bottom: 10px;
+    transform-origin: 0 50%;
+    transition: all linear 0.15s;
+}
+
+#issuesBoxContainer a:hover {
+    border: 1px solid #F7F7F7;
+}
+
+.hideSection {
+    display: none!important;
+}
+
+.sections {
+    background-color: #3C3C3C;
+    height: 100%;
+}
+
+#stackTrace {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+#stackTrace section,
+#stackTrace section .container {
+    height: 100%;
+}
+
+#stackTrace section:last-of-type .container {
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    width: calc(100% - 1px);
+}
+
+#stackTrace #aside {
+    height: 100%;
+    background-color: #E1E1E1;
+    width: 100%;
+    overflow-y: scroll;
+}
+
+#stackTrace .content {
+    background-color: #191919;
+    width: 100%;
+    overflow-y: scroll;
+}
+
+#supAside, .supContent {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 10px;
+    width: calc(100% - 20px);
+    background-color: #2D2D2D;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#supAside {
+    justify-content: space-between;
+}
+
+.supContent {
+    justify-content: flex-start;
+}
+
+#asideNav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#asideNav svg {
+    width: 12px;
+    margin-right: 5px;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: all linear 0.15s;
+}
+
+#asideNav svg path {
+    fill: #FFF;
+}
+
+#asideNav svg:hover {
+    opacity: 1;
+}
+
+#supAside p {
+    font-size: 12px;
+    text-decoration: underline;
+    font-family: 'robotolight', Tahoma, Geneva, sans-serif;
+    cursor: pointer;
+    opacity: 0.5;
+    padding: 10px 0;
+    transition: all linear 0.15s;
+}
+
+#supAside p:hover {
+    opacity: 1;
+}
+
+.supContent p {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: calc(100% - 20px);
+    padding: 5px 10px;
+    font-family: 'robotolight', Tahoma, Geneva, sans-serif;
+}
+
+.supContent p:first-of-type {
+    opacity: 0.5;
+}
+
+.pencil {
+    width: 16px;
+    height: 16px;
+    margin-left: 8px;
+    opacity: 0.5;
+    cursor: pointer;
+    transform-origin: 50% 50%;
+    transform: scale(1);
+    transition: all linear 0.15s;
+}
+
+.pencil path {
+    fill: #FFF;
+}
+
+.pencil:hover {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+#stackTrace #aside {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.traceList {
+    background-color: #F7F7F7;
+    color: #3C3C3C;
+    justify-content: flex-start;
+    align-items: flex-end;
+    width: 100%;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.traceList:not(.vendorFile) {
+    display: flex;
+}
+
+.traceList:last-of-type {
+    border-bottom: unset;
+}
+
+.traceList div {
+    border-left: 2px solid rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    width: calc(100% - 102px);
+    display: flex;
+    flex-direction: column;
+    word-break: break-all;
+}
+
+.selectedStack {
+    background-color: #E1E1E1;
+}
+
+.selectedStack div {
+    border-left: 2px solid #e05c14!important;
+}
+
+.traceList>p:first-of-type {
+    padding: 10px 0;
+    font-family: 'robotolight', Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    width: 40px;
+    text-align: center;
+}
+
+.selectedStack>p:first-of-type,
+.selectedStack>p:last-of-type {
+    color: #e05c14!important;
+}
+
+.traceList>p:last-of-type {
+    padding: 10px 0;
+    font-family: 'robotolight', Tahoma, Geneva, sans-serif;
+    font-size: 12px;
+    width: 40px;
+    text-align: center;
+}
+
+.selectedStack div>p:first-of-type {
+    color: #e05c14;
+    font-family: 'robotobold', Tahoma, Geneva, sans-serif;
+}
+
+.traceList div p:first-of-type {
+    opacity: 0.7;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.traceList div p:last-of-type {
+    font-size: 12px;
+}
+
+.vendorsContainer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #F7F7F7;
+    width: 100%;
+    color: #3C3C3C;
+    font-family: 'robotoregular', Tahom, Geneva, sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.vendorsContainer div {
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stackVendorsPlus, .stackVendorsMoins {
+    width: 20px;
+    height: 20px;
+    display: flex;
+}
+
+.deployVendors .stackVendorsMoins {
+    display: flex!important;
+}
+
+.deployVendors .stackVendorsPlus {
+    display: none!important;
+}
+
+.stackVendorsMoins {
+    display: none;
+}
+
+.stackVendorsPlus path, .stackVendorsMoins path {
+    fill: #3C3C3C;
+    opacity: 0.5;
+}
+
+.vendorsContainer p {
+    padding: 20px 10px;
+    border-left: 2px solid rgba(0, 0, 0, 0.15);
+    width: calc(100% - 62px);
+}
+
+.vendorFile {
+    display: none;
+}
+
+.vendorFileDisplay {
+    display: flex!important;
+}
+
+#stackTrace .content {
+
+}
+
+.hideStackFile {
+    display: none!important;
+}
+
+table pre {
+    margin: 0;
+}
+
+.hljs {
+    padding: 0 .5em!important;
+    background-color: transparent!important;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.stackRail {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.lines {
+    background-color: #222222;
+    text-align: center;
+    border-bottom: 1px solid #191919;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.stackRail tr:hover, .errorLine {
+    background-color: #2D2D2D;
+    cursor: pointer;
+}
+
+.stackRail tr:hover .lines, .errorLine .lines {
+    background-color: #F7F7F7;
+    color: #3C3C3C;
+}
+
+#request, #app, #context, #user, #debug {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: calc(100% - 10px);
+    padding: 0 5px;
+    background-color: #E1E1E1;
+}
+
+.stdContent {
+    background-color: #F7F7F7;
+    color: #3C3C3C;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 5px 0 0 0;
+    width: 100%;
+    padding: 0 0 10px 0;
+}
+
+.stdContent:last-of-type {
+    margin-bottom: 5px;
+}
+
+.stdContent h3 {
+    font-family: 'robotothin', Tahome, Geneva, sans-serif;
+    font-size: 22px;
+    width: calc(100% - 20px);
+    padding: 8px 10px;
+    background-image: linear-gradient(to right, #191919, transparent, transparent);
+    margin-bottom: 15px;
+    color: #C1C1C1;
+}
+
+.stdContent dl {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.stdContent dt, .stdContent dd {
+    display: flex;
+    align-items: stretch;
+    word-break: break-all;
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+.stdContent dt {
+    width: calc(30% - 20px);
+    justify-content: flex-end;
+    color: rgba(0, 0, 0, 0.5);
+    font-family: 'robotobold', Tahoma, Geneva, sans-serif;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.stdContent dd {
+    width: calc(70% - 20px);
+    justify-content: flex-start;
+    font-family: 'robotolight', Tahoma, Geneva, sans-serif;
+    color: #7094db;
+}
+
+.stdContent dl:nth-child(odd){
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+.stdContent p {
+    font-family: 'robotoitalic', Tahoma, Geneva, sans-serif;
+    font-style: italic;
+    opacity: 0.5;
+}
+
+.greenCode, .redCode {
+    width: 13px;
+    height: 13px;
+    border-radius: 100px;
+    margin-left: 5px;
+}
+
+.greenCode {
+    background-color: #66cc66;
+}
+
+.redCode {
+    background-color: #ff531a;
+}
