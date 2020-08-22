@@ -332,33 +332,89 @@
         <!-- App -->
         <section class="xLarge-12 large-12 medium-12 small-12 xSmall-12 hideSection sections" id="app">
             <div class="stdContent">
-                <h3>Routing</h3>
-                <dl>
-                    <dt>Controller :</dt>
-                    <dd></dd>
-                </dl>
+                <h3>Mapper</h3>
                 <dl>
                     <dt>Constellation Name :</dt>
-                    <dd></dd>
+                    <dd>
+                        <?php if (isset($_ENV['constellation']['main']['as'])) {
+                            echo $_ENV['constellation']['main']['as'];
+                        } else {
+                            echo '--';
+                        } ?>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>Constellation Controller :</dt>
+                    <dd>
+                        <?php if (isset($_ENV['constellation']['main']['controller'])) {
+                            echo $_ENV['constellation']['main']['controller'];
+                        } else {
+                            echo '--';
+                        } ?>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>Constellation Method :</dt>
+                    <dd>
+                        <?php if (isset($_ENV['constellation']['main']['method'])) {
+                            echo $_ENV['constellation']['main']['method'];
+                        } else {
+                            echo '--';
+                        } ?>
+                    </dd>
                 </dl>
                 <dl>
                     <dt>Constellation Parameters :</dt>
-                    <dd></dd>
+                    <dd>
+                        <?php if (isset($_ENV['constellation']['main']['options'])
+                            && !empty($_ENV['constellation']['main']['options'])) {
+                            $options = $_ENV['constellation']['main']['options'];
+                            foreach ($options as $index => $option) { ?>
+                                <span><?= $index ?> => <b><?= $option ?></b></span>
+                            <?php }
+                        } else {
+                            echo '--';
+                        } ?>
+                    </dd>
                 </dl>
                 <dl>
                     <dt>Vortex :</dt>
-                    <dd></dd>
+                    <dd>
+                        <?php if (isset($_ENV['constellation']['main']['vortex'])
+                            && !empty($_ENV['constellation']['main']['vortex'])) {
+                            $vortex = $_ENV['constellation']['main']['vortex'];
+                            foreach ($vortex as $index => $vor) { ?>
+                                <span><?= $index ?> => <b><?= $vor ?></b></span>
+                            <?php }
+                        } else {
+                            echo '--';
+                        } ?>
+                    </dd>
                 </dl>
             </div>
             <div class="stdContent">
                 <h3>View</h3>
                 <dl>
                     <dt>View Name :</dt>
-                    <dd></dd>
+                    <dd>
+                        <?php if (isset($_ENV['constellation']['main']['view'])) {
+                            echo $_ENV['constellation']['main']['view'];
+                        } else {
+                            echo '--';
+                        } ?>
+                    </dd>
                 </dl>
                 <dl>
                     <dt>View Data :</dt>
-                    <dd></dd>
+                    <dd>
+                        <?php if (isset($_ENV['constellation']['main']['data'])) {
+                            foreach ($_ENV['constellation']['main']['data'] as $index => $data) { ?>
+                                <span><?= $index ?> => <b><?= $data ?></b></span>
+                            <?php }
+                        } else {
+                            echo '--';
+                        } ?>
+                    </dd>
                 </dl>
             </div>
         </section>

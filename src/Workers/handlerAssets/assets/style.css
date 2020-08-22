@@ -107,12 +107,19 @@ main {
     padding: 0 8.33%;
     width: 83.33%;
     min-height: 100vh;
+    background-color: #282828;
+    background-image: url("logo-white-simple-RVB.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-blend-mode: color-burn;
+    background-attachment: fixed;
 }
 
 .mainSection {
     margin-top: 50px;
     box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid #2D2D2D;
     overflow: hidden;
 }
 
@@ -581,10 +588,6 @@ main {
     display: flex!important;
 }
 
-#stackTrace .content {
-
-}
-
 .hideStackFile {
     display: none!important;
 }
@@ -699,6 +702,11 @@ table {
     color: #7094db;
 }
 
+.stdContent dd b {
+    font-family: 'robotobold', Tahoma, Geneva, sans-serif;
+    font-weight: bold;
+}
+
 .stdContent dl:nth-child(odd){
     background-color: rgba(0, 0, 0, 0.03);
 }
@@ -722,4 +730,23 @@ table {
 
 .redCode {
     background-color: #ff531a;
+}
+
+.stdContent pre {
+    margin: 0;
+    padding: 10px;
+    width: calc(100% - 20px);
+    background-color: rgba(230, 230, 255, 0.7);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    min-height: 40px;
+}
+
+.sections {
+    background-image: url("logo-white-simple-RVB.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-blend-mode: multiply;
+    background-attachment: fixed;
 }

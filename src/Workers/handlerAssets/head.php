@@ -7,7 +7,7 @@
     <meta name="referrer" content="origin-when-cross-origin">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="msapplication-tap-highlight" content="no" />
-    <title>🚧 <?= $data['message'] ?></title>
+    <title>🚧 <?= $data['message'] ?> 🚧</title>
     <link rel="icon" href="/vendor/quantic/igniter/src/Workers/handlerAssets/assets/favicon.png">
     <link rel="stylesheet" href="/vendor/quantic/igniter/src/Wormhole/assets/reset.css" type="text/css">
     <link rel="stylesheet" href="/vendor/quantic/igniter/src/Wormhole/assets/responsive.css" type="text/css">

@@ -46,3 +46,26 @@ q:before, q:after {
 * {
     -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #191919;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #3c3c3c;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #0099cc;
+}
+
+::selection {
+    background-color: #f1f1f1;
+    color: #1c3859;
+    font-weight: bold;
+}

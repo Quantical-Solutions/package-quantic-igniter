@@ -240,7 +240,7 @@ class Constellation
             $this->page['method'] = $method;
             $this->page['options'] = $options;
 
-            $_ENV['constellation'] = $this->page;
+            $_ENV['constellation']['main'] = $this->page;
             $new->$method(implode(',', $options));
         }
     }

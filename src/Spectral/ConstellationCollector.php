@@ -9,5 +9,7 @@ class ConstellationCollector
     public function constellationParser()
     {
         $nav = require_once(ROOTDIR . '/constellations/links.php');
+        $_ENV['constellation']['list'] = $nav;
+        return $nav;
     }
 }
