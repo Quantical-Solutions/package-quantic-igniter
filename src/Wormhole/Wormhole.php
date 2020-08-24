@@ -72,7 +72,8 @@ class Wormhole
                 'data' => $data,
                 'instant' => $instant,
                 'ux' => $ux,
-                'constellation' => $activeConstellation
+                'constellation' => $activeConstellation,
+                'env' => $_ENV
             ]);
         }
 

@@ -135,7 +135,7 @@
                 <svg class="wormholeBottomBarHeaderRightSvg" viewBox="0 0 32 32">
                     <path d="M17.987 3h-5v3h5v-3zM17.987 15v-2h-5v2h5zM12.987 30h5v-8h-5v8zM24.987 12l-2.187-2.5 2.187-2.5h-16l-2.6 2.5 2.6 2.5h16zM22.987 16h-16l2.188 2.5-2.188 2.5h16l2.625-2.5-2.625-2.5z"></path>
                 </svg>
-                <p>{{ $_ENV['constellation']['request_type'] }} <span id="debugRoute">{{ $_ENV['constellation']['request_string'] }}</span></p>
+                <p>{{ $env['constellation']['main']['request_type'] }} <span id="debugRoute">{{ $env['constellation']['main']['request_string'] }}</span></p>
                 <title>Constellation</title>
             </div>
             <div class="wormholeBottomBarHeaderRightParts">

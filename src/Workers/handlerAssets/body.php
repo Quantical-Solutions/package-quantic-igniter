@@ -24,7 +24,7 @@
         <section class="xLarge-12 large-12 medium-12 small-12 xSmall-12">
             <div class="container">
                 <div id="header">
-                    <p>ErrorException</p>
+                    <p><?= $data['severity'] ?></p>
                     <h1><?= $data['message'] ?></h1>
                     <a href="<?= (($_SERVER['HTTPS']) ? 'https://' : 'http://') . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'] ?>">
                         <?= (($_SERVER['HTTPS']) ? 'https://' : 'http://') . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'] ?>
@@ -294,7 +294,7 @@
                     <?php foreach ($_FILES as $key => $value) { ?>
                         <dl>
                             <dt><?= $key ?> :</dt>
-                            <dd><?= (is_string($value)) ? $value : '<code>' . json_encode($value, true) . '</code>' ?></dd>
+                            <dd><?= (is_string($value)) ? $value : '<pre>' . json_encode($value, true) . '</pre>' ?></dd>
                         </dl>
                     <?php } ?>
                 <?php } else { ?>
@@ -303,14 +303,21 @@
             </div>
             <div class="stdContent">
                 <h3>Session</h3>
+                <?php $emptySession = 0; ?>
                 <?php if (!empty($_SESSION)) { ?>
-                    <?php foreach ($_SESSION as $key => $value) { ?>
-                        <dl>
-                            <dt><?= $key ?> :</dt>
-                            <dd><?= (is_string($value)) ? $value : '<code>' . json_encode($value, true) . '</code>' ?></dd>
-                        </dl>
+                    <?php foreach ($_SESSION as $key => $value) {
+                        if ($key != "exceptions" && $key != "last_exception") { ?>
+                            <dl>
+                                <dt><?= $key ?> :</dt>
+                                <dd><?= (is_string($value)) ? $value : '<pre>' . json_encode($value, true) . '</pre>' ?></dd>
+                            </dl>
+                            <?php $emptySession = 1; ?>
+                        <?php } else {
+                            $emptySession = 0;
+                        } ?>
                     <?php } ?>
-                <?php } else { ?>
+                <?php }
+                if ($emptySession == 0) { ?>
                     <p>Session global variable is empty</p>
                 <?php } ?>
             </div>
@@ -320,7 +327,7 @@
                     <?php foreach ($_COOKIE as $key => $value) { ?>
                         <dl>
                             <dt><?= $key ?> :</dt>
-                            <dd><?= (is_string($value)) ? $value : '<code>' . json_encode($value, true) . '</code>' ?></dd>
+                            <dd><?= (is_string($value)) ? $value : '<pre>' . json_encode($value, true) . '</pre>' ?></dd>
                         </dl>
                     <?php } ?>
                 <?php } else { ?>
@@ -499,9 +506,56 @@
         <!-- Debug -->
         <section class="xLarge-12 large-12 medium-12 small-12 xSmall-12 hideSection sections" id="debug">
             <div class="stdContent">
-                <h3>Query</h3>
-                <?php if (isset($queries) && !empty($queries)) {
-                    foreach ($queries as $index => $query) { ?>
+                <div class="xLarge-12 large-12 medium-12 small-12 xSmall-12">
+                    <div id="queryFilter">
+                        <div class="filters">
+                            <label class="filterContainer">Dumps
+                                <input type="checkbox" checked="checked">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="filters">
+                            <label class="filterContainer">Glows
+                                <input type="checkbox" checked="checked">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="filters">
+                            <label class="filterContainer">Logs
+                                <input type="checkbox" checked="checked">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="filters">
+                            <label class="filterContainer">Queries
+                                <input type="checkbox" checked="checked">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div id="filter">
+                            <span>Reset Filters</span>
+                        </div>
+                    </div>
+                </div>
+                <?php $noData = 0; ?>
+                <?php if (isset($dumps) && !empty($dumps)) { $noData = 1; ?>
+
+                <?php } else {
+                    $noData = 0;
+                } ?>
+                <?php if (isset($glows) && !empty($glows)) { $noData = 1; ?>
+
+                <?php } else {
+                    $noData = 0;
+                } ?>
+                <?php if (isset($logs) && !empty($logs)) { $noData = 1; ?>
+
+                <?php } else {
+                    $noData = 0;
+                } ?>
+                <?php if (isset($queries) && !empty($queries)) { $noData = 1; ?>
+                    <h3>Database Queries</h3>
+                    <?php foreach ($queries as $index => $query) { ?>
                         <dl>
                             <dt>Query :</dt>
                             <dd></dd>
@@ -527,10 +581,15 @@
                             </dl>
                         <?php }
                     }
-                } else { ?>
-                    <p>No query has been sent</p>
-                <?php } ?>
+                } else {
+                    $noData = 0;
+                } ?>
             </div>
+            <?php if ( $noData == 0) { ?>
+                <div class="xLarge-12 large-12 medium-12 small-12 xSmall-12 noData">
+                    <p>No data available</p>
+                </div>
+            <?php } ?>
         </section>
     </section>
 </main>
