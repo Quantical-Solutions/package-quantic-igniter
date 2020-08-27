@@ -10,33 +10,71 @@ class ErrorsHandler
 {
     public static function HTMLBuilder($exception)
     {
-        $log_dir = ROOTDIR . '/vendor/quantic/igniter/src/Workers/logs/error_logs.php';
+        // Prepare Solution's options
+        $solutions = self::solutions();
+        // Define errors params
+        self::ini();
+        // ignite BottomBarDebugger
+        $debug = self::debugger();
+        // Translate Severity Error
+        $sev = self::severity($exception);
+        // Compile error's data
+        $data = self::compileData($exception, $sev);
+        // Build ErrorsHandler template in buffer
+        $log_message = self::prepareMessage($exception, $sev);
+        // Prevent logs from XHR requests
+        self::appendSession($log_message);
+        // Display Error View
+        ob_start();
+        require_once(ROOTDIR . '/vendor/quantic/igniter/src/Workers/handlerAssets/head.php');
+        require_once(ROOTDIR . '/vendor/quantic/igniter/src/Workers/handlerAssets/body.php');
+        echo $debug;
+        require_once(ROOTDIR . '/vendor/quantic/igniter/src/Workers/handlerAssets/footer.php');
+        $content = ob_get_clean();
+        echo $content;
+    }
+
+    private static function ini()
+    {
         ini_set('error_reporting', E_ALL);
         ini_set("log_errors", TRUE);
+        $timeZone = date_default_timezone_get();
+        date_default_timezone_set($timeZone);
+    }
 
+    private static function debugger()
+    {
         $uxDebugger = (class_exists('Quantic\Uxdebugger\Debugger')) ? Uxdebug::ignite() : false;
-        $debug = Wormhole::BottomBar(config('wormhole.bottombar'), $uxDebugger, []);
+        return Wormhole::BottomBar(config('wormhole.bottombar'), $uxDebugger, []);
+    }
 
-        $exceptionsAssets = ROOTDIR . '/vendor/quantic/igniter/src/Workers';
+    private static function solutions()
+    {
+        $solutions = [];
+        $allClasses = get_declared_classes();
+        return $solutions;
+    }
 
+    private static function severity($exception)
+    {
         $sev = 'ERROR';
-
         if ($exception instanceof ErrorException) {
             $names = [];
-
             $consts = array_flip(
                 array_slice(
                     get_defined_constants(true)['Core'], 0, 15, true));
-
             foreach ($consts as $code => $name) {
                 if ($exception->getSeverity() & $code) $names [] = $name;
             }
-
             $sev = join(' | ', $names);
         }
+        return $sev;
+    }
 
-        $data = [
-            'custom' => 'My custom message',
+    private static function compileData($exception, $sev)
+    {
+        return [
+            'solution' => 'My custom message',
             'severity' => $sev,
             'message' => $exception->getMessage(),
             'previous' => $exception->getPrevious(),
@@ -48,24 +86,14 @@ class ErrorsHandler
             'type' => '::',
             'trace' => $exception->getTrace()
         ];
+    }
 
+    private static function prepareMessage($exception, $sev)
+    {
         ob_start();
-        require_once($exceptionsAssets . '/handlerAssets/head.php');
-        require_once($exceptionsAssets . '/handlerAssets/body.php');
-        echo $debug;
-        require_once($exceptionsAssets . '/handlerAssets/footer.php');
-        $content = ob_get_clean();
-
-        $timeZone = date_default_timezone_get();
-        date_default_timezone_set($timeZone);
-        $title = date("Y-m-d H:i:s") . ' ' . $timeZone;
-        $message = $exception->getMessage() . ' in ' . $exception->getFile() . ' at line ' . $exception->getLine();
-
-        ob_start();
-        echo '[' . $title . ']' . ' ' . $sev . ': ';
-        echo $message . "\n";
-        echo 'Stack Trace :' . "\n";
-
+        echo '[' . date("Y-m-d H:i:s") . ' ' . date_default_timezone_get() . ']' . ' ' . $sev . ': ';
+        echo $exception->getMessage() . "\n\n" . 'In file ' . $exception->getFile() . ' at line ' . $exception->getLine() . "\n\n";
+        echo 'Stack Trace :' . "\n\n";
         $traces = $exception->getTrace();
         for ($i = 0; $i < count($traces); $i++) {
             $args = [];
@@ -79,18 +107,13 @@ class ErrorsHandler
             echo "\t" . '#' . $i . ' ' . $traces[$i]['file'] . '(' . $traces[$i]['line'] . '): ' . @$traces[$i]['class'] .
                 @$traces[$i]['type'] . (($traces[$i]['function']) ? $traces[$i]['function'] . '(' . implode(', ', $args) . ')' : '') . "\n";
         }
+        return ob_get_clean();
+    }
 
-        $log_message = ob_get_clean();
-
-        $encode = urlencode(strtolower($exception->getMessage()));
-        if (!isset($_SESSION['last_exception'][$encode])
-            || (isset($_SESSION['last_exception'][$encode])
-                && intval(date("is")) - intval($_SESSION['last_exception'][$encode]) > 10)
-        ) {
-            //error_log($log_message, 3, $log_dir);
+    private static function appendSession($log_message)
+    {
+        if(!isset($_SERVER['HTTP_X_REQUESTED_WITH'])) {
             $_SESSION['exceptions'][date("YmsHis")] = $log_message;
-            $_SESSION['last_exception'][$encode] = date("is");
         }
-        echo $content;
     }
 }

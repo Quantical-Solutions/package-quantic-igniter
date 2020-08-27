@@ -11,7 +11,7 @@ class Config
 {
     /**
      * ConvertEnvConstants method
-     * Convert all .env parameters in constants
+     * Get all .init file constants
      *
      * @return array
      */

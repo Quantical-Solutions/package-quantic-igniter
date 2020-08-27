@@ -18,9 +18,111 @@ document.addEventListener('DOMContentLoaded', (event) => {
     seekErrorLineOnLoad();
 });
 
+var hideSolution = document.querySelector('#hideSolution');
+hideSolution.addEventListener('click', function(){
+    document.querySelector('#middle').classList.add('hideSolutionSection');
+});
+
+var displaySolution = document.querySelector('#displaySolution');
+displaySolution.addEventListener('click', function(){
+    document.querySelector('#middle').classList.remove('hideSolutionSection');
+});
+
+var developPlus = document.querySelectorAll('.developPlus');
+for (var i = 0; i < developPlus.length; i++) {
+    developPlus[i].addEventListener('click', function(ev){
+        var target = ev.currentTarget,
+            parent = target.parentElement,
+            div = parent.nextElementSibling;
+
+        parent.classList.add('displayReportContainer');
+        div.classList.add('displayReportContainer');
+    })
+}
+
+var developMinus = document.querySelectorAll('.developMinus');
+for (var i = 0; i < developMinus.length; i++) {
+    developMinus[i].addEventListener('click', function(ev){
+        var target = ev.currentTarget,
+            parent = target.parentElement,
+            div = parent.nextElementSibling;
+
+        parent.classList.remove('displayReportContainer');
+        div.classList.remove('displayReportContainer');
+    })
+}
+
 var onglets = document.querySelectorAll('.liToDrop');
 for (var i = 0; i < onglets.length; i++) {
     onglets[i].addEventListener('click', selectLi);
+}
+
+var filterContainer = document.querySelectorAll('.filterContainer');
+for (var i = 0; i < filterContainer.length; i++) {
+    filterContainer[i].addEventListener('click', function(ev){
+        var target = ev.currentTarget,
+            check = 0,
+            input = target.querySelector('input[type="checkbox"]'),
+            block = document.querySelector('#' + target.dataset.id);
+
+        if (input.checked == false) {
+            if (block) {
+                block.style.display = 'none';
+            }
+            document.querySelector('#filter span').style.visibility = 'visible';
+        } else {
+            if (block) {
+                block.style.display = 'flex';
+            }
+            var allInputs = document.querySelectorAll('.filterContainer input[type="checkbox"]');
+            for (var j = 0; j < allInputs.length; j++) {
+                if (allInputs[j].checked == false) {
+                    check = 1;
+                }
+            }
+            if (check == 1) {
+                document.querySelector('#filter span').style.visibility = 'visible';
+            } else {
+                document.querySelector('#filter span').style.visibility = 'hidden';
+            }
+        }
+    });
+}
+
+var filterSpan = document.querySelector('#filter span');
+filterSpan.addEventListener('click', function(ev){
+    var target = ev.currentTarget,
+        inputs = document.querySelectorAll('.filterContainer input[type="checkbox"]');
+    for (var i = 0; i < inputs.length; i++) {
+        if (inputs[i].checked == false) {
+            inputs[i].parentElement.click();
+        }
+    }
+    target.style.visibility = 'hidden';
+});
+
+var deleters = document.querySelectorAll('.deleters');
+for (var i = 0; i < deleters.length; i++) {
+    deleters[i].addEventListener('click', function(ev){
+        var target = ev.currentTarget,
+            type = target.dataset.del,
+            bloc = target.closest('.stdContent'),
+            parent = bloc.parentElement,
+            json = {
+                'mode' : 'xhr',
+                'job' : 'deleter',
+                'type' : type
+            },
+            url = '/xmlhttprequests';
+
+        $.post(url, json, function(data, status){
+            if (status == 'success') {
+                parent.removeChild(bloc);
+            } else {
+                console.log(data.error);
+            }
+        });
+    });
 }
 
 function selectLi(ev) {
@@ -185,66 +287,62 @@ function expanderFrames(elmt) {
 
 var listers = document.querySelectorAll('.traceList');
 for (var i = 0; i < listers.length; i++) {
-    listers[i].addEventListener('click', getFileEditor);
-}
+    listers[i].addEventListener('click', function(ev) {
 
-function getFileEditor(ev) {
+        var onglet = ev.currentTarget,
+            id = onglet.dataset.id,
+            listers = document.querySelectorAll('.traceList'),
+            editors = document.querySelectorAll('#stackTrace section:nth-child(2) .container'),
+            line = parseInt(onglet.children[2].innerHTML.replace(':', ''));
 
-    var onglet = ev.currentTarget,
-        id = onglet.dataset.id,
-        listers = document.querySelectorAll('.traceList'),
-        editors = document.querySelectorAll('#stackTrace section:nth-child(2) .container'),
-        line = parseInt(onglet.children[2].innerHTML.replace(':', ''));
-
-    for (var i = 0; i < editors.length; i++) {
-        var editor = editors[i],
-            editorID = editor.dataset.id;
-        if (editorID == id) {
-            editor.classList.remove('hideStackFile');
-            var tr = editor.querySelector('tr[data-line="' + line + '"]');
-            tr.scrollIntoView();
-        } else {
-            editor.classList.add('hideStackFile');
+        for (var i = 0; i < editors.length; i++) {
+            var editor = editors[i],
+                editorID = editor.dataset.id;
+            if (editorID == id) {
+                editor.classList.remove('hideStackFile');
+                var tr = editor.querySelector('tr[data-line="' + line + '"]');
+                tr.scrollIntoView();
+            } else {
+                editor.classList.add('hideStackFile');
+            }
         }
-    }
 
-    for (var i = 0; i < listers.length; i++) {
-        listers[i].classList.remove('selectedStack');
-    }
+        for (var i = 0; i < listers.length; i++) {
+            listers[i].classList.remove('selectedStack');
+        }
 
-    onglet.classList.add('selectedStack');
-    resizeSections();
+        onglet.classList.add('selectedStack');
+        resizeSections();
+    });
 }
 
 var vendorsContainer = document.querySelectorAll('.vendorsContainer');
 for (var i = 0; i < vendorsContainer.length; i++) {
-    vendorsContainer[i].addEventListener('click', expandVendorSections);
-}
+    vendorsContainer[i].addEventListener('click', function(ev) {
 
-function expandVendorSections(ev) {
+        var target = ev.currentTarget,
+            data = target.dataset.vendor,
+            vendors = document.querySelectorAll('.vendorFile');
 
-    var target = ev.currentTarget,
-        data = target.dataset.vendor,
-        vendors = document.querySelectorAll('.vendorFile');
+        if (target.classList.contains('deployVendors')) {
+            target.classList.remove('deployVendors');
+        } else {
+            target.classList.add('deployVendors');
+        }
 
-    if (target.classList.contains('deployVendors')) {
-        target.classList.remove('deployVendors');
-    } else {
-        target.classList.add('deployVendors');
-    }
+        for (var i = 0; i < vendors.length; i++) {
+            var vendor = vendors[i],
+                dataVendor = vendor.dataset.vendor;
 
-    for (var i = 0; i < vendors.length; i++) {
-        var vendor = vendors[i],
-            dataVendor = vendor.dataset.vendor;
-
-        if (dataVendor == data) {
-            if (vendor.classList.contains('vendorFileDisplay')) {
-                vendor.classList.remove('vendorFileDisplay');
-            } else {
-                vendor.classList.add('vendorFileDisplay');
+            if (dataVendor == data) {
+                if (vendor.classList.contains('vendorFileDisplay')) {
+                    vendor.classList.remove('vendorFileDisplay');
+                } else {
+                    vendor.classList.add('vendorFileDisplay');
+                }
             }
         }
-    }
+    });
 }
 
 function orderVendorFiles() {
@@ -297,6 +395,7 @@ function fetchSimilarHeaders (callback) {
     // Since we are only after the headers, a HEAD request may be sufficient.
     //
     request.open('HEAD', document.location, true);
+    request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     request.send(null);
 }
 

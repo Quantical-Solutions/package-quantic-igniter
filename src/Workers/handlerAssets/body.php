@@ -33,11 +33,23 @@
             </div>
         </section>
     </section>
-    <?php if ($data['custom'] != '') { ?>
+    <?php if ($data['solution'] != '') { ?>
         <section class="xLarge-12 large-12 medium-12 small-12 xSmall-12 mainSection" id="middle">
+            <p id="displaySolution">
+                Display solution
+                <svg class="solutionBG" viewBox="0 0 250 500">
+                    <polygon class="cls-1" points="250 250 0 250 125 125 250 0 250 250"/>
+                    <polygon class="cls-2" points="250 250 250 500 125 375 0 250 250 250"/>
+                </svg>
+            </p>
             <div class="container">
+                <svg class="solutionBG" viewBox="0 0 250 500">
+                    <polygon class="cls-1" points="250 250 0 250 125 125 250 0 250 250"/>
+                    <polygon class="cls-2" points="250 250 250 500 125 375 0 250 250 250"/>
+                </svg>
+                <p id="hideSolution">Hide solution</p>
                 <div id="message">
-                    <p><?= $data['custom'] ?></p>
+                    <p><?= $data['solution'] ?></p>
                 </div>
             </div>
         </section>
@@ -509,25 +521,25 @@
                 <div class="xLarge-12 large-12 medium-12 small-12 xSmall-12">
                     <div id="queryFilter">
                         <div class="filters">
-                            <label class="filterContainer">Dumps
+                            <label class="filterContainer" data-id="stdContentDumps">Dumps
                                 <input type="checkbox" checked="checked">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         <div class="filters">
-                            <label class="filterContainer">Glows
+                            <label class="filterContainer" data-id="stdContentGlows">Glows
                                 <input type="checkbox" checked="checked">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         <div class="filters">
-                            <label class="filterContainer">Logs
+                            <label class="filterContainer" data-id="stdContentLogs">Logs
                                 <input type="checkbox" checked="checked">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         <div class="filters">
-                            <label class="filterContainer">Queries
+                            <label class="filterContainer" data-id="stdContentQueries">Queries
                                 <input type="checkbox" checked="checked">
                                 <span class="checkmark"></span>
                             </label>
@@ -537,53 +549,113 @@
                         </div>
                     </div>
                 </div>
-                <?php $noData = 0; ?>
-                <?php if (isset($dumps) && !empty($dumps)) { $noData = 1; ?>
+            </div>
+            <?php $noData = 0; ?>
+            <?php if (isset($dumps) && !empty($dumps)) { $noData = 1; ?>
+                <div class="stdContent" id="stdContentDumps">
+                    <div class="xLarge-12 large-12 medium-12 small-12 xSmall-12">
+                        <h3>
+                            Dumps<span class="titleCounter"><?= count($dumps) ?></span>
+                            <svg class="developPlus" viewBox="0 0 32 32">
+                                <path d="M15.5 29.5c-7.18 0-13-5.82-13-13s5.82-13 13-13 13 5.82 13 13-5.82 13-13 13zM21.938 15.938c0-0.552-0.448-1-1-1h-4v-4c0-0.552-0.447-1-1-1h-1c-0.553 0-1 0.448-1 1v4h-4c-0.553 0-1 0.448-1 1v1c0 0.553 0.447 1 1 1h4v4c0 0.553 0.447 1 1 1h1c0.553 0 1-0.447 1-1v-4h4c0.552 0 1-0.447 1-1v-1z"></path>
+                            </svg>
+                            <svg class="developMinus" viewBox="0 0 32 32">
+                                <path d="M15.5 3.5c-7.18 0-13 5.82-13 13s5.82 13 13 13c7.18 0 13-5.82 13-13s-5.82-13-13-13zM22 16.875c0 0.553-0.448 1-1 1h-11c-0.553 0-1-0.447-1-1v-1c0-0.552 0.447-1 1-1h11c0.552 0 1 0.448 1 1v1z"></path>
+                            </svg>
+                            <p class="deleters" data-del="dumps">Delete Dumps</p>
+                        </h3>
+                        <div id="dumpsContainer" class="reportContainers">
 
-                <?php } else {
-                    $noData = 0;
-                } ?>
-                <?php if (isset($glows) && !empty($glows)) { $noData = 1; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
+            <?php if (isset($glows) && !empty($glows)) { $noData = 1; ?>
+                <div class="stdContent" id="stdContentGlows">
+                    <div class="xLarge-12 large-12 medium-12 small-12 xSmall-12">
+                        <h3>
+                            Glows<span class="titleCounter"><?= count($glows) ?></span>
+                            <svg class="developPlus" viewBox="0 0 32 32">
+                                <path d="M15.5 29.5c-7.18 0-13-5.82-13-13s5.82-13 13-13 13 5.82 13 13-5.82 13-13 13zM21.938 15.938c0-0.552-0.448-1-1-1h-4v-4c0-0.552-0.447-1-1-1h-1c-0.553 0-1 0.448-1 1v4h-4c-0.553 0-1 0.448-1 1v1c0 0.553 0.447 1 1 1h4v4c0 0.553 0.447 1 1 1h1c0.553 0 1-0.447 1-1v-4h4c0.552 0 1-0.447 1-1v-1z"></path>
+                            </svg>
+                            <svg class="developMinus" viewBox="0 0 32 32">
+                                <path d="M15.5 3.5c-7.18 0-13 5.82-13 13s5.82 13 13 13c7.18 0 13-5.82 13-13s-5.82-13-13-13zM22 16.875c0 0.553-0.448 1-1 1h-11c-0.553 0-1-0.447-1-1v-1c0-0.552 0.447-1 1-1h11c0.552 0 1 0.448 1 1v1z"></path>
+                            </svg>
+                        </h3>
+                        <div id="glowsContainer" class="reportContainers">
 
-                <?php } else {
-                    $noData = 0;
-                } ?>
-                <?php if (isset($logs) && !empty($logs)) { $noData = 1; ?>
-
-                <?php } else {
-                    $noData = 0;
-                } ?>
-                <?php if (isset($queries) && !empty($queries)) { $noData = 1; ?>
-                    <h3>Database Queries</h3>
-                    <?php foreach ($queries as $index => $query) { ?>
-                        <dl>
-                            <dt>Query :</dt>
-                            <dd></dd>
-                        </dl>
-                        <dl>
-                            <dt>Time :</dt>
-                            <dd></dd>
-                        </dl>
-                        <dl>
-                            <dt>Connexion driver :</dt>
-                            <dd></dd>
-                        </dl>
-                        <?php if (isset($params) && !empty($params)) { ?>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
+            <?php if (isset($_SESSION['exceptions']) && !empty($_SESSION['exceptions'])) { $noData = 1; ?>
+                <div class="stdContent" id="stdContentLogs">
+                    <div class="xLarge-12 large-12 medium-12 small-12 xSmall-12">
+                        <h3>
+                            Logs<span class="titleCounter"><?= count($_SESSION['exceptions']) ?></span>
+                            <svg class="developPlus" viewBox="0 0 32 32">
+                                <path d="M15.5 29.5c-7.18 0-13-5.82-13-13s5.82-13 13-13 13 5.82 13 13-5.82 13-13 13zM21.938 15.938c0-0.552-0.448-1-1-1h-4v-4c0-0.552-0.447-1-1-1h-1c-0.553 0-1 0.448-1 1v4h-4c-0.553 0-1 0.448-1 1v1c0 0.553 0.447 1 1 1h4v4c0 0.553 0.447 1 1 1h1c0.553 0 1-0.447 1-1v-4h4c0.552 0 1-0.447 1-1v-1z"></path>
+                            </svg>
+                            <svg class="developMinus" viewBox="0 0 32 32">
+                                <path d="M15.5 3.5c-7.18 0-13 5.82-13 13s5.82 13 13 13c7.18 0 13-5.82 13-13s-5.82-13-13-13zM22 16.875c0 0.553-0.448 1-1 1h-11c-0.553 0-1-0.447-1-1v-1c0-0.552 0.447-1 1-1h11c0.552 0 1 0.448 1 1v1z"></path>
+                            </svg>
+                            <p class="deleters" data-del="logs">Delete Logs</p>
+                        </h3>
+                        <div id="logsContainer" class="reportContainers">
+                            <?php foreach (array_reverse($_SESSION['exceptions']) as $index => $excep) { ?>
+                                <dl>
+                                    <dt>Message :</dt>
+                                    <dd>
+                                        <pre><?= $excep ?></pre>
+                                    </dd>
+                                </dl>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
+            <?php if (isset($queries) && !empty($queries)) { $noData = 1; ?>
+            <div class="stdContent" id="stdContentQueries">
+                <div class="xLarge-12 large-12 medium-12 small-12 xSmall-12">
+                    <h3>
+                        Queries<span class="titleCounter"><?= count($queries) ?></span>
+                        <svg class="developPlus" viewBox="0 0 32 32">
+                            <path d="M15.5 29.5c-7.18 0-13-5.82-13-13s5.82-13 13-13 13 5.82 13 13-5.82 13-13 13zM21.938 15.938c0-0.552-0.448-1-1-1h-4v-4c0-0.552-0.447-1-1-1h-1c-0.553 0-1 0.448-1 1v4h-4c-0.553 0-1 0.448-1 1v1c0 0.553 0.447 1 1 1h4v4c0 0.553 0.447 1 1 1h1c0.553 0 1-0.447 1-1v-4h4c0.552 0 1-0.447 1-1v-1z"></path>
+                        </svg>
+                        <svg class="developMinus" viewBox="0 0 32 32">
+                            <path d="M15.5 3.5c-7.18 0-13 5.82-13 13s5.82 13 13 13c7.18 0 13-5.82 13-13s-5.82-13-13-13zM22 16.875c0 0.553-0.448 1-1 1h-11c-0.553 0-1-0.447-1-1v-1c0-0.552 0.447-1 1-1h11c0.552 0 1 0.448 1 1v1z"></path>
+                        </svg>
+                    </h3>
+                    <div id="queriesContainer" class="reportContainers">
+                        <?php foreach ($queries as $index => $query) { ?>
                             <dl>
-                                <dt>Variables :</dt>
-                                <dd>
-                                    <ul>
-                                        <?php foreach ($params as $param) { ?>
-                                            <li><?= $param ?></li>
-                                        <?php } ?>
-                                    </ul>
-                                </dd>
+                                <dt>Query :</dt>
+                                <dd></dd>
                             </dl>
-                        <?php }
-                    }
-                } else {
-                    $noData = 0;
-                } ?>
+                            <dl>
+                                <dt>Time :</dt>
+                                <dd></dd>
+                            </dl>
+                            <dl>
+                                <dt>Connexion driver :</dt>
+                                <dd></dd>
+                            </dl>
+                            <?php if (isset($params) && !empty($params)) { ?>
+                                <dl>
+                                    <dt>Variables :</dt>
+                                    <dd>
+                                        <ul>
+                                            <?php foreach ($params as $param) { ?>
+                                                <li><?= $param ?></li>
+                                            <?php } ?>
+                                        </ul>
+                                    </dd>
+                                </dl>
+                            <?php }
+                        } ?>
+                    </div>
+                    <?php } ?>
+                </div>
             </div>
             <?php if ( $noData == 0) { ?>
                 <div class="xLarge-12 large-12 medium-12 small-12 xSmall-12 noData">

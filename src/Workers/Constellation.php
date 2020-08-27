@@ -10,6 +10,25 @@ class Constellation
 
     public function __construct($nav)
     {
+        $extra = [
+            'xhr_post' => [
+                'uri' => '/xmlhttprequests',
+                'controller' => 'XhrController',
+                'method' => 'index',
+                'request' => 'post',
+                'as' => 'XHR'
+            ],
+            'xhr_get' => [
+                'uri' => '/xmlhttprequests',
+                'controller' => 'XhrController',
+                'method' => 'index',
+                'request' => 'get',
+                'as' => 'XHR'
+            ]
+        ];
+        foreach ($extra as $key => $ex) {
+            $nav[$key] = $ex;
+        }
         $this->parseNavigation($nav);
     }
 
@@ -231,7 +250,8 @@ class Constellation
     private function execute($class, $method, $options)
     {
         define('VIEWINIT', true);
-        $controller = 'App\\Http\\Controllers\\' . $class;
+        $controller = ($class != 'XhrController') ? 'App\\Http\\Controllers\\' . $class : 'Quantic\\Igniter\\Workers\\' .
+            $class;
         $new = new $controller;
 
         if (class_exists($controller) && method_exists($controller, $method)) {
