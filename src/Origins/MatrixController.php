@@ -4,5 +4,5 @@ namespace Quantic\Igniter\Origins;
 
 class MatrixController
 {
-    use \Quantic\Igniter\Covalent\Traits\MatrixControllerTraits;
+    use \Quantic\Igniter\Covalent\Traits\MatrixTraits;
 }

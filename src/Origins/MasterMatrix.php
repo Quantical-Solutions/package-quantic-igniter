@@ -2,7 +2,7 @@
 
 namespace Quantic\Igniter\Origins;
 
-class MatrixVortex
+class MasterMatrix
 {
     use \Quantic\Igniter\Covalent\Traits\MatrixTraits;
 }

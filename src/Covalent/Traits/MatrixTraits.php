@@ -5,7 +5,7 @@ namespace Quantic\Igniter\Covalent\Traits;
 use Quantic\Igniter\Spectral\Glows;
 use Quantic\Igniter\Spectral\Context;
 
-trait MatrixControllerTraits
+trait MatrixTraits
 {
 
     public function Context($name, $string)
