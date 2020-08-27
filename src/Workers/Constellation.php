@@ -201,17 +201,6 @@ class Constellation
         }
     }
 
-    private function checkDomain()
-    {
-        $protocol = ($_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://';
-        $domain = $protocol . $_SERVER['SERVER_NAME'];
-
-        $this->page['protocol'] = $protocol;
-        $this->page['domain'] = $domain;
-
-        return $domain;
-    }
-
     public function where($controls, $page)
     {
         $response = true;
