@@ -5,13 +5,14 @@ namespace Quantic\Igniter\Workers;
 use ErrorException;
 use Quantic\Igniter\Wormhole\Wormhole;
 use Quantic\Uxdebugger\Debugger as Uxdebug;
+use Quantic\Igniter\Solutions\Solutions;
 
 class ExceptionsHandler
 {
     public static function HTMLBuilder($exception)
     {
         // Prepare Solution's options
-        $solutions = self::solutions();
+        $solutions = Solutions::analyse();
         // Define errors params
         self::ini();
         // ignite BottomBarDebugger
