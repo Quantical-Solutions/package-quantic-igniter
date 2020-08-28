@@ -5,11 +5,10 @@ namespace Quantic\Igniter\Workers;
 use ErrorException;
 use Quantic\Igniter\Wormhole\Wormhole;
 use Quantic\Uxdebugger\Debugger as Uxdebug;
-use Error;
 
-class ErrorsHandler
+class ExceptionsHandler
 {
-    public static function HTMLBuilder($severity, $message, $file, $line)
+    public static function HTMLBuilder($exception)
     {
         // Prepare Solution's options
         $solutions = self::solutions();
@@ -18,11 +17,11 @@ class ErrorsHandler
         // ignite BottomBarDebugger
         $debug = self::debugger();
         // Translate Severity Error
-        $sev = self::severity($severity);
+        $sev = self::severity($exception);
         // Compile error's data
-        $data = self::compileData($message, $file, $line, $sev);
+        $data = self::compileData($exception, $sev);
         // Build ErrorsHandler template in buffer
-        $log_message = self::prepareMessage($message, $file, $line, $sev);
+        $log_message = self::prepareMessage($exception, $sev);
         // Prevent logs from XHR requests
         self::appendSession($log_message);
         // Display Error View
@@ -56,14 +55,15 @@ class ErrorsHandler
         return $solutions;
     }
 
-    private static function severity($error)
+    private static function severity($exception)
     {
+        $error = new ErrorException;
         $names = [];
         $consts = array_flip(
             array_slice(
                 get_defined_constants(true)['Core'], 0, 15, true));
         foreach ($consts as $code => $name) {
-            if ($error & $code) $names [] = $name;
+            if ($error->getSeverity() & $code) $names [] = $name;
         }
         foreach ($names as $key => $name) {
             $names[$key] = (isset(explode('_', $name)[count(explode('_', $name))-1])) ? explode('_', $name)[count(explode('_', $name))-1] : $name;
@@ -72,44 +72,30 @@ class ErrorsHandler
         return $sev;
     }
 
-    private static function compileData($message, $file, $line, $sev)
+    private static function compileData($exception, $sev)
     {
-        $error = new Error;
-        $traces = [];
-        foreach ($error->getTrace() as $trace) {
-            if (isset($trace['file'])) {
-                array_push($traces, $trace);
-            }
-        }
         return [
             'solution' => 'My custom message',
             'severity' => $sev,
-            'message' => $message,
-            'previous' => $error->getPrevious(),
-            'code' => $error->getCode(),
-            'file' => $file,
-            'line' => $line,
-            'function' => 'error_handler',
-            'class' => 'Utils\ErrorsHandler',
+            'message' => $exception->getMessage(),
+            'previous' => $exception->getPrevious(),
+            'code' => $exception->getCode(),
+            'file' => $exception->getFile(),
+            'line' => $exception->getLine(),
+            'function' => 'exception_handler',
+            'class' => 'Utils\ExceptionHandler',
             'type' => '::',
-            'trace' => $traces
+            'trace' => $exception->getTrace()
         ];
     }
 
-    private static function prepareMessage($message, $file, $line, $sev)
+    private static function prepareMessage($exception, $sev)
     {
-        $error = new Error;
-        $traces = [];
-        foreach ($error->getTrace() as $trace) {
-            if (isset($trace['file'])) {
-                array_push($traces, $trace);
-            }
-        }
         ob_start();
         echo '[' . date("Y-m-d H:i:s") . ' ' . date_default_timezone_get() . ']' . ' ' . $sev . ': ';
-        echo $message . "\n\n" . 'In file ' . $file . ' at line ' . $line . "\n\n";
+        echo $exception->getMessage() . "\n\n" . 'In file ' . $exception->getFile() . ' at line ' . $exception->getLine() . "\n\n";
         echo 'Stack Trace :' . "\n\n";
-        $cnt = 0;
+        $traces = $exception->getTrace();
         for ($i = 0; $i < count($traces); $i++) {
             $args = [];
             foreach ($traces[$i]['args'] as $arg) {
@@ -119,9 +105,8 @@ class ErrorsHandler
                     array_push($args, 'Array');
                 }
             }
-            echo "\t" . '#' . $cnt . ' ' . $traces[$i]['file'] . '(' . $traces[$i]['line'] . '): ' . @$traces[$i]['class'] .
+            echo "\t" . '#' . $i . ' ' . $traces[$i]['file'] . '(' . $traces[$i]['line'] . '): ' . @$traces[$i]['class'] .
                 @$traces[$i]['type'] . (($traces[$i]['function']) ? $traces[$i]['function'] . '(' . implode(', ', $args) . ')' : '') . "\n";
-            $cnt++;
         }
         return ob_get_clean();
     }

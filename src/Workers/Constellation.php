@@ -217,19 +217,17 @@ class Constellation
 
                         case 'alpha':
                             $verif = ctype_alpha($value);
-                            $confirm = ($verif) ? $verif : 'Variable {' . $key . '} must only contains letters.';
+                            $confirm = ($verif) ? $verif : 'Variable {' . $key . '} must only contains letters';
                             break;
 
                         case 'numeric':
                             $verif = ctype_digit($value);
-                            $confirm = ($verif) ? $verif : 'Variable {' . $key . '} must only contains numbers.';
+                            $confirm = ($verif) ? $verif : 'Variable {' . $key . '} must only contains numbers';
                             break;
                     }
                 }
                 if (is_string($confirm) && $confirm != '') {
-
-                    $response = $confirm;
-                    break;
+                    trigger_error($confirm);
                 }
             }
         }

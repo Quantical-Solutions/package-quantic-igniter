@@ -87,7 +87,9 @@ class Config
 
     public static function createSVGForlder()
     {
-        @mkdir(ROOTDIR . '/resources/svg');
+        if (!file_exists(ROOTDIR . '/resources/svg')) {
+            mkdir(ROOTDIR . '/resources/svg');
+        }
     }
 
     public static function import_svg($file, $class, $array = false)

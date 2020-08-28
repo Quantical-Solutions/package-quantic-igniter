@@ -6,6 +6,8 @@ class Unlinker
 {
     public static function KillFiles()
     {
-        @unlink(ROOTDIR . '/public/dist/styles.js');
+        if (file_exists(ROOTDIR . '/public/dist/styles.js')) {
+            unlink(ROOTDIR . '/public/dist/styles.js');
+        }
     }
 }
