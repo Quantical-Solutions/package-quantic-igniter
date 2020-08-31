@@ -19,14 +19,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 
 var hideSolution = document.querySelector('#hideSolution');
-hideSolution.addEventListener('click', function(){
-    document.querySelector('#middle').classList.add('hideSolutionSection');
-});
+if (hideSolution) {
+    hideSolution.addEventListener('click', function () {
+        document.querySelector('#middle').classList.add('hideSolutionSection');
+    });
+}
 
 var displaySolution = document.querySelector('#displaySolution');
-displaySolution.addEventListener('click', function(){
-    document.querySelector('#middle').classList.remove('hideSolutionSection');
-});
+if (displaySolution) {
+    displaySolution.addEventListener('click', function () {
+        document.querySelector('#middle').classList.remove('hideSolutionSection');
+    });
+}
 
 var developPlus = document.querySelectorAll('.developPlus');
 for (var i = 0; i < developPlus.length; i++) {
@@ -90,16 +94,18 @@ for (var i = 0; i < filterContainer.length; i++) {
 }
 
 var filterSpan = document.querySelector('#filter span');
-filterSpan.addEventListener('click', function(ev){
-    var target = ev.currentTarget,
-        inputs = document.querySelectorAll('.filterContainer input[type="checkbox"]');
-    for (var i = 0; i < inputs.length; i++) {
-        if (inputs[i].checked == false) {
-            inputs[i].parentElement.click();
+if (filterSpan) {
+    filterSpan.addEventListener('click', function (ev) {
+        var target = ev.currentTarget,
+            inputs = document.querySelectorAll('.filterContainer input[type="checkbox"]');
+        for (var i = 0; i < inputs.length; i++) {
+            if (inputs[i].checked == false) {
+                inputs[i].parentElement.click();
+            }
         }
-    }
-    target.style.visibility = 'hidden';
-});
+        target.style.visibility = 'hidden';
+    });
+}
 
 var deleters = document.querySelectorAll('.deleters');
 for (var i = 0; i < deleters.length; i++) {

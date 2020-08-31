@@ -12,8 +12,6 @@ class ErrorsHandler
 {
     public static function HTMLBuilder($severity, $message, $file, $line)
     {
-        // Prepare Solution's options
-        $solutions = Solutions::analyse();
         // Define errors params
         self::ini();
         // ignite BottomBarDebugger
@@ -50,13 +48,6 @@ class ErrorsHandler
         return Wormhole::BottomBar(config('wormhole.bottombar'), $uxDebugger, []);
     }
 
-    private static function solutions()
-    {
-        $solutions = [];
-        $allClasses = get_declared_classes();
-        return $solutions;
-    }
-
     private static function severity($error)
     {
         $names = [];
@@ -83,7 +74,8 @@ class ErrorsHandler
             }
         }
         return [
-            'solution' => 'My custom message',
+            'error' => 'ErrorsHandler',
+            'solution' => Solutions::analyse($message),
             'severity' => $sev,
             'message' => $message,
             'previous' => $error->getPrevious(),
@@ -113,15 +105,20 @@ class ErrorsHandler
         $cnt = 0;
         for ($i = 0; $i < count($traces); $i++) {
             $args = [];
-            foreach ($traces[$i]['args'] as $arg) {
-                if (!is_array($arg) && !is_object($arg)) {
-                    array_push($args, $arg);
-                } else {
-                    array_push($args, 'Array');
+            if (isset($traces[$i]['args'])) {
+                foreach ($traces[$i]['args'] as $arg) {
+                    if (!is_array($arg) && !is_object($arg)) {
+                        array_push($args, $arg);
+                    } else {
+                        array_push($args, 'Array');
+                    }
                 }
             }
-            echo "\t" . '#' . $cnt . ' ' . $traces[$i]['file'] . '(' . $traces[$i]['line'] . '): ' . @$traces[$i]['class'] .
-                @$traces[$i]['type'] . (($traces[$i]['function']) ? $traces[$i]['function'] . '(' . implode(', ', $args) . ')' : '') . "\n";
+            $classe = (isset($traces[$i]['class'])) ? $traces[$i]['class'] : '';
+            $type = (isset($traces[$i]['type'])) ? $traces[$i]['type'] : '';
+            $fil = (isset($traces[$i]['file'])) ? $traces[$i]['file'] : '';
+            $lin = (isset($traces[$i]['line'])) ? $traces[$i]['line'] : '';
+            echo "\t" . '#' . $i . ' ' . $fil . '(' . $lin . '): ' . $classe . $type . (($traces[$i]['function']) ? $traces[$i]['function'] . '(' . implode(', ', $args) . ')' : '') . "\n";
             $cnt++;
         }
         return ob_get_clean();

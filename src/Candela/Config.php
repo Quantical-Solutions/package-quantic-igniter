@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Jenssegers\Blade\Blade;
 use Quantic\Igniter\Wormhole\Wormhole;
 use Quantic\Uxdebugger\Debugger as Uxdebug;
+use Quantic\Igniter\Solutions\Solutions;
 
 class Config
 {
@@ -61,6 +62,14 @@ class Config
         return $explode;
     }
 
+    /**
+     * views method
+     * Convert Select the blade view corresponding to the URL.
+     *
+     * @param $view
+     * @param mixed $data
+     * @return void
+     */
     public static function views($view, $data = false) {
 
         $resources = '/resources/views';
@@ -70,28 +79,131 @@ class Config
             define('CHECKRENDER', true);
         }
 
-        $blade = new Blade(ROOTDIR . $resources, ROOTDIR . $cache);
-        $original = $blade->render($view, $data);
+        $scan = scandir(ROOTDIR . $resources);
+        $allViews = [];
+        foreach ($scan as $file) {
+            if ($file != '.' && $file != '..') {
+                $newRoot = ROOTDIR . $resources . '/' . $file;
+                if (is_dir($newRoot)) {
+                    $newViews = self::listAllViews($newRoot, ROOTDIR . $resources);
+                    if (!empty($newViews)) {
+                        foreach ($newViews as $newView) {
+                            $new = str_replace(
+                                '.blade.php', '', str_replace(
+                                    ROOTDIR . $resources . '/', '', $newView
+                                )
+                            );
+                            array_push($allViews, $new);
+                        }
+                    }
+                } else {
+                    if (is_file($newRoot)) {
+                        $new = str_replace(
+                            '.blade.php', '', str_replace(
+                                ROOTDIR . $resources . '/', '', $newRoot
+                            )
+                        );
+                        array_push($allViews, $new);
+                    }
+                }
+            }
+        }
 
-        $uxDebugger = (class_exists('Quantic\Uxdebugger\Debugger')) ? Uxdebug::ignite() : false;
-        $debug = Wormhole::BottomBar(config('wormhole.bottombar'), $uxDebugger, array(
-            'view' => $view,
-            'params' => array_keys($data),
-            'paths' => $resources
-        ));
+        Solutions::addViews($allViews);
+        Solutions::askedView($view);
 
-        $content = explode('</body>', $original)[0] . PHP_EOL;
-        $closure = $debug . PHP_EOL . '</body>' . explode('</body>', $original)[1];
-        echo $content . $closure;
+        addSolution(
+            'The Blade\'s view [ ' . $view . ' ] doesn\'t exist.',
+            'Did you mean <b>[ ' . Solutions::$possibleView . ' ]</b> ?'
+        );
+
+        if (file_exists(ROOTDIR . $resources . '/' . $view . '.blade.php')) {
+
+            $_ENV['constellation']['main']['view'] = $view;
+            $_ENV['constellation']['main']['data'] = $data;
+            $blade = new Blade(ROOTDIR . $resources, ROOTDIR . $cache);
+            $original = $blade->render($view, $data);
+
+            $uxDebugger = (class_exists('Quantic\Uxdebugger\Debugger')) ? Uxdebug::ignite() : false;
+            $debug = Wormhole::BottomBar(config('wormhole.bottombar'), $uxDebugger, array(
+                'view' => $view,
+                'params' => array_keys($data),
+                'paths' => $resources
+            ));
+
+            $content = explode('</body>', $original)[0] . PHP_EOL;
+            $closure = $debug . PHP_EOL . '</body>' . explode('</body>', $original)[1];
+            echo $content . $closure;
+
+        } else {
+            trigger_error('The Blade\'s view [ ' . $view . ' ] doesn\'t exist.');
+        }
     }
 
-    public static function createSVGForlder()
+    /**
+     * listAllViews method
+     * A list of all existing views
+     *
+     * @param $root
+     * @param $origin
+     * @return array
+     */
+    private static function listAllViews($root, $origin)
+    {
+        $allViews = [];
+        $scan = scandir($root);
+        foreach ($scan as $file) {
+            if ($file != '.' && $file != '..') {
+                $newRoot = $root . '/' . $file;
+                if (is_dir($newRoot)) {
+                    $newViews = self::listAllViews($newRoot, $origin);
+                    if (!empty($newViews)) {
+                        foreach ($newViews as $newView) {
+                            $new = str_replace(
+                                '.blade.php', '', str_replace(
+                                    $origin . '/', '', $newView
+                                )
+                            );
+                            array_push($allViews, $new);
+                        }
+                    }
+                } else {
+                    if (is_file($newRoot)) {
+                        $new = str_replace(
+                            '.blade.php', '', str_replace(
+                                $origin . '/', '', $newRoot
+                            )
+                        );
+                        array_push($allViews, $new);
+                    }
+                }
+            }
+        }
+        return $allViews;
+    }
+
+    /**
+     * createSVGFolder method
+     * Create de SVGs folder if not exists
+     *
+     * @return void
+     */
+    public static function createSVGFolder()
     {
         if (!file_exists(ROOTDIR . '/resources/svg')) {
             mkdir(ROOTDIR . '/resources/svg');
         }
     }
 
+    /**
+     * import_svg method
+     * Import a svg file from the SVG folder and build a HTML Element containing de asked svg file
+     *
+     * @param $file
+     * @param $class
+     * @param mixed $array
+     * @return mixed
+     */
     public static function import_svg($file, $class, $array = false)
     {
         $js = '';
@@ -125,6 +237,12 @@ class Config
         }
     }
 
+    /**
+     * sitemap_generator method
+     * Build the sitemap.xml and robot.txt files at the project's root
+     *
+     * @return void
+     */
     public static function sitemap_generator() {
 
         if (config('app.env') !== 'production') {
@@ -200,30 +318,23 @@ class Config
 
             } else {
 
-                @unlink(ROOTDIR . '/sitemap.xml');
-                @unlink(ROOTDIR . '/robots.txt');
+                if (file_exists(ROOTDIR . '/sitemap.xml')) {
+                    unlink(ROOTDIR . '/sitemap.xml');
+                }
+                if (ROOTDIR . '/robots.txt') {
+                    unlink(ROOTDIR . '/robots.txt');
+                }
                 self::sitemap_generator();
             }
         }
     }
 
-    public static function sitemap_builder($where) {
-
-        $nav = config('app.navigation');
-        ob_start();
-        echo '<ul>';
-        foreach ($nav as $row) {
-            if ($row['place'] === $where) { ?>
-                <li>
-                    <a href="<?= config('app.url') . $row['url'] ?>"><?= $row['titre'] ?> - url: <i><?= $row['url'] ?></i></a>
-                </li>
-            <?php }
-        }
-        echo '</ul>';
-        $content = ob_get_clean();
-        return ($content != '<ul></ul>') ? $content : '';
-    }
-
+    /**
+     * is_ajax method
+     * Check if the Request sent is an XMLHttpRequest type
+     *
+     * @return boolean
+     */
     public static function is_ajax() {
 
         $response = false;
@@ -234,6 +345,14 @@ class Config
         return $response;
     }
 
+    /**
+     * symlinker method
+     * Create symlinks
+     *
+     * @param $target
+     * @param $link
+     * @return void
+     */
     public static function symlinker($target, $link) {
 
         if (!file_exists($link)) {
@@ -246,6 +365,12 @@ class Config
         }
     }
 
+    /**
+     * unlinkSymlinker method
+     * Delete symlink from the symlinks list
+     *
+     * @return void
+     */
     public static function unlinkSymlinker($link) {
 
         if (!file_exists($link)) {
@@ -257,6 +382,13 @@ class Config
         }
     }
 
+    /**
+     * config method
+     * Convert all globals files and their contents in root scope variables
+     *
+     * @param $str
+     * @return mixed
+     */
     public static function config($str) {
 
         $globals = ROOTDIR . '/globals/';
@@ -285,6 +417,14 @@ class Config
         return $response;
     }
 
+    /**
+     * init method
+     * Convert .init file constants in root scope variables
+     *
+     * @param $declaration
+     * @param mixed $default
+     * @return mixed
+     */
     public static function init($declaration, $default = null) {
 
         $response = $default;
@@ -298,6 +438,13 @@ class Config
         return $response;
     }
 
+    /**
+     * humanizeSize method
+     * Convert octets in readable information for human
+     *
+     * @param $space
+     * @return string
+     */
     public static function humanizeSize($space) {
 
         if ($space / pow(1024, 4) < 1 && $space / pow(1024, 3) >= 1) {
@@ -315,6 +462,13 @@ class Config
         return $used;
     }
 
+    /**
+     * storage_path method
+     * Build the sitemap.xml and robot.txt files at the project's root
+     *
+     * @param $data
+     * @return string
+     */
     public static function storage_path($data) {
 
         return $data;

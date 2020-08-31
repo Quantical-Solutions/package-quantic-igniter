@@ -1,4 +1,3 @@
-<?php //echo '<pre>'; print_r($data); echo '</pre>'; ?>
 <main id="handlerMain">
     <section class="xLarge-12 large-12 medium-12 small-12 xSmall-12 mainSection" id="top">
         <section class="xLarge-12 large-12 medium-12 small-12 xSmall-12">
@@ -24,6 +23,7 @@
         <section class="xLarge-12 large-12 medium-12 small-12 xSmall-12">
             <div class="container">
                 <div id="header">
+                    <small><?= $data['error'] ?></small>
                     <p><?= $data['severity'] ?></p>
                     <h1><?= $data['message'] ?></h1>
                     <a href="<?= (($_SERVER['HTTPS']) ? 'https://' : 'http://') . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'] ?>">
@@ -33,7 +33,7 @@
             </div>
         </section>
     </section>
-    <?php if ($data['solution'] != '') { ?>
+    <?php if (!empty($data['solution']) && isset($data['solution']['message'])) { ?>
         <section class="xLarge-12 large-12 medium-12 small-12 xSmall-12 mainSection" id="middle">
             <p id="displaySolution">
                 Display solution
@@ -49,7 +49,14 @@
                 </svg>
                 <p id="hideSolution">Hide solution</p>
                 <div id="message">
-                    <p><?= $data['solution'] ?></p>
+                    <ul>
+                        <li><?= $data['solution']['message'] ?></li>
+                        <li><?= $data['solution']['description'] ?></li>
+                        <li>
+                            <a href="https://stackoverflow.com/search?q=<?= urlencode($data['message']) ?>" target="_blank">Help</a>
+                            <a href="https://github.com/Quantical-Solutions/Quantic/blob/master/README.md" target="_blank">Quantic Docs</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </section>
@@ -116,6 +123,7 @@
                         $vendorGroup = 0;
                         $cnt = count($data['trace']);
                         foreach ($data['trace'] as $id => $datum) { ?>
+                        <?php if (isset($datum['file'])) { ?>
                         <?php if (strpos($datum['file'], '/vendor/') !== false) { ?>
                         <?php if ($vendorCounter == 0) { ?>
                             <div class="vendorsContainer" data-vendor="vendorGroup_<?= $vendorGroup ?>">
@@ -146,6 +154,7 @@
                                 <p>:<?= $datum['line'] ?></p>
                             </div>
                             <?php $cnt--; } ?>
+                            <?php } ?>
                         </div>
                     </div>
             </section>
@@ -178,39 +187,41 @@
                     </div>
                 </div>
                 <?php $cntFile = count($data['trace']); foreach ($data['trace'] as $id => $datum) { ?>
-                    <div class="container hideStackFile" data-id="<?= $id + 1 ?>">
-                        <div class="supContent">
-                            <?php if (isset($datum['class'])) { ?>
-                                <p><?= $datum['class'] ?><?= @$datum['type'] ?><?= @$datum['function'] ?></p>
-                            <?php } else { ?>
-                                <p>Procedural function <?= ($datum['function']) ? '::' . $datum['function'] . '()' : '' ?></p>
-                            <?php } ?>
-                            <p>
-                                <?= str_replace(ROOTDIR . '/', '', $datum['file']) . ':' . $datum['line'] ?>
-                                <a href="phpstorm://open?file=<?= urlencode($datum['file']) ?>&line=<?= $datum['line'] ?>">
-                                    <svg class="pencil" viewBox="0 0 32 32">
-                                        <path d="M5.582 20.054l14.886-14.886 6.369 6.369-14.886 14.886-6.369-6.369zM21.153 8.758l-0.698-0.697-11.981 11.98 0.698 0.698 11.981-11.981zM22.549 10.154l-0.698-0.698-11.981 11.982 0.697 0.697 11.982-11.981zM23.945 11.55l-0.698-0.698-11.981 11.981 0.698 0.698 11.981-11.981zM23.319 2.356c0.781-0.783 2.045-0.788 2.82-0.013l3.512 3.512c0.775 0.775 0.77 2.038-0.012 2.82l-2.17 2.17-6.32-6.32 2.17-2.169zM5.092 20.883l6.030 6.030-5.284 1.877-2.623-2.623 1.877-5.284zM4.837 29.117l-3.066 1.117 1.117-3.066 1.949 1.949z"></path>
-                                    </svg>
-                                </a>
-                            </p>
-                        </div>
-                        <div class="content">
-                            <div class="stackRail">
-                                <table>
-                                    <?php
-                                    foreach (file($datum['file']) as $nb => $line) { ?>
-                                        <tr data-line="<?= $nb + 1 ?>" class="<?= ($nb + 1 == $datum['line']) ? 'errorLine' : '' ?>"
-                                            onclick="window.location = 'phpstorm://open?file=<?= urlencode($datum['file'])
-                                            ?>&line=<?= $nb + 1 ?>'">
-                                            <td class="lines"><code><?= $nb + 1 ?></code></td>
-                                            <td><pre><code class="php"><?= $line ?></code></pre></td>
-                                        </tr>
-                                    <?php } ?>
-                                </table>
+                    <?php if (isset($datum['file'])) { ?>
+                        <div class="container hideStackFile" data-id="<?= $id + 1 ?>">
+                            <div class="supContent">
+                                <?php if (isset($datum['class'])) { ?>
+                                    <p><?= $datum['class'] ?><?= @$datum['type'] ?><?= @$datum['function'] ?></p>
+                                <?php } else { ?>
+                                    <p>Procedural function <?= ($datum['function']) ? '::' . $datum['function'] . '()' : '' ?></p>
+                                <?php } ?>
+                                <p>
+                                    <?= str_replace(ROOTDIR . '/', '', $datum['file']) . ':' . $datum['line'] ?>
+                                    <a href="phpstorm://open?file=<?= urlencode($datum['file']) ?>&line=<?= $datum['line'] ?>">
+                                        <svg class="pencil" viewBox="0 0 32 32">
+                                            <path d="M5.582 20.054l14.886-14.886 6.369 6.369-14.886 14.886-6.369-6.369zM21.153 8.758l-0.698-0.697-11.981 11.98 0.698 0.698 11.981-11.981zM22.549 10.154l-0.698-0.698-11.981 11.982 0.697 0.697 11.982-11.981zM23.945 11.55l-0.698-0.698-11.981 11.981 0.698 0.698 11.981-11.981zM23.319 2.356c0.781-0.783 2.045-0.788 2.82-0.013l3.512 3.512c0.775 0.775 0.77 2.038-0.012 2.82l-2.17 2.17-6.32-6.32 2.17-2.169zM5.092 20.883l6.030 6.030-5.284 1.877-2.623-2.623 1.877-5.284zM4.837 29.117l-3.066 1.117 1.117-3.066 1.949 1.949z"></path>
+                                        </svg>
+                                    </a>
+                                </p>
+                            </div>
+                            <div class="content">
+                                <div class="stackRail">
+                                    <table>
+                                        <?php
+                                        foreach (file($datum['file']) as $nb => $line) { ?>
+                                            <tr data-line="<?= $nb + 1 ?>" class="<?= ($nb + 1 == $datum['line']) ? 'errorLine' : '' ?>"
+                                                onclick="window.location = 'phpstorm://open?file=<?= urlencode($datum['file'])
+                                                ?>&line=<?= $nb + 1 ?>'">
+                                                <td class="lines"><code><?= $nb + 1 ?></code></td>
+                                                <td><pre><code class="php"><?= $line ?></code></pre></td>
+                                            </tr>
+                                        <?php } ?>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <?php $cntFile--; } ?>
+                        <?php $cntFile--; } ?>
+                <?php } ?>
             </section>
         </section>
 
@@ -425,14 +436,15 @@
                 </dl>
                 <dl>
                     <dt>View Data :</dt>
-                    <dd>
-                        <?php if (isset($_ENV['constellation']['main']['data'])) {
-                            foreach ($_ENV['constellation']['main']['data'] as $index => $data) { ?>
-                                <span><?= $index ?> => <b><?= $data ?></b></span>
-                            <?php }
-                        } else {
-                            echo '--';
-                        } ?>
+                    <?php if (isset($_ENV['constellation']['main']['data'])) {
+                        echo '<dd class="ddArray">';
+                        foreach ($_ENV['constellation']['main']['data'] as $index => $data) { ?>
+                            <span>$<?= $index ?> : <b><?= (is_string($data)) ? $data : 'Array' ?></b></span>
+                        <?php }
+                        echo '</dd>';
+                    } else {
+                        echo '<dd>--</dd>';
+                    } ?>
                     </dd>
                 </dl>
             </div>
@@ -444,14 +456,22 @@
                 <h3>User Data</h3>
                 <dl>
                     <dt>Email :</dt>
-                    <dd></dd>
+                    <?php if (isset($_SESSION['user']['email']) && $_SESSION['user']['email'] != '') { ?>
+                        <dd><?= $_SESSION['user']['email'] ?></dd>
+                    <?php } else { ?>
+                        <dd>--</dd>
+                    <?php } ?>
                 </dl>
                 <dl>
                     <dt>Data :</dt>
                     <dd>
-                        <pre>
-
+                        <?php if (isset($_SESSION['user']) && !empty($_SESSION['user'])) { ?>
+                            <pre>
+                            <?php print_r($_SESSION['user']) ?>
                         </pre>
+                        <?php } else { ?>
+                            <pre></pre>
+                        <?php } ?>
                     </dd>
                 </dl>
             </div>
@@ -502,11 +522,19 @@
             </div>
             <div class="stdContent">
                 <h3>Generic context</h3>
-                <?php if (isset($context)) {
-                    foreach ($context as $index => $item) { ?>
+                <?php if (isset($_ENV['contexts'])) {
+                    foreach ($_ENV['contexts'] as $index => $item) { ?>
                         <dl>
                             <dt><?= $index ?> :</dt>
-                            <dd><?= $item ?></dd>
+                            <?php if (is_array($item) && !empty($item)) { ?>
+                                <dd class="ddArray">
+                                    <?php foreach ($item as $k => $it) { ?>
+                                        <span><?= $k ?> : <b><?= $it ?></b></span>
+                                    <?php } ?>
+                                </dd>
+                            <?php } else { ?>
+                                <dd><?= $item ?></dd>
+                            <?php } ?>
                         </dl>
                     <?php } ?>
                 <?php } else { ?>
@@ -570,11 +598,11 @@
                     </div>
                 </div>
             <?php } ?>
-            <?php if (isset($glows) && !empty($glows)) { $noData = 1; ?>
+            <?php if (isset($_ENV['glows']) && !empty($_ENV['glows'])) { $noData = 1; ?>
                 <div class="stdContent" id="stdContentGlows">
                     <div class="xLarge-12 large-12 medium-12 small-12 xSmall-12">
                         <h3>
-                            Glows<span class="titleCounter"><?= count($glows) ?></span>
+                            Glows<span class="titleCounter"><?= count($_ENV['glows']) ?></span>
                             <svg class="developPlus" viewBox="0 0 32 32">
                                 <path d="M15.5 29.5c-7.18 0-13-5.82-13-13s5.82-13 13-13 13 5.82 13 13-5.82 13-13 13zM21.938 15.938c0-0.552-0.448-1-1-1h-4v-4c0-0.552-0.447-1-1-1h-1c-0.553 0-1 0.448-1 1v4h-4c-0.553 0-1 0.448-1 1v1c0 0.553 0.447 1 1 1h4v4c0 0.553 0.447 1 1 1h1c0.553 0 1-0.447 1-1v-4h4c0.552 0 1-0.447 1-1v-1z"></path>
                             </svg>
@@ -583,7 +611,24 @@
                             </svg>
                         </h3>
                         <div id="glowsContainer" class="reportContainers">
-
+                            <?php foreach ($_ENV['glows'] as $glow) { ?>
+                                <dl>
+                                    <dt>Message :</dt>
+                                    <dd><?= $glow['message'] ?></dd>
+                                    <dt>Level :</dt>
+                                    <dd><?= $glow['level'] ?></dd>
+                                    <dt>Arguments :</dt>
+                                    <?php if (!empty($glow['arguments'])) { ?>
+                                        <dd>
+                                            <?php foreach ($glow['arguments'] as $index => $item) { ?>
+                                                <span><?= $index ?> : <b><?= ($item != '') ? $item : '--' ?></b></span>
+                                            <?php } ?>
+                                        </dd>
+                                    <?php } else { ?>
+                                        <dd>--</dd>
+                                    <?php } ?>
+                                </dl>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>

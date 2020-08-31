@@ -189,7 +189,7 @@ main {
 }
 
 #middle .container {
-    padding: 8.33%;
+    padding: 60px 8.33%;
     width: calc(83.33%);
     background-color: #7094db;
     color: #3C3C3C;
@@ -224,6 +224,14 @@ main {
     font-family: 'robotobold', Tahoma, Geneva, sans-serif;
     font-weight: bold;
     margin: 15px 0 30px 0;
+}
+
+#header small {
+    font-size: 14px;
+    font-family: 'robotothin', Tahoma, Geneva, sans-serif;
+    margin-bottom: 10px;
+    display: flex;
+    opacity: 0.5;
 }
 
 #header p {
@@ -638,6 +646,7 @@ table {
 
 .stackRail {
     width: 100%;
+    min-height: 100%;
     overflow-x: auto;
     overflow-y: hidden;
 }
@@ -1023,5 +1032,87 @@ table {
 }
 
 .deleters:hover {
+    opacity: 1;
+}
+
+.ddArray {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.ddArray span {
+    margin-bottom: 5px;
+}
+
+#message {
+    width: 100%;
+}
+
+#message ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    min-width: 300px;
+}
+
+#message li {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#message li:nth-child(1) {
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+#message li:nth-child(2) {
+    width: 100%;
+    font-family: 'robotolight', Tahoma, Geneva, sans-serif;
+    font-size: 16px;
+}
+
+#message li:nth-child(2) b {
+    font-family: 'robotobold', Tahoma, Geneva, sans-serif;
+    font-weight: bold;
+    margin: 0 4px;
+}
+
+#message li:nth-child(3) {
+    width: max-content;
+    border-top: 2px solid rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+    padding-top: 10px;
+}
+
+#message li:nth-child(3) a:first-of-type {
+    padding: 10px 20px;
+    background-color: rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+    border-radius: 3px;
+    font-size: 16px;
+    color: inherit;
+    transition: all linear 0.15s;
+}
+
+#message li:nth-child(3) a:last-of-type {
+    padding: 10px 20px;
+    font-family: 'robotolight', Tahoma, Geneva, sans-serif;
+    font-size: 16px;
+    opacity: 0.5;
+    transition: all linear 0.15s;
+}
+
+#message li:nth-child(3) a:first-of-type:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #F7F7F7;
+}
+
+#message li:nth-child(3) a:last-of-type:hover {
+    text-decoration: underline;
     opacity: 1;
 }

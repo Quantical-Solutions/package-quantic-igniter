@@ -10,7 +10,7 @@ class Context
     {
         if (is_string($name)) {
             if (is_string($string)) {
-                $_ENV['contexts']['name'] = $string;
+                $_ENV['contexts'][$name] = $string;
                 return ['name' => $name, 'infos' => $string];
             } else {
                 trigger_error('Context() second param must be a String type');
@@ -24,7 +24,7 @@ class Context
     {
         if (is_string($name)) {
             if (is_array($array)) {
-                $_ENV['contexts']['name'] = $array;
+                $_ENV['contexts'][$name] = $array;
                 return ['name' => $name, 'infos' => $array];
             } else {
                 trigger_error('ContextGroup() second param must be an Array type');
