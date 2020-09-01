@@ -353,14 +353,32 @@ class Config
      * @param $link
      * @return void
      */
-    public static function symlinker($target, $link) {
+    public static function symlinker()
+    {
+        $symlinks = require_once(ROOTDIR . '/constellations/symlinks.php');
+        foreach ($symlinks as $link => $target) {
+            if (!file_exists($link)) {
+                if (isset($_SERVER['WINDIR']) && ($_SERVER['WINDIR'] || $_SERVER['windir'])) {
+                    exec('junction "' . $link . '" "' . $target . '"');
+                } else {
+                    symlink($target, $link);
+                }
+            }
+            self::interceptor($link);
+        }
+    }
 
-        if (!file_exists($link)) {
-            if (isset($_SERVER['WINDIR']) && ($_SERVER['WINDIR'] || $_SERVER['windir'])) {
-                exec('junction "' . $link . '" "' . $target . '"');
-            } else {
-                symlink($target, $link);
-                echo readlink($link);
+    private static function interceptor($link)
+    {
+        $uri = $_SERVER['REQUEST_URI'];
+        if (isset(explode('/', $uri)[1])
+            && explode('/', $uri)[1] == $link) {
+
+            $rest = explode($link . '/', $uri)[1];
+            $new = $link . '/' . $rest;
+            if (file_exists($new)) {
+                readfile($new);
+                exit();
             }
         }
     }
@@ -371,9 +389,9 @@ class Config
      *
      * @return void
      */
-    public static function unlinkSymlinker($link) {
-
-        if (!file_exists($link)) {
+    public static function unlinkSymlinker($link)
+    {
+        if (file_exists($link)) {
             if (isset($_SERVER['WINDIR']) && ($_SERVER['WINDIR'] || $_SERVER['windir'])) {
                 exec('junction -d "' . $link . '"');
             } else {
@@ -389,8 +407,8 @@ class Config
      * @param $str
      * @return mixed
      */
-    public static function config($str) {
-
+    public static function config($str)
+    {
         $globals = ROOTDIR . '/globals/';
         $response = 'Wrong string parameter format in config() function : ' . $str . ' isn\'t a valid argument.';
 
@@ -425,8 +443,8 @@ class Config
      * @param mixed $default
      * @return mixed
      */
-    public static function init($declaration, $default = null) {
-
+    public static function init($declaration, $default = null)
+    {
         $response = $default;
         $initArray = Config::ConvertEnvConstants();
 
@@ -445,8 +463,8 @@ class Config
      * @param $space
      * @return string
      */
-    public static function humanizeSize($space) {
-
+    public static function humanizeSize($space)
+    {
         if ($space / pow(1024, 4) < 1 && $space / pow(1024, 3) >= 1) {
             $used = number_format(($space / pow(1024, 3)), 1, '.', ' ') . 'GB';
         } else if ($space / pow(1024, 3) < 1 && $space / pow(1024, 2) >= 1) {

@@ -24,6 +24,13 @@ class Constellation
                 'method' => 'index',
                 'request' => 'get',
                 'as' => 'XHR'
+            ],
+            'visio' => [
+                'uri' => '/' . config('app.visio'),
+                'controller' => 'Visio',
+                'method' => 'ignite',
+                'request' => 'get',
+                'as' => 'Visio'
             ]
         ];
         foreach ($extra as $key => $ex) {
@@ -237,8 +244,13 @@ class Constellation
     private function execute($class, $method, $options)
     {
         define('VIEWINIT', true);
-        $controller = ($class != 'XhrController') ? 'App\\Http\\Controllers\\' . $class : 'Quantic\\Igniter\\Workers\\' .
-            $class;
+        if ($class == 'XhrController') {
+            $controller = 'Quantic\\Igniter\\Workers\\' . $class;
+        } else if ($class == 'Visio') {
+            $controller = 'Quantic\\Visio\\' . $class;
+        } else {
+            $controller = 'App\\Http\\Controllers\\' . $class;
+        }
         $new = new $controller;
 
         if (class_exists($controller) && method_exists($controller, $method)) {
