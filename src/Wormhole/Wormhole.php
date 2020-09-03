@@ -13,6 +13,7 @@ use Symfony\Component\VarDumper\Dumper\ContextProvider\SourceContextProvider;
 use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 use Symfony\Component\VarDumper\Dumper\ServerDumper;
 use Symfony\Component\VarDumper\VarDumper;
+use Illuminate\Database\Capsule\Manager as DB;
 
 class Wormhole
 {
@@ -20,6 +21,8 @@ class Wormhole
     {
         $render = '';
         if ($state == 'show') {
+
+            $queries = DB::getQueryLog();
 
             $viewCollector = new ViewsCollector;
             $activeView = $viewCollector->viewParser($array);
@@ -73,7 +76,8 @@ class Wormhole
                 'instant' => $instant,
                 'ux' => $ux,
                 'constellation' => $activeConstellation,
-                'env' => $_ENV
+                'env' => $_ENV,
+                'queries' => $queries
             ]);
         }
 

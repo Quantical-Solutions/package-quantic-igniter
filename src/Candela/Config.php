@@ -7,6 +7,8 @@ use Jenssegers\Blade\Blade;
 use Quantic\Igniter\Wormhole\Wormhole;
 use Quantic\Uxdebugger\Debugger as Uxdebug;
 use Quantic\Igniter\Solutions\Solutions;
+use Quantic\Igniter\Candela\Expander as Database;
+use Illuminate\Database\Capsule\Manager as DB;
 
 class Config
 {
@@ -487,8 +489,20 @@ class Config
      * @param $data
      * @return string
      */
-    public static function storage_path($data) {
-
+    public static function storage_path($data)
+    {
         return $data;
+    }
+
+    /**
+     * setDB method
+     * Set connexion to DataBase with Eloquent
+     *
+     * @return void
+     */
+    public static function setDB()
+    {
+        new Database();
+        DB::connection()->enableQueryLog();
     }
 }

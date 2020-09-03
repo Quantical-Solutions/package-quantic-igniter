@@ -2,6 +2,8 @@
 
 namespace Quantic\Igniter\Solutions;
 
+use Illuminate\Database\Capsule\Manager as DB;
+
 class Solutions
 {
     private static array $solutions = [];
@@ -11,12 +13,14 @@ class Solutions
     private static array $functions;
     private static array $viewVars = [];
     public static string $possibleView = '';
+    private static array $tables = [];
 
     public static function analyse($message)
     {
         self::getFunctions();
         self::getClasses();
         self::getViewVars();
+        self::getTables();
         return self::getSolution($message);
     }
 
@@ -41,6 +45,15 @@ class Solutions
             }
         } else {
             trigger_error('Solutions::addSolution() first argument must be a String type');
+        }
+    }
+
+    private static function getTables()
+    {
+        $tables = DB::select('SHOW TABLES');
+        foreach ($tables as $table) {
+            foreach ($table as $key => $value)
+                array_push(self::$tables, $value);
         }
     }
 
@@ -169,8 +182,9 @@ class Solutions
                 if (!empty($classes)) {
 
                     foreach ($classes as $class) {
-                        $cl = explode('\\', $class)[count(explode('\\', $class))-1];
-                        similar_text($class, $track, $percent);
+                        $cl = (isset(explode('\\', $class)[count(explode('\\', $class))-1])) ? explode('\\', $class)
+                        [count(explode('\\', $class))-1] : $class;
+                        similar_text($cl, $track, $percent);
                         $matcher = intval($percent);
                         array_push($indices, $matcher);
                     }
@@ -178,6 +192,29 @@ class Solutions
                     $value = max($indices);
                     $key = array_search($value, $indices);
                     $desc = $classes[$key];
+                }
+
+            } else if (strpos($message, 'Base table or view not found') !== false
+                && strpos($message, 'Table') !== false
+                && strpos($message, 'doesn\'t exist') !== false) {
+
+                $start = explode('\'', $message)[1];
+                $track = explode('.', $start)[1];
+
+                $tables = self::$tables;
+                $indices = [];
+
+                if (!empty($tables)) {
+
+                    foreach ($tables as $table) {
+                        similar_text($table, $track, $percent);
+                        $matcher = intval($percent);
+                        array_push($indices, $matcher);
+                    }
+
+                    $value = max($indices);
+                    $key = array_search($value, $indices);
+                    $desc = $tables[$key];
                 }
             }
 

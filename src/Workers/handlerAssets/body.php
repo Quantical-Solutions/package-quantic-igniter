@@ -619,7 +619,7 @@
                                     <dd><?= $glow['level'] ?></dd>
                                     <dt>Arguments :</dt>
                                     <?php if (!empty($glow['arguments'])) { ?>
-                                        <dd>
+                                        <dd class="ddArray">
                                             <?php foreach ($glow['arguments'] as $index => $item) { ?>
                                                 <span><?= $index ?> : <b><?= ($item != '') ? $item : '--' ?></b></span>
                                             <?php } ?>
@@ -673,31 +673,38 @@
                     </h3>
                     <div id="queriesContainer" class="reportContainers">
                         <?php foreach ($queries as $index => $query) { ?>
-                            <dl>
-                                <dt>Query :</dt>
-                                <dd></dd>
-                            </dl>
-                            <dl>
-                                <dt>Time :</dt>
-                                <dd></dd>
-                            </dl>
-                            <dl>
-                                <dt>Connexion driver :</dt>
-                                <dd></dd>
-                            </dl>
-                            <?php if (isset($params) && !empty($params)) { ?>
+                            <div class="queriesSections">
                                 <dl>
-                                    <dt>Variables :</dt>
-                                    <dd>
-                                        <ul>
-                                            <?php foreach ($params as $param) { ?>
-                                                <li><?= $param ?></li>
-                                            <?php } ?>
-                                        </ul>
-                                    </dd>
+                                    <dt>Query :</dt>
+                                    <dd><pre><?= $query['query'] ?></pre></dd>
                                 </dl>
-                            <?php }
-                        } ?>
+                                <dl>
+                                    <dt>Time :</dt>
+                                    <dd><?= $query['time'] ?> ms</dd>
+                                </dl>
+                                <dl>
+                                    <dt>Connexion driver :</dt>
+                                    <dd><?= config('database.default') ?></dd>
+                                </dl>
+                                <?php if (isset($query['bindings']) && !empty($query['bindings'])) { ?>
+                                    <dl>
+                                        <dt>Variables :</dt>
+                                        <dd>
+                                            <ul>
+                                                <?php foreach ($query['bindings'] as $cle => $binding) { ?>
+                                                    <li>bind #<?= $cle + 1 ?> = <b><?= $binding ?></b></li>
+                                                <?php } ?>
+                                            </ul>
+                                        </dd>
+                                    </dl>
+                                <?php } else { ?>
+                                    <dl>
+                                        <dt>Variables :</dt>
+                                        <dd>--</dd>
+                                    </dl>
+                                <?php } ?>
+                            </div>
+                        <?php } ?>
                     </div>
                     <?php } ?>
                 </div>

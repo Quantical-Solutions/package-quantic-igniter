@@ -7,6 +7,7 @@ use Quantic\Igniter\Wormhole\Wormhole;
 use Quantic\Uxdebugger\Debugger as Uxdebug;
 use Quantic\Igniter\Solutions\Solutions;
 use Error;
+use Illuminate\Database\Capsule\Manager as DB;
 
 class SQLHandler
 {
@@ -14,6 +15,8 @@ class SQLHandler
     {
         // Define errors params
         self::ini();
+        // Get all queries
+        $queries = DB::getQueryLog();
         // ignite BottomBarDebugger
         $debug = self::debugger();
         // Translate Severity Error

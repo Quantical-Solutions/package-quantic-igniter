@@ -6,6 +6,7 @@ use ErrorException;
 use Quantic\Igniter\Wormhole\Wormhole;
 use Quantic\Uxdebugger\Debugger as Uxdebug;
 use Quantic\Igniter\Solutions\Solutions;
+use Illuminate\Database\Capsule\Manager as DB;
 
 class ExceptionsHandler
 {
@@ -13,6 +14,8 @@ class ExceptionsHandler
     {
         // Define errors params
         self::ini();
+        // Get all queries
+        $queries = DB::getQueryLog();
         // ignite BottomBarDebugger
         $debug = self::debugger();
         // Translate Severity Error

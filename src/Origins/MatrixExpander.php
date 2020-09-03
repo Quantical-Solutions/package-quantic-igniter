@@ -2,7 +2,9 @@
 
 namespace Quantic\Igniter\Origins;
 
-class MatrixExpander
+use Illuminate\Database\Eloquent\Model;
+
+class MatrixExpander extends Model
 {
     use \Quantic\Igniter\Covalent\Traits\MatrixTraits;
 }
