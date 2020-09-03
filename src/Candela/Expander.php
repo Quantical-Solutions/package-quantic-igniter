@@ -9,12 +9,12 @@ use Illuminate\Container\Container;
 class Expander
 {
     /**
-     * EloquentIgniter method
+     * __construct method
      *
      * @return void
      * @access public
      */
-    public static function EloquentIgniter()
+    public function __construct()
     {
         try {
 
@@ -47,7 +47,7 @@ class Expander
 
             } else {
 
-                throw new \Exception('Some variables aren\'t defined in the .env file... Please fill them to connect BDD.');
+                throw new \Exception('Some variables aren\'t defined in the .init file... Please fill them to connect BDD.');
             }
 
         } catch (\Exception $e) {
