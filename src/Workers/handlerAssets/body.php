@@ -1,4 +1,33 @@
+<?php
+switch (config('app.ide')) {
+    case 'phpstorm': $ide = 'phpstorm://open?file='; break;
+    case 'sublime': $ide = 'subl://open?url=file://'; break;
+    case 'vscode': $ide = 'vscode://open?file='; break;
+    case 'atom': $ide = 'atom://open?file='; break;
+}
+?>
 <main id="handlerMain">
+    <section class="xLarge-12 large-12 medium-12 small-12 xSmall-12 mainSection" id="supertop">
+        <section class="xLarge-12 large-12 medium-12 small-12 xSmall-12">
+            <div class="container">
+                <div id="ideSets">
+                    <img id="ideImg" src="/vendor/quantic/igniter/src/Workers/handlerAssets/assets/ide/<?= config('app.ide') ?>.png">
+                    <p>
+                        Your IDE is set on&nbsp;
+                        <?php
+                        switch (config('app.ide')) {
+                            case 'phpstorm': echo '<b class="purple">PhpStorm</b>'; break;
+                            case 'sublime': echo '<b class="orange">Sublime Text</b>'; break;
+                            case 'vscode': echo '<b class="blue">Visual Studio Code</b>'; break;
+                            case 'atom': echo '<b class="green">Atom</b>'; break;
+                        }
+                        ?>
+                        . You can change coding program in&nbsp;&nbsp;<i>"globals/app.php"</i>&nbsp;&nbsp;file.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </section>
     <section class="xLarge-12 large-12 medium-12 small-12 xSmall-12 mainSection" id="top">
         <section class="xLarge-12 large-12 medium-12 small-12 xSmall-12">
             <div class="container">
@@ -164,7 +193,7 @@
                         <p><?= $data['class'] ?><?= @$data['type'] ?><?= @$data['function'] ?></p>
                         <p>
                             <?= str_replace(ROOTDIR . '/', '', $data['file']) . ':' . $data['line'] ?>
-                            <a href="phpstorm://open?file=<?= urlencode($data['file']) ?>&line=<?= $data['line'] ?>">
+                            <a href="<?= $ide ?><?= urlencode($data['file']) ?>&line=<?= $data['line'] ?>">
                                 <svg class="pencil" viewBox="0 0 32 32">
                                     <path d="M5.582 20.054l14.886-14.886 6.369 6.369-14.886 14.886-6.369-6.369zM21.153 8.758l-0.698-0.697-11.981 11.98 0.698 0.698 11.981-11.981zM22.549 10.154l-0.698-0.698-11.981 11.982 0.697 0.697 11.982-11.981zM23.945 11.55l-0.698-0.698-11.981 11.981 0.698 0.698 11.981-11.981zM23.319 2.356c0.781-0.783 2.045-0.788 2.82-0.013l3.512 3.512c0.775 0.775 0.77 2.038-0.012 2.82l-2.17 2.17-6.32-6.32 2.17-2.169zM5.092 20.883l6.030 6.030-5.284 1.877-2.623-2.623 1.877-5.284zM4.837 29.117l-3.066 1.117 1.117-3.066 1.949 1.949z"></path>
                                 </svg>
@@ -177,7 +206,8 @@
                                 <?php
                                 foreach (file($data['file']) as $nb => $line) { ?>
                                     <tr data-line="<?= $nb + 1 ?>" class="<?= ($nb + 1 == $data['line']) ? 'errorLine' : '' ?>"
-                                        onclick="window.location = 'phpstorm://open?file=<?= urlencode($data['file']) ?>&line=<?= $nb + 1 ?>'">
+                                        onclick="window.location = '<?= $ide ?><?= urlencode($data['file'])
+                                        ?>&line=<?= $nb + 1 ?>'">
                                         <td class="lines"><code><?= $nb + 1 ?></code></td>
                                         <td><pre><code class="php"><?= $line ?></code></pre></td>
                                     </tr>
@@ -197,7 +227,8 @@
                                 <?php } ?>
                                 <p>
                                     <?= str_replace(ROOTDIR . '/', '', $datum['file']) . ':' . $datum['line'] ?>
-                                    <a href="phpstorm://open?file=<?= urlencode($datum['file']) ?>&line=<?= $datum['line'] ?>">
+                                    <a href="<?= $ide ?><?= urlencode($datum['file']) ?>&line=<?=
+                                    $datum['line'] ?>">
                                         <svg class="pencil" viewBox="0 0 32 32">
                                             <path d="M5.582 20.054l14.886-14.886 6.369 6.369-14.886 14.886-6.369-6.369zM21.153 8.758l-0.698-0.697-11.981 11.98 0.698 0.698 11.981-11.981zM22.549 10.154l-0.698-0.698-11.981 11.982 0.697 0.697 11.982-11.981zM23.945 11.55l-0.698-0.698-11.981 11.981 0.698 0.698 11.981-11.981zM23.319 2.356c0.781-0.783 2.045-0.788 2.82-0.013l3.512 3.512c0.775 0.775 0.77 2.038-0.012 2.82l-2.17 2.17-6.32-6.32 2.17-2.169zM5.092 20.883l6.030 6.030-5.284 1.877-2.623-2.623 1.877-5.284zM4.837 29.117l-3.066 1.117 1.117-3.066 1.949 1.949z"></path>
                                         </svg>
@@ -210,7 +241,8 @@
                                         <?php
                                         foreach (file($datum['file']) as $nb => $line) { ?>
                                             <tr data-line="<?= $nb + 1 ?>" class="<?= ($nb + 1 == $datum['line']) ? 'errorLine' : '' ?>"
-                                                onclick="window.location = 'phpstorm://open?file=<?= urlencode($datum['file'])
+                                                onclick="window.location = '<?= $ide ?><?= urlencode
+                                                ($datum['file'])
                                                 ?>&line=<?= $nb + 1 ?>'">
                                                 <td class="lines"><code><?= $nb + 1 ?></code></td>
                                                 <td><pre><code class="php"><?= $line ?></code></pre></td>
@@ -268,7 +300,7 @@
                     if (ucfirst($key) != 'Cache-Control' && ucfirst($key) != 'Pragma') { ?>
                         <dl>
                             <dt><?= ucfirst($key) ?> :</dt>
-                            <dd><?= (is_string($value)) ? $value : '<code>' . json_encode($value, true) . '</code>' ?></dd>
+                            <dd><?php if (is_string($value)) { echo $value; } else { dump($value); } ?></dd>
                         </dl>
                     <?php }} ?>
             </div>
@@ -278,7 +310,7 @@
                     <?php foreach ($_POST as $key => $value) { ?>
                         <dl>
                             <dt><?= $key ?> :</dt>
-                            <dd><?= (is_string($value)) ? $value : '<code>' . json_encode($value, true) . '</code>' ?></dd>
+                            <dd><?php if (is_string($value)) { echo $value; } else { dump($value); } ?></dd>
                         </dl>
                     <?php } ?>
                 <?php } ?>
@@ -286,7 +318,7 @@
                     <?php foreach ($_GET as $key => $value) { ?>
                         <dl>
                             <dt><?= $key ?> :</dt>
-                            <dd><?= (is_string($value)) ? $value : '<code>' . json_encode($value, true) . '</code>' ?></dd>
+                            <dd><?php if (is_string($value)) { echo $value; } else { dump($value); } ?></dd>
                         </dl>
                     <?php } ?>
                 <?php } ?>
@@ -294,30 +326,13 @@
                     <p>No query attached to the request</p>
                 <?php } ?>
             </div>
-            <?php if (false) { ?>
-                <div class="stdContent">
-                    <h3>Body</h3>
-                    <?php if (true) { ?>
-                        <dl>
-                            <dt>Preview :</dt>
-                            <dd>
-                        <pre>
-
-                        </pre>
-                            </dd>
-                        </dl>
-                    <?php } else { ?>
-                        <p>Header response is empty</p>
-                    <?php } ?>
-                </div>
-            <?php } ?>
             <div class="stdContent">
                 <h3>Files</h3>
                 <?php if (!empty($_FILES)) { ?>
                     <?php foreach ($_FILES as $key => $value) { ?>
                         <dl>
                             <dt><?= $key ?> :</dt>
-                            <dd><?= (is_string($value)) ? $value : '<pre>' . json_encode($value, true) . '</pre>' ?></dd>
+                            <dd><?php if (is_string($value)) { echo $value; } else { dump($value); } ?></dd>
                         </dl>
                     <?php } ?>
                 <?php } else { ?>
@@ -332,7 +347,7 @@
                         if ($key != "exceptions" && $key != "last_exception") { ?>
                             <dl>
                                 <dt><?= $key ?> :</dt>
-                                <dd><?= (is_string($value)) ? $value : '<pre>' . json_encode($value, true) . '</pre>' ?></dd>
+                                <dd><?php if (is_string($value)) { echo $value; } else { dump($value); } ?></dd>
                             </dl>
                             <?php $emptySession = 1; ?>
                         <?php } else {
@@ -350,7 +365,7 @@
                     <?php foreach ($_COOKIE as $key => $value) { ?>
                         <dl>
                             <dt><?= $key ?> :</dt>
-                            <dd><?= (is_string($value)) ? $value : '<pre>' . json_encode($value, true) . '</pre>' ?></dd>
+                            <dd><?php if (is_string($value)) { echo $value; } else { dump($value); } ?></dd>
                         </dl>
                     <?php } ?>
                 <?php } else { ?>
@@ -455,9 +470,9 @@
             <div class="stdContent">
                 <h3>User Data</h3>
                 <dl>
-                    <dt>Email :</dt>
-                    <?php if (isset($_SESSION['user']['email']) && $_SESSION['user']['email'] != '') { ?>
-                        <dd><?= $_SESSION['user']['email'] ?></dd>
+                    <dt>Email (<span class="purple italic">MAIL_FROM_ADDRESS</span>) :</dt>
+                    <?php if (isset(config('mail.from')['address']) && config('mail.from')['address'] != '') { ?>
+                        <dd><?= config('mail.from')['address'] ?></dd>
                     <?php } else { ?>
                         <dd>--</dd>
                     <?php } ?>
@@ -465,11 +480,9 @@
                 <dl>
                     <dt>Data :</dt>
                     <dd>
-                        <?php if (isset($_SESSION['user']) && !empty($_SESSION['user'])) { ?>
-                            <pre>
-                            <?php print_r($_SESSION['user']) ?>
-                        </pre>
-                        <?php } else { ?>
+                        <?php if (isset($_SESSION['user']) && !empty($_SESSION['user'])) {
+                            dump($_SESSION['user']);
+                        } else { ?>
                             <pre></pre>
                         <?php } ?>
                     </dd>
@@ -580,7 +593,7 @@
             </div>
             <?php $noData = 0; ?>
             <?php if (isset($dumps) && !empty($dumps)) { $noData = 1; ?>
-                <div class="stdContent" id="stdContentDumps">
+                <div id="stdContentDumps">
                     <div class="xLarge-12 large-12 medium-12 small-12 xSmall-12">
                         <h3>
                             Dumps<span class="titleCounter"><?= count($dumps) ?></span>
@@ -590,10 +603,55 @@
                             <svg class="developMinus" viewBox="0 0 32 32">
                                 <path d="M15.5 3.5c-7.18 0-13 5.82-13 13s5.82 13 13 13c7.18 0 13-5.82 13-13s-5.82-13-13-13zM22 16.875c0 0.553-0.448 1-1 1h-11c-0.553 0-1-0.447-1-1v-1c0-0.552 0.447-1 1-1h11c0.552 0 1 0.448 1 1v1z"></path>
                             </svg>
-                            <p class="deleters" data-del="dumps">Delete Dumps</p>
                         </h3>
                         <div id="dumpsContainer" class="reportContainers">
-
+                            <?php $cnt = count($dumps); foreach (array_reverse($dumps) as $dump) { ?>
+                                <dl>
+                                    <dt>
+                                    <span data-id="dumpContent<?= $cnt ?>" class="previewDump">
+                                        <span>Preview dump #<?= $cnt ?></span>
+                                        <svg viewBox="0 0 32 32">
+                                            <path d="M29.156 29.961l-0.709 0.709c-0.785 0.784-2.055 0.784-2.838 0l-5.676-5.674c-0.656-0.658-0.729-1.644-0.281-2.412l-3.104-3.102c-1.669 1.238-3.728 1.979-5.965 1.979-5.54 0-10.031-4.491-10.031-10.031s4.491-10.032 10.031-10.032c5.541 0 10.031 4.491 10.031 10.032 0 2.579-0.98 4.923-2.58 6.7l3.035 3.035c0.768-0.447 1.754-0.375 2.41 0.283l5.676 5.674c0.784 0.785 0.784 2.056 0.001 2.839zM18.088 11.389c0-4.155-3.369-7.523-7.524-7.523s-7.524 3.367-7.524 7.523 3.368 7.523 7.523 7.523 7.525-3.368 7.525-7.523z"></path>
+                                        </svg>
+                                    </span>
+                                        Dump #<?= $cnt; ?>
+                                    </dt>
+                                    <dd>
+                                        <span><?= $dump ?></span>
+                                        <div id="dumpContent<?= $cnt ?>" class="content dumpPreview">
+                                            <div class="dumpHeader">
+                                                <div class="dumpHeaderSup">
+                                                    <p>
+                                                        <svg viewBox="0 0 32 32">
+                                                            <path d="M1.735 17.832l12.054 6.081 2.152-6.081-12.053-5.758-2.153 5.758zM16.211 17.832l2.045 6.027 12.484-6.081-2.422-5.704-12.107 5.758zM-0.247 7.212l4.144 4.843 12.053-6.134-3.928-5.005-12.269 6.296zM32.247 7.319l-12.001-6.403-4.090 5.005 12.162 6.134 3.929-4.736zM3.175 19.353l-0.041 5.839 12.713 5.893v-10.98l-1.816 4.736-10.856-5.488zM16.291 20.105v10.979l12.674-5.893v-5.799l-10.99 5.46-1.684-4.747z"></path>
+                                                        </svg>
+                                                        Dumped on <?= date ("Y/m/d", filemtime($dumpDir . $dump)) ?>
+                                                        at <?= date ("H\hi", filemtime($dumpDir . $dump)) ?>
+                                                    </p>
+                                                    <span class="closeDumpPreview" data-id="dumpContent<?= $cnt ?>">
+                                                    <svg viewBox="0 0 32 32">
+                                                        <path d="M16 29c-7.18 0-13-5.82-13-13s5.82-13 13-13 13 5.82 13 13-5.82 13-13 13zM21.961 12.209c0.244-0.244 0.244-0.641 0-0.885l-1.328-1.327c-0.244-0.244-0.641-0.244-0.885 0l-3.761 3.761-3.761-3.761c-0.244-0.244-0.641-0.244-0.885 0l-1.328 1.327c-0.244 0.244-0.244 0.641 0 0.885l3.762 3.762-3.762 3.76c-0.244 0.244-0.244 0.641 0 0.885l1.328 1.328c0.244 0.244 0.641 0.244 0.885 0l3.761-3.762 3.761 3.762c0.244 0.244 0.641 0.244 0.885 0l1.328-1.328c0.244-0.244 0.244-0.641 0-0.885l-3.762-3.76 3.762-3.762z"></path>
+                                                    </svg>
+                                                </span>
+                                                </div>
+                                                <div class="scrollRail">
+                                                    <div class="stackRail">
+                                                        <table>
+                                                            <?php
+                                                            foreach (file($dumpDir . $dump) as $nb => $line) { ?>
+                                                                <tr data-line="<?= $nb + 1 ?>" onclick="window.location = '<?= $ide ?><?= urlencode($dumpDir . $dump) ?>&line=<?= $nb + 1 ?>'">
+                                                                    <td class="lines"><code><?= $nb + 1 ?></code></td>
+                                                                    <td><pre><code class="sql"><?= $line ?></code></pre></td>
+                                                                </tr>
+                                                            <?php } ?>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </dd>
+                                </dl>
+                                <?php $cnt--; } ?>
                         </div>
                     </div>
                 </div>

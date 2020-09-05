@@ -10,7 +10,7 @@
     <title>🚧 <?= $data['message'] ?> 🚧</title>
     <link rel="icon" href="/vendor/quantic/igniter/src/Workers/handlerAssets/assets/favicon.png">
     <link rel="stylesheet" href="/vendor/quantic/igniter/src/Wormhole/assets/reset.css" type="text/css">
-    <link rel="stylesheet" href="/vendor/quantic/igniter/src/Wormhole/assets/responsive.css" type="text/css">
+    <link rel="stylesheet" href="/vendor/quantic/igniter/src/Workers/handlerAssets/assets/responsive.css" type="text/css">
     <link rel="stylesheet" href="/vendor/quantic/igniter/src/Wormhole/assets/debugFonts.css" type="text/css">
     <link rel="stylesheet" href="/vendor/quantic/igniter/src/Workers/handlerAssets/assets/styles/ocean.css">
     <link rel="stylesheet" href="/vendor/quantic/igniter/src/Workers/handlerAssets/assets/style.css" type="text/css">

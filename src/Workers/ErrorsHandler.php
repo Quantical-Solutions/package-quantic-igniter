@@ -27,6 +27,9 @@ class ErrorsHandler
         $log_message = self::prepareMessage($message, $file, $line, $sev);
         // Prevent logs from XHR requests
         self::appendSession($log_message);
+        // Get Dumps
+        $dumpDir = ROOTDIR . '/boson/dumps/';
+        $dumps = self::getDumps($dumpDir);
         // Display Error View
         ob_start();
         require_once(ROOTDIR . '/vendor/quantic/igniter/src/Workers/handlerAssets/head.php');
@@ -35,6 +38,19 @@ class ErrorsHandler
         require_once(ROOTDIR . '/vendor/quantic/igniter/src/Workers/handlerAssets/footer.php');
         $content = ob_get_clean();
         echo $content;
+    }
+
+    private static function getDumps($dumpDir)
+    {
+        $dumps = [];
+        if (file_exists($dumpDir)) {
+            foreach (scandir($dumpDir) as $dump) {
+                if ($dump != '.' && $dump != '..' && !is_dir($dumpDir . $dump)) {
+                    array_push($dumps, $dump);
+                }
+            }
+        }
+        return $dumps;
     }
 
     private static function ini()

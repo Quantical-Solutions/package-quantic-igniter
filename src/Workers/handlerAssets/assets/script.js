@@ -131,6 +131,30 @@ for (var i = 0; i < deleters.length; i++) {
     });
 }
 
+var previewDump = document.querySelectorAll('.previewDump');
+for (var i = 0; i < previewDump.length; i++) {
+    previewDump[i].addEventListener('click', function(ev){
+        var target = ev.currentTarget,
+            element = document.querySelector('#' + target.dataset.id),
+            scrollRail = element.querySelector('.scrollRail'),
+            parentHeight = scrollRail.parentElement.scrollHeight,
+            div = scrollRail.previousElementSibling,
+            height = div.offsetHeight;
+
+        scrollRail.style.height = 'calc(100% - ' + height + 'px)';
+        element.classList.add('displayDumpPreview');
+    });
+}
+
+var closeDumpPreview = document.querySelectorAll('.closeDumpPreview');
+for (var i = 0; i < closeDumpPreview.length; i++) {
+    closeDumpPreview[i].addEventListener('click', function(ev){
+        var target = ev.currentTarget,
+            element = document.querySelector('#' + target.dataset.id);
+        element.classList.remove('displayDumpPreview');
+    });
+}
+
 function selectLi(ev) {
 
     var target = ev.currentTarget,

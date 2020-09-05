@@ -495,6 +495,18 @@ class Config
     }
 
     /**
+     * resource_path method
+     * Build the sitemap.xml and robot.txt files at the project's root
+     *
+     * @param $path
+     * @return string
+     */
+    public static function resource_path($path)
+    {
+        return $path;
+    }
+
+    /**
      * setDB method
      * Set connexion to DataBase with Eloquent
      *

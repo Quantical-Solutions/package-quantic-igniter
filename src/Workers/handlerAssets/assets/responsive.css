@@ -1,0 +1,397 @@
+@media only screen and (min-width: 1280px) {
+    /* For wide screens: */
+    .xLarge-1 {width: 8.33%;}
+    .xLarge-2 {width: 16.66%;}
+    .xLarge-3 {width: 25%;}
+    .xLarge-4 {width: 33.33%;}
+    .xLarge-5 {width: 41.66%;}
+    .xLarge-6 {width: 50%;}
+    .xLarge-7 {width: 58.33%;}
+    .xLarge-8 {width: 66.66%;}
+    .xLarge-9 {width: 75%;}
+    .xLarge-10 {width: 83.33%;}
+    .xLarge-11 {width: 91.66%;}
+    .xLarge-12 {width: 100%;}
+}
+
+@media only screen and (min-width: 980px) and (max-width: 1279px) {
+    /* For desktop: */
+    .large-1 {width: 8.33%;}
+    .large-2 {width: 16.66%;}
+    .large-3 {width: 25%;}
+    .large-4 {width: 33.33%;}
+    .large-5 {width: 41.66%;}
+    .large-6 {width: 50%;}
+    .large-7 {width: 58.33%;}
+    .large-8 {width: 66.66%;}
+    .large-9 {width: 75%;}
+    .large-10 {width: 83.33%;}
+    .large-11 {width: 91.66%;}
+    .large-12 {width: 100%;}
+}
+
+@media only screen and (min-width: 520px) and (max-width: 979px) {
+    /* For tablets: */
+    .medium-1 {width: 8.33%;}
+    .medium-2 {width: 16.66%;}
+    .medium-3 {width: 25%;}
+    .medium-4 {width: 33.33%;}
+    .medium-5 {width: 41.66%;}
+    .medium-6 {width: 50%;}
+    .medium-7 {width: 58.33%;}
+    .medium-8 {width: 66.66%;}
+    .medium-9 {width: 75%;}
+    .medium-10 {width: 83.33%;}
+    .medium-11 {width: 91.66%;}
+    .medium-12 {width: 100%;}
+
+    main {
+        background-size: 80%!important;
+    }
+
+    #ideSets {
+        flex-direction: column;
+    }
+
+    #ideImg {
+        width: 100px!important;
+        margin-right: 0!important;
+        margin-bottom: 15px;
+    }
+
+    #ideSets p {
+        text-align: center;
+    }
+
+    #top,
+    #middle {
+        overflow-x: auto;
+    }
+
+    #top>section,
+    #middle .container {
+        width: 600px!important;
+    }
+
+    #displaySolution {
+        width: calc(100% - 60px);
+        justify-content: center;
+        align-items: center;
+    }
+
+    #stackTrace {
+        flex-direction: column;
+    }
+
+    #bottom {
+        height: unset!important;
+    }
+
+    .stdContent dl, #stdContentDumps dl {
+        flex-direction: column;
+    }
+
+    .stdContent dt, #stdContentDumps dt {
+        width: calc(100% - 20px)!important;
+        justify-content: flex-start!important;
+    }
+
+    .stdContent dd, #stdContentDumps dd {
+        width: calc(100% - 20px)!important;
+    }
+
+    .sections h3 {
+        background-image: unset!important;
+        background-color: #2D2D2D!important;
+    }
+
+    .deleters {
+        background-color: #F7F7F7;
+        padding: 5px 10px!important;
+        right: 10px!important;
+        top: 7px!important;
+        border-radius: 3px;
+        border: 1px solid;
+    }
+
+    #queryFilter {
+        flex-direction: column;
+        align-items: flex-start!important;
+        position: relative;
+    }
+
+    .filters {
+        margin: 3px 0!important;
+    }
+
+    #filter {
+        position: absolute;
+        right: 10px;
+        top: 6px;
+    }
+
+    #onglets {
+        justify-content: flex-start!important;
+        overflow-x: auto;
+        overflow-y: hidden;
+        width: max-content!important;
+        padding: 0!important;
+    }
+
+    .liToDrop {
+        width: max-content;
+    }
+
+    .supContent {
+        overflow-x: auto;
+    }
+
+    #onglets::-webkit-scrollbar,
+    .supContent::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 260px) and (max-width: 519px) {
+    /* For mobile: */
+    .small-1 {width: 8.33%;}
+    .small-2 {width: 16.66%;}
+    .small-3 {width: 25%;}
+    .small-4 {width: 33.33%;}
+    .small-5 {width: 41.66%;}
+    .small-6 {width: 50%;}
+    .small-7 {width: 58.33%;}
+    .small-8 {width: 66.66%;}
+    .small-9 {width: 75%;}
+    .small-10 {width: 83.33%;}
+    .small-11 {width: 91.66%;}
+    .small-12 {width: 100%;}
+
+    main {
+        background-size: 100%!important;
+    }
+
+    #ideSets {
+        flex-direction: column;
+    }
+
+    #ideImg {
+        width: 100px!important;
+        margin-right: 0!important;
+        margin-bottom: 15px;
+    }
+
+    #ideSets p {
+        text-align: center;
+    }
+
+    #top,
+    #middle {
+        overflow-x: auto;
+    }
+
+    #top>section,
+    #middle .container {
+        width: 600px!important;
+    }
+
+    #displaySolution {
+        width: calc(100% - 60px);
+        justify-content: center;
+        align-items: center;
+    }
+
+    #stackTrace {
+        flex-direction: column;
+    }
+
+    #bottom {
+        height: unset!important;
+    }
+
+    .stdContent dl, #stdContentDumps dl {
+        flex-direction: column;
+    }
+
+    .stdContent dt, #stdContentDumps dt {
+        width: calc(100% - 20px)!important;
+        justify-content: flex-start!important;
+    }
+
+    .stdContent dd, #stdContentDumps dd {
+        width: calc(100% - 20px)!important;
+    }
+
+    .sections h3 {
+        background-image: unset!important;
+        background-color: #2D2D2D!important;
+    }
+
+    .deleters {
+        background-color: #F7F7F7;
+        padding: 5px 10px!important;
+        right: 10px!important;
+        top: 7px!important;
+        border-radius: 3px;
+        border: 1px solid;
+    }
+
+    #queryFilter {
+        flex-direction: column;
+        align-items: flex-start!important;
+        position: relative;
+    }
+
+    .filters {
+        margin: 3px 0!important;
+    }
+
+    #filter {
+        position: absolute;
+        right: 10px;
+        top: 6px;
+    }
+
+    #onglets {
+        justify-content: flex-start!important;
+        overflow-x: auto;
+        overflow-y: hidden;
+        width: max-content!important;
+        padding: 0!important;
+    }
+
+    .liToDrop {
+        width: max-content;
+    }
+
+    .supContent {
+        overflow-x: auto;
+    }
+
+    #onglets::-webkit-scrollbar,
+    .supContent::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 259px) {
+    /* For watch: */
+    .xSmall-1 {width: 8.33%;}
+    .xSmall-2 {width: 16.66%;}
+    .xSmall-3 {width: 25%;}
+    .xSmall-4 {width: 33.33%;}
+    .xSmall-5 {width: 41.66%;}
+    .xSmall-6 {width: 50%;}
+    .xSmall-7 {width: 58.33%;}
+    .xSmall-8 {width: 66.66%;}
+    .xSmall-9 {width: 75%;}
+    .xSmall-10 {width: 83.33%;}
+    .xSmall-11 {width: 91.66%;}
+    .xSmall-12 {width: 100%;}
+
+    main {
+        background-size: 100%!important;
+    }
+
+    #ideSets {
+        flex-direction: column;
+    }
+
+    #ideImg {
+        width: 100px!important;
+        margin-right: 0!important;
+        margin-bottom: 15px;
+    }
+
+    #ideSets p {
+        text-align: center;
+    }
+
+    #top,
+    #middle {
+        overflow-x: auto;
+    }
+
+    #top>section,
+    #middle .container {
+        width: 600px!important;
+    }
+
+    #displaySolution {
+        width: calc(100% - 60px);
+        justify-content: center;
+        align-items: center;
+    }
+
+    #stackTrace {
+        flex-direction: column;
+    }
+
+    #bottom {
+        height: unset!important;
+    }
+
+    .stdContent dl, #stdContentDumps dl {
+        flex-direction: column;
+    }
+
+    .stdContent dt, #stdContentDumps dt {
+        width: calc(100% - 20px)!important;
+        justify-content: flex-start!important;
+    }
+
+    .stdContent dd, #stdContentDumps dd {
+        width: calc(100% - 20px)!important;
+    }
+
+    .sections h3 {
+        background-image: unset!important;
+        background-color: #2D2D2D!important;
+    }
+
+    .deleters {
+        background-color: #F7F7F7;
+        padding: 5px 10px!important;
+        right: 10px!important;
+        top: 7px!important;
+        border-radius: 3px;
+        border: 1px solid;
+    }
+
+    #queryFilter {
+        flex-direction: column;
+        align-items: flex-start!important;
+        position: relative;
+    }
+
+    .filters {
+        margin: 3px 0!important;
+    }
+
+    #filter {
+        position: absolute;
+        right: 10px;
+        top: 6px;
+    }
+
+    #onglets {
+        justify-content: flex-start!important;
+        overflow-x: auto;
+        overflow-y: hidden;
+        width: max-content!important;
+        padding: 0!important;
+    }
+
+    .liToDrop {
+        width: max-content;
+    }
+
+    .supContent {
+        overflow-x: auto;
+    }
+
+    #onglets::-webkit-scrollbar,
+    .supContent::-webkit-scrollbar {
+        display: none;
+    }
+}
