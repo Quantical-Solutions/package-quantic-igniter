@@ -324,19 +324,20 @@
             </div>
             <div class="stdContent">
                 <h3>Session</h3>
-                <?php $emptySession = 0; ?>
+                <?php $emptySession = 0; $session = []; ?>
                 <?php if (!empty($_SESSION)) { ?>
                     <?php foreach ($_SESSION as $key => $value) {
-                        if ($key != "exceptions" && $key != "last_exception") { ?>
-                            <dl>
-                                <dt><?= $key ?> :</dt>
-                                <dd><?php if (is_string($value)) { echo $value; } else { r($value); } ?></dd>
-                            </dl>
-                            <?php $emptySession = 1; ?>
-                        <?php } else {
-                            $emptySession = 0;
-                        } ?>
-                    <?php } ?>
+                        if ($key != "exceptions" && $key != "last_exception") {
+                            $session[$key] = $value;
+                        }
+                    }
+                    foreach ($session as $key => $value) { ?>
+                        <dl>
+                            <dt><?= $key ?> :</dt>
+                            <dd><?php if (is_string($value)) { echo $value; } else { r($value); } ?></dd>
+                        </dl>
+                        <?php $emptySession = 1;
+                    } ?>
                 <?php }
                 if ($emptySession == 0) { ?>
                     <p>Session global variable is empty</p>
