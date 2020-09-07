@@ -14,15 +14,13 @@
     @include('includes.window')
 </div>
 @if($ux != false)
-    <div id="wormholeBottomBarUXOpen">
-        @include('includes.ux')
-    </div>
+    @include('includes.ux')
 @endif
 <div id="wormholeBottomBar">
     <style>
-        {!! file_get_contents(dirname(__DIR__) . '/assets/debugFonts.css') !!}
-        {!! file_get_contents(dirname(__DIR__) . '/assets/responsive.css') !!}
-        {!! file_get_contents(dirname(__DIR__) . '/assets/style.css') !!}
+        {!! require_once(dirname(__DIR__) . '/assets/debugFonts.css') !!}
+        {!! require_once(dirname(__DIR__) . '/assets/responsive.css') !!}
+        {!! require_once(dirname(__DIR__) . '/assets/style.css') !!}}
     </style>
     <div id="resize-wormholeBottomBar">
         <span>___</span>
@@ -227,7 +225,9 @@
             @include('includes.request')
         </div>
     </div>
-    <script type="text/javascript">{!! file_get_contents(dirname(__DIR__) . '/assets/script.js') !!}</script>
-    <script type="text/javascript">{!! file_get_contents(dirname(__DIR__) . '/assets/timer.js') !!}</script>
-    <script type="text/javascript">{!! file_get_contents(dirname(__DIR__) . '/assets/listeners.js') !!}</script>
+    <script type="text/javascript">
+        {!! require_once(dirname(__DIR__) . '/assets/script.js') !!}
+        {!! require_once(dirname(__DIR__) . '/assets/timer.js') !!}
+        {!! require_once(dirname(__DIR__) . '/assets/listeners.js') !!}
+    </script>
 </div>

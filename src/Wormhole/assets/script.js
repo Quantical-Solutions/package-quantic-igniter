@@ -230,7 +230,7 @@ function setFormatAndContentType() {
     var formatSpan = document.querySelector('#request_format'),
         contentTypeSpan = document.querySelector('#request_content_type'),
         charset = (document.characterSet) ? 'charset=' + document.characterSet : 'charset not defined',
-        format = (document.doctype.name) ? document.doctype.name : 'not defined';
+        format = (document.doctype && document.doctype.name) ? document.doctype.name : 'not defined';
 
     formatSpan.innerHTML = format;
     contentTypeSpan.innerHTML = ((format.toLowerCase() == 'html' || format.toLowerCase() == 'xml') ? 'text/' : 'data/') + format + '; ' + charset;

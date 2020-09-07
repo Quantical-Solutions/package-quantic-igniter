@@ -714,3 +714,7 @@
     font-weight: bold;
     color: #ff531a;
 }
+
+.thin {
+    font-family: 'robotothin', Tahoma, Geneva, sans-serif;
+}
