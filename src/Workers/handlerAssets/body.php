@@ -283,7 +283,7 @@
                     if (ucfirst($key) != 'Cache-Control' && ucfirst($key) != 'Pragma') { ?>
                         <dl>
                             <dt><?= ucfirst($key) ?> :</dt>
-                            <dd><?php if (is_string($value)) { echo $value; } else { dump($value); } ?></dd>
+                            <dd><?php if (is_string($value)) { echo $value; } else { r($value); } ?></dd>
                         </dl>
                     <?php }} ?>
             </div>
@@ -293,7 +293,7 @@
                     <?php foreach ($_POST as $key => $value) { ?>
                         <dl>
                             <dt><?= $key ?> :</dt>
-                            <dd><?php if (is_string($value)) { echo $value; } else { dump($value); } ?></dd>
+                            <dd><?php if (is_string($value)) { echo $value; } else { r($value); } ?></dd>
                         </dl>
                     <?php } ?>
                 <?php } ?>
@@ -301,7 +301,7 @@
                     <?php foreach ($_GET as $key => $value) { ?>
                         <dl>
                             <dt><?= $key ?> :</dt>
-                            <dd><?php if (is_string($value)) { echo $value; } else { dump($value); } ?></dd>
+                            <dd><?php if (is_string($value)) { echo $value; } else { r($value); } ?></dd>
                         </dl>
                     <?php } ?>
                 <?php } ?>
@@ -315,7 +315,7 @@
                     <?php foreach ($_FILES as $key => $value) { ?>
                         <dl>
                             <dt><?= $key ?> :</dt>
-                            <dd><?php if (is_string($value)) { echo $value; } else { dump($value); } ?></dd>
+                            <dd><?php if (is_string($value)) { echo $value; } else { r($value); } ?></dd>
                         </dl>
                     <?php } ?>
                 <?php } else { ?>
@@ -330,7 +330,7 @@
                         if ($key != "exceptions" && $key != "last_exception") { ?>
                             <dl>
                                 <dt><?= $key ?> :</dt>
-                                <dd><?php if (is_string($value)) { echo $value; } else { dump($value); } ?></dd>
+                                <dd><?php if (is_string($value)) { echo $value; } else { r($value); } ?></dd>
                             </dl>
                             <?php $emptySession = 1; ?>
                         <?php } else {
@@ -348,7 +348,7 @@
                     <?php foreach ($_COOKIE as $key => $value) { ?>
                         <dl>
                             <dt><?= $key ?> :</dt>
-                            <dd><?php if (is_string($value)) { echo $value; } else { dump($value); } ?></dd>
+                            <dd><?php if (is_string($value)) { echo $value; } else { r($value); } ?></dd>
                         </dl>
                     <?php } ?>
                 <?php } else { ?>
@@ -464,7 +464,7 @@
                     <dt>Data :</dt>
                     <dd>
                         <?php if (isset($_SESSION['user']) && !empty($_SESSION['user'])) {
-                            dump($_SESSION['user']);
+                            r($_SESSION['user']);
                         } else { ?>
                             <pre></pre>
                         <?php } ?>

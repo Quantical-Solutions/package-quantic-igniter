@@ -1335,7 +1335,11 @@ table {
     color: #55AD78;
 }
 
-.stdContent .sf-dump {
+.stdContent r[data-input=""] {
+    display: none;
+}
+
+.stdContent r[data-output=""] {
     margin: 0;
     padding: 10px;
     width: calc(100% - 20px);
@@ -1344,10 +1348,36 @@ table {
     border-radius: 3px;
     line-height: 1.5em;
     outline: none;
+    box-shadow: unset!important;
 }
 
-.stdContent .sf-dump-default {
-    display: none;
+.stdContent dd div {
+    width: 100%;
+    font : 12px Menlo, Monaco, Consolas, monospace!important;
+}
+
+.ref [data-array], .ref [data-array] ~ i, .ref [data-object], .ref [data-object] ~ i, .ref [data-resource] ~ i {
+    color: #1299DA!important;
+    font-weight: bold;
+}
+
+.ref [data-toggle] {
+    vertical-align: -2px!important;
+    margin-left: 2px!important;
+    border-width: 6px 0 6px 10px!important;
+    border-color: transparent transparent transparent #A0A0A0!important;
+}
+
+.ref {
+    color: inherit!important;
+}
+
+.ref [data-output] [r] {
+    background-color: transparent!important;
+}
+
+.ref [data-gLabel], .ref [gl] {
+    color: #1299DA!important;
 }
 
 .italic {
