@@ -30,6 +30,10 @@ class SQLHandler
         // Get Dumps
         $dumpDir = ROOTDIR . '/boson/dumps/';
         $dumps = self::getDumps($dumpDir);
+        // Get IDE command
+        $ide = self::getIDE();
+        // Get IDE name
+        $ideTitle = self::getIDEName();
         // Display Error View
         ob_start();
         require_once(ROOTDIR . '/vendor/quantic/igniter/src/Workers/handlerAssets/head.php');
@@ -38,6 +42,31 @@ class SQLHandler
         require_once(ROOTDIR . '/vendor/quantic/igniter/src/Workers/handlerAssets/footer.php');
         $content = ob_get_clean();
         echo $content;
+    }
+
+    private static function getIDEName()
+    {
+        $title = '<b class="purple">PhpStorm</b>';
+        switch (config('app.ide')) {
+            case 'phpstorm': $title = '<b class="purple">PhpStorm</b>'; break;
+            case 'sublime': $title = '<b class="orange">Sublime Text</b>'; break;
+            case 'vscode': $title = '<b class="blue">Visual Studio Code</b>'; break;
+            case 'atom': $title = '<b class="green">Atom</b>'; break;
+        }
+        return $title;
+    }
+
+    private static function getIDE()
+    {
+        $ide = 'phpstorm://open?file=';
+        switch (config('app.ide')) {
+            case 'phpstorm': $ide = 'phpstorm://open?file='; break;
+            case 'sublime': $ide = 'sublime://open?file='; break;
+            //case 'sublime': $ide = 'sublime://open?url=file://'; break;
+            case 'vscode': $ide = 'vscode://open?file='; break;
+            case 'atom': $ide = 'atom://open?file='; break;
+        }
+        return $ide;
     }
 
     private static function getDumps($dumpDir)

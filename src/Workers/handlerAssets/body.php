@@ -1,11 +1,3 @@
-<?php
-switch (config('app.ide')) {
-    case 'phpstorm': $ide = 'phpstorm://open?file='; break;
-    case 'sublime': $ide = 'subl://open?url=file://'; break;
-    case 'vscode': $ide = 'vscode://open?file='; break;
-    case 'atom': $ide = 'atom://open?file='; break;
-}
-?>
 <main id="handlerMain">
     <section class="xLarge-12 large-12 medium-12 small-12 xSmall-12 mainSection" id="supertop">
         <section class="xLarge-12 large-12 medium-12 small-12 xSmall-12">
@@ -13,16 +5,7 @@ switch (config('app.ide')) {
                 <div id="ideSets">
                     <img id="ideImg" src="/vendor/quantic/igniter/src/Workers/handlerAssets/assets/ide/<?= config('app.ide') ?>.png">
                     <p>
-                        Your IDE is set on&nbsp;
-                        <?php
-                        switch (config('app.ide')) {
-                            case 'phpstorm': echo '<b class="purple">PhpStorm</b>'; break;
-                            case 'sublime': echo '<b class="orange">Sublime Text</b>'; break;
-                            case 'vscode': echo '<b class="blue">Visual Studio Code</b>'; break;
-                            case 'atom': echo '<b class="green">Atom</b>'; break;
-                        }
-                        ?>
-                        . You can change coding program in&nbsp;&nbsp;<i>"globals/app.php"</i>&nbsp;&nbsp;file.
+                        Your IDE is set on&nbsp;<?= $ideTitle ?>. You can change coding program in&nbsp;&nbsp;<i>"globals/app.php"</i>&nbsp;&nbsp;file.
                     </p>
                 </div>
             </div>

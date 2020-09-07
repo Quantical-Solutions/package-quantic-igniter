@@ -21,6 +21,7 @@
 <div id="wormholeBottomBar">
     <style>
         {!! file_get_contents(dirname(__DIR__) . '/assets/debugFonts.css') !!}
+        {!! file_get_contents(dirname(__DIR__) . '/assets/responsive.css') !!}
         {!! file_get_contents(dirname(__DIR__) . '/assets/style.css') !!}
     </style>
     <div id="resize-wormholeBottomBar">
@@ -179,7 +180,7 @@
                     </svg>
                 </div>
             @endif
-            <div class="wormholeBottomBarHeaderRightParts noBordersRightParts">
+            <div class="wormholeBottomBarHeaderRightParts noBordersRightParts" id="wormholeBottomBarHeaderChevronContainer">
                 <svg class="wormholeBottomBarHeaderRightSvg" id="wormholeBottomBarHeaderChevron" viewBox="0 0 20 20">
                     <path d="M9.293 12.95l0.707 0.707 5.657-5.657-1.414-1.414-4.243 4.242-4.243-4.242-1.414 1.414z"></path>
                 </svg>

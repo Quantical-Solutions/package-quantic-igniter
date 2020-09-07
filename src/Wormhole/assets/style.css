@@ -339,7 +339,7 @@
     align-items: flex-start;
     flex-direction: column;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 35px);
     background-color: #2D2D2D;
     color: #FFF;
     font-family: 'robotoregular', Tahoma, Geneva, sans-serif;
@@ -573,4 +573,144 @@
 
 #wormholeBottomBarFolderOpenFooterBottom label {
     margin-right: 5px;
+}
+
+.mobileHeight {
+    max-height: 40vh;
+    min-height: 40vh;
+}
+
+.mobileHeight #wormholeBottomBarHeaderChevronContainer {
+    display: none!important;
+}
+
+.resize-wormholeBottomBarMobile:hover {
+    background-color: #FFF!important;
+    height: 2px!important;
+}
+
+.mobileHeight .wormholeBottomBarHeaderLeftSelected span {
+    color: #6600cc;
+    font-weight: bold;
+    font-family: 'robotobold', Tahoma, Geneva, sans-serif;
+    visibility: visible!important;
+    top: -26px;
+    left: 1px;
+    width: calc(100% - 12px);
+    text-align: center;
+}
+
+.mobileHeight #wormholeBottomBarHeaderLeft p {
+    position: unset!important;
+}
+
+.wormholeIncludes {
+    width: calc(100% - 5px);
+    margin-left: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.wormholeSearchForm {
+    width: calc(100% - 12px);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 3px 5px;
+    background-color: #3C3C3C;
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    min-height: 25px;
+    max-height: 25px;
+    margin-top: 10px;
+}
+
+.wormholeSearchForm input {
+    width: calc(100% - 25px);
+    outline: none;
+    padding: 3px 10px;
+    border-radius: 2px;
+    border: none;
+    margin: 2px 0;
+    font-family: 'robotolight', Tahoma, Geneva, sans-serif;
+}
+
+.wormholeSearchForm svg {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+.wormholeSearchForm svg path {
+    fill: #FFF;
+}
+
+#wormholeIncludeMessages,
+#wormholeIncludeGate,
+#wormholeIncludeModels,
+#wormholeIncludeViews {
+    height: calc(100% - 35px);
+}
+
+.wormholeIncludes ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.wormholeIncludes ul li {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.wormholeIncludes ul li:nth-child(odd)>label,
+.wormholeIncludes ul li:nth-child(odd)>span {
+    background-color: #3C3C3C;
+}
+
+.wormholeIncludes ul li>label,
+.wormholeIncludes ul li>span{
+    padding: 5px 10px;
+}
+
+.wormholeIncludes ul li>label {
+    width: 140px;
+    font-family: 'robotothin', Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+}
+
+.wormholeIncludes ul li>span {
+    width: calc(100% - 180px);
+    min-width: 600px;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    min-height: 14px;
+}
+
+#wormholeBottomBar .sf-dump {
+    background-color: transparent;
+    margin: 0!important;
+    padding: 0!important;
+    outline: none;
+}
+
+#wormholeBottomBar .sf-dump-default {
+    display: none!important;
+}
+
+.wormhole-greenCode {
+    font-family: 'robotobold', Tahoma, Geneva, sans-serif;
+    font-weight: bold;
+    color: #66cc66;
+}
+
+.wormhole-redCode {
+    font-family: 'robotobold', Tahoma, Geneva, sans-serif;
+    font-weight: bold;
+    color: #ff531a;
 }

@@ -70,7 +70,7 @@
 
     #top>section,
     #middle .container {
-        width: 600px!important;
+        min-width: 600px!important;
     }
 
     #displaySolution {
@@ -192,7 +192,7 @@
 
     #top>section,
     #middle .container {
-        width: 600px!important;
+        min-width: 600px!important;
     }
 
     #displaySolution {
@@ -314,7 +314,7 @@
 
     #top>section,
     #middle .container {
-        width: 600px!important;
+        min-width: 600px!important;
     }
 
     #displaySolution {
