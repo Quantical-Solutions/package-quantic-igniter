@@ -884,6 +884,7 @@
     height: 18px;
     min-height: 18px;
     overflow: hidden;
+    margin-bottom: 10px;
 }
 
 .wormholeNoRender icon {
