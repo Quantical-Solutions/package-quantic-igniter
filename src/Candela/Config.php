@@ -121,8 +121,14 @@ class Config
 
         if (file_exists(ROOTDIR . $resources . '/' . $view . '.blade.php')) {
 
+            $tracer = debug_backtrace();
+            $file = '';
+            if (isset($tracer[1])) {
+                $file = str_replace(ROOTDIR, '', $tracer[1]['file']) . ':' . $tracer[1]['line'];
+            }
             $_ENV['constellation']['main']['view'] = $view;
             $_ENV['constellation']['main']['data'] = $data;
+            $_ENV['constellation']['main']['file'] = $file;
             $blade = new Blade(ROOTDIR . $resources, ROOTDIR . $cache);
             $original = $blade->render($view, $data);
 

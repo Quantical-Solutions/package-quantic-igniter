@@ -3,6 +3,7 @@
 namespace Quantic\Igniter\Workers;
 
 use Quantic\Igniter\Workers\Request;
+use ReflectionClass;
 
 class Constellation
 {
@@ -255,9 +256,11 @@ class Constellation
 
         if (class_exists($controller) && method_exists($controller, $method)) {
 
+            $cl = new ReflectionClass($controller);
             $this->page['controller'] = $controller;
             $this->page['method'] = $method;
             $this->page['options'] = $options;
+            $this->page['namespace'] = $cl->getNamespaceName();
 
             $_ENV['constellation']['main'] = $this->page;
             $new->$method(implode(',', $options));

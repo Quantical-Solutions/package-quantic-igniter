@@ -131,15 +131,6 @@ if (wormholeBody) {
     }, false);
 }
 
-
-
-var wormholeOnglets = document.querySelectorAll('#wormholeBottomBarHeaderLeft p');
-if (wormholeOnglets) {
-    for (var i = 0; i < wormholeOnglets.length; i++) {
-        wormholeOnglets[i].addEventListener('click', displayWormholeContainers);
-    }
-}
-
 function displayWormholeContainers(ev) {
 
     var target = ev.currentTarget;
@@ -204,9 +195,9 @@ function wormholeGetArchives(ev) {
 
 function searchInList(input) {
 
-    var input, filter, ul, li, a, i, txtValue;
+    var filter, ul, li, a, i, txtValue;
     filter = input.value.toUpperCase();
-    ul = document.closest(".wormholeIncludes").querySelector('ul');
+    ul = input.closest(".wormholeBottomBarBodyParts").querySelector('ul');
     if (ul) {
 
         lis = ul.querySelectorAll("li");
@@ -234,4 +225,29 @@ function setFormatAndContentType() {
 
     formatSpan.innerHTML = format;
     contentTypeSpan.innerHTML = ((format.toLowerCase() == 'html' || format.toLowerCase() == 'xml') ? 'text/' : 'data/') + format + '; ' + charset;
+}
+
+function displayWormholeViewsStack(ev) {
+
+    var li = ev.currentTarget,
+        div = li.querySelector('div'),
+        allDivs = document.querySelectorAll('.varsDropDown');
+
+    if (div) {
+
+        if (div.classList.contains('displayViewVars')) {
+            div.classList.remove('displayViewVars');
+        } else {
+            for (var i = 0; i < allDivs.length; i++) {
+                allDivs[i].classList.remove('displayViewVars');
+            }
+            div.classList.add('displayViewVars');
+        }
+
+    } else {
+
+        for (var i = 0; i < allDivs.length; i++) {
+            allDivs[i].classList.remove('displayViewVars');
+        }
+    }
 }

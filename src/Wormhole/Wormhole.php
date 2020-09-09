@@ -10,7 +10,7 @@ use Illuminate\Database\Capsule\Manager as DB;
 
 class Wormhole
 {
-    public static function BottomBar($state, $ux, $array = [])
+    public static function BottomBar($state, $ux, $array = [], $exceptions = [])
     {
         $render = '';
         if ($state == 'show') {
@@ -27,7 +27,8 @@ class Wormhole
                 $activeView,
                 $activeConstellation,
                 $queries,
-                $ux
+                $ux,
+                $exceptions
             );
 
             $blade = new Blade(__DIR__ . '/views', __DIR__ . '/cache');
@@ -37,7 +38,7 @@ class Wormhole
         return $render;
     }
 
-    private static function renderVars($activeView, $activeConstellation, $queries, $ux)
+    private static function renderVars($activeView, $activeConstellation, $queries, $ux, $exceptions)
     {
         $instant = self::getInstantVars(
             $activeView,
@@ -67,6 +68,8 @@ class Wormhole
             : '<span class="wormhole-redCode">' . $code . '</span>';
         $instant['time'] = Carbon::parse($instant['date'], 'UTC')->isoFormat("HH:mm:ss");
 
+        //dump(get_class_methods(DB::class));
+
         return [
             'data' => $data,
             'instant' => $instant,
@@ -83,7 +86,9 @@ class Wormhole
             'query' => $query,
             'status_text' => $status_text,
             'status_code' => $status_code,
-            'path_info' => $path_info
+            'path_info' => $path_info,
+            'exceptions' => $exceptions,
+            'messages' => ''
         ];
     }
 

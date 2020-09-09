@@ -23,6 +23,8 @@ class ErrorsHandler
         $sev = self::severity($severity);
         // Compile error's data
         $data = self::compileData($message, $file, $line, $sev);
+        // ignite BottomBarDebugger
+        $debug = self::debugger($data);
         // Build ErrorsHandler template in buffer
         $log_message = self::prepareMessage($message, $file, $line, $sev);
         // Prevent logs from XHR requests
@@ -90,10 +92,10 @@ class ErrorsHandler
         date_default_timezone_set($timeZone);
     }
 
-    private static function debugger()
+    private static function debugger($data)
     {
         $uxDebugger = (class_exists('Quantic\Uxdebugger\Debugger')) ? Uxdebug::ignite() : false;
-        return Wormhole::BottomBar(config('wormhole.bottombar'), $uxDebugger, []);
+        return Wormhole::BottomBar(config('wormhole.bottombar'), $uxDebugger, [], $data);
     }
 
     private static function severity($error)

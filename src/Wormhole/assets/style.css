@@ -652,6 +652,8 @@
 #wormholeIncludeModels,
 #wormholeIncludeViews {
     height: calc(100% - 35px);
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .wormholeIncludes ul {
@@ -717,4 +719,292 @@
 
 .thin {
     font-family: 'robotothin', Tahoma, Geneva, sans-serif;
+}
+
+#wormholeViewsStack li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    cursor: pointer;
+    width: calc(100% - 20px);
+    padding: 10px;
+}
+
+#wormholeViewsStack li:nth-child(odd) {
+    background-color: #3C3C3C;
+}
+
+#wormholeViewsStack p {
+    width: max-content;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-family: 'robotolight', Tahoma, Geneva, sans-serif;
+}
+
+#wormholeViewsStack p svg {
+    width: 15px;
+    height: 15px;
+    margin: 0 5px;
+}
+
+#wormholeViewsStack p svg path {
+    fill: #FFF;
+}
+
+#wormholeViewsStack p:nth-child(2) {
+    opacity: 0.5;
+}
+
+.varsDropDown {
+    display: none;
+    width: 100%;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 10px 0;
+}
+
+.displayViewVars {
+    display: flex!important;
+}
+
+.varsDropDown table, .varsDropDown th, .varsDropDown td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.varsDropDown th, .varsDropDown td {
+    padding: 5px 10px;
+    text-align: left;
+}
+
+.varsDropDown th {
+    background-color: #191919;
+    font-family: 'robotoregular', Tahoma, Geneva, sans-serif;
+}
+
+.varsDropDown td {
+    font-family: 'robotolight', Tahoma, Geneva, sans-serif;
+    font-size: 12px;
+}
+
+.varsDropDown td:nth-child(1) {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+#timeLineContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+#timeLineTableContainer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 10px;
+}
+
+.timeLineContainers {
+    width: 100%;
+    position: relative;
+    margin: 5px 0;
+    padding: 10px 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.timeLineContainers p {
+    font-family: 'robotolight', Tahoma, Geneva, sans-serif;
+    font-size: 12px;
+    position: relative;
+    z-index: 2;
+    padding: 0 5px;
+}
+
+#timeLineTableContainer table {
+    width: 100%;
+}
+
+#timeLineTableContainer table, #timeLineTableContainer th, #timeLineTableContainer td {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-collapse: collapse;
+}
+
+#timeLineTableContainer td {
+    padding: 10px;
+    text-align: left;
+}
+
+#timeLineTableContainer td div {
+    display: flex;
+    width: 100%;
+}
+
+#timeLineTableContainer td:nth-child(1) {
+    width: 200px;
+    font-family: 'robotobold', Tahoma, Geneva, sans-serif;
+    font-weight: bold;
+}
+
+#timeLineTableContainer td:nth-child(2) {
+    font-family: 'robotolight', Tahoma, Geneva, sans-serif;
+    font-size: 12px;
+}
+
+.bgTimeLine {
+    background-color: purple;
+    padding: 5px;
+    border-bottom: 3px solid;
+    border-radius: 3px;
+}
+
+.timeLineContainers .bgTimeLine {
+    position: absolute;
+    top: 6px;
+    left: 0;
+    height: 10px;
+    z-index: 1;
+}
+
+.wormholeNoRender {
+    background-color: rgba(255, 255, 255, 0.1);
+    width: calc(100% - 20px);
+    padding: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-family: 'robotothin', Tahoma, Geneva, sans-serif;
+    height: 18px;
+    min-height: 18px;
+    overflow: hidden;
+}
+
+.wormholeNoRender icon {
+    font-weight: bold;
+    font-family: 'robotobold', Tahoma, Geneva, sans-serif;
+    font-size: 12px;
+    width: 10px;
+    height: 10px;
+    background-color: #191919;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3px;
+    border-radius: 30px;
+    margin-right: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+#wormholeExceptionHead {
+    position: relative;
+}
+
+#wormholeErrorType {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    padding: 10px;
+    background-color: #191919;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.8);
+    border: 1px solid #3C3C3C;
+    z-index: 2;
+    color: #ff531a;
+    font-family: 'robotobold', Tahoma, Geneva, sans-serif;
+    font-weight: bold;
+    width: max-content!important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#wormholeExceptionHead, #wormholeExceptionDropdown {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+#wormholeFilePreview {
+    width: calc(100% - 2px);
+    background-color: #191919;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 10px 0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#wormholeExceptionHead p {
+    width: 100%;
+}
+
+#wormholeFilePreview table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#wormholeFilePreview table pre {
+    margin: 0;
+}
+
+#wormholeFilePreview .hljs {
+    padding: 0 .5em!important;
+    background-color: transparent!important;
+}
+
+#wormholeFilePreview .lines {
+    background-color: #222222;
+    text-align: center;
+    border-bottom: 1px solid #191919;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+#wormholeFilePreview .errorLine {
+    background-color: #2D2D2D;
+    cursor: default!important;
+}
+
+#wormholeFilePreview .errorLine .lines {
+    background-color: #F7F7F7;
+    color: #3C3C3C;
+}
+
+#wormholeExceptionDropdown ul li {
+    font-family: 'robotoitalic', Tahoma, Geneva, sans-serif;
+    font-style: italic;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 2px 0;
+}
+
+#wormholeExceptionMessage {
+    color: #6600cc;
+    background-color: #FFF;
+    width: max-content!important;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.8);
+    margin-bottom: 10px;
+    font-family: 'robotobold', Tahoma, Geneva, sans-serif;
+    font-weight: bold;
+}
+
+.wormholeTracesNb {
+    color: #FFF;
+    background-color: transparent!important;
+    width: max-content!important;
+    min-width: unset!important;
+    padding: 0!important;
+    border: unset!important;
 }

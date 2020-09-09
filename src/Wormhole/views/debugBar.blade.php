@@ -46,8 +46,8 @@
                 <svg class="wormholeBottomBarHeaderLeftSvg" viewBox="0 0 32 32">
                     <path d="M16.984 16.047h-8v0.906h8v-0.906zM16.984 19.047h-8v0.969h8v-0.969zM12.016 4.016v3.016h-3.032v3.016h-2.953v18.938h13.969v-3.031h2.953v-2.938h3.016v-19h-13.953zM19.031 28.016h-12.031v-17.063h12.031v17.063zM21.984 25.047h-1.984v-15h-10.047v-2.047h12.031v17.047zM25 22.047h-2.047v-15.016h-9.969v-2.047h12.016v17.063zM16.984 25.031h-8v0.969h8v-0.969zM16.984 22.016h-8v0.969h8v-0.969zM16.999 13.016h-8v1h8v-1z"></path>
                 </svg>
-                @if(false)
-                    <span class="wormholeBottomBarCounter">3</span>
+                @if(isset($messages) && !empty($messages))
+                    <span class="wormholeBottomBarCounter">{{ count($messages) }}</span>
                 @endif
             </p>
             <p data-id="wormhole-timeline">
@@ -61,8 +61,8 @@
                 <svg class="wormholeBottomBarHeaderLeftSvg" viewBox="0 0 20 20">
                     <path d="M15.3 14.89l2.77 2.77c0.18 0.181 0.291 0.43 0.291 0.705s-0.111 0.524-0.291 0.705l0-0c-0.181 0.18-0.43 0.291-0.705 0.291s-0.524-0.111-0.705-0.291l0 0-2.59-2.58c-0.825 0.765-1.872 1.303-3.034 1.505l-0.036 0.005v-8.96c0-0.552-0.448-1-1-1s-1 0.448-1 1v0 8.96c-1.198-0.207-2.245-0.744-3.074-1.513l0.004 0.003-2.59 2.58c-0.181 0.18-0.43 0.291-0.705 0.291s-0.524-0.111-0.705-0.291l0 0c-0.18-0.181-0.291-0.43-0.291-0.705s0.111-0.524 0.291-0.705l2.77-2.77c-0.298-0.547-0.518-1.183-0.626-1.856l-0.004-0.034h-3.070c-0.552 0-1-0.448-1-1s0.448-1 1-1v0h3v-2.59l-3.070-3.070c-0.18-0.181-0.291-0.43-0.291-0.705s0.111-0.524 0.291-0.705l-0 0c0.181-0.18 0.43-0.291 0.705-0.291s0.524 0.111 0.705 0.291l2.1 2.1h11.12l2.1-2.1c0.181-0.18 0.43-0.291 0.705-0.291s0.524 0.111 0.705 0.291l-0-0c0.18 0.181 0.291 0.43 0.291 0.705s-0.111 0.524-0.291 0.705l-3.070 3.070v2.59h3c0.552 0 1 0.448 1 1s-0.448 1-1 1v0h-3.070c-0.1 0.67-0.32 1.31-0.63 1.89zM15 5h-10c0-2.761 2.239-5 5-5s5 2.239 5 5v0z"></path>
                 </svg>
-                @if(false)
-                    <span class="wormholeBottomBarCounter">3</span>
+                @if(isset($exceptions) && !empty($exceptions))
+                    <span class="wormholeBottomBarCounter">1</span>
                 @endif
             </p>
             <p data-id="wormhole-views">
@@ -70,8 +70,8 @@
                 <svg class="wormholeBottomBarHeaderLeftSvg" viewBox="0 0 20 20">
                     <path d="M19.025 3.587c-4.356 2.556-4.044 7.806-7.096 10.175-2.297 1.783-5.538 0.88-7.412 0.113 0 0-1.27 1.603-2.181 3.74-0.305 0.717-1.644-0.073-1.409-0.68 2.978-7.685 13.11-11.519 13.11-11.519s-7.149-0.303-11.927 5.94c-0.128-1.426-0.34-5.284 3.36-7.65 5.016-3.211 14.572-0.715 13.555-0.119z"></path>
                 </svg>
-                @if(true)
-                    <span class="wormholeBottomBarCounter">3</span>
+                @if(isset($instant['views']) && count($instant['views']) > 0)
+                    <span class="wormholeBottomBarCounter">{{ count($instant['views']) }}</span>
                 @endif
             </p>
             <p data-id="wormhole-constellation">
@@ -85,8 +85,8 @@
                 <svg class="wormholeBottomBarHeaderLeftSvg" viewBox="0 0 20 20">
                     <path d="M16.726 12.641c-0.843 1.363-3.535 2.361-6.726 2.361s-5.883-0.998-6.727-2.361c-0.178-0.29-0.273-0.135-0.273 0.007 0 0.144 0 2.002 0 2.002 0 1.94 3.134 3.95 7 3.95s7-2.010 7-3.949c0 0 0-1.858 0-2.002s-0.096-0.298-0.274-0.008zM16.737 7.525c-0.83 1.205-3.532 2.090-6.737 2.090s-5.908-0.885-6.738-2.090c-0.171-0.248-0.262-0.113-0.262-0.002 0 0.113 0 2.357 0 2.357 0 1.762 3.134 3.189 7 3.189s7-1.428 7-3.189c0 0 0-2.244 0-2.357 0-0.111-0.092-0.246-0.263 0.002zM10 1c-3.866 0-7 1.18-7 2.633v1.26c0 1.541 3.134 2.791 7 2.791s7-1.25 7-2.791v-1.26c0-1.453-3.134-2.633-7-2.633z"></path>
                 </svg>
-                @if(false)
-                    <span class="wormholeBottomBarCounter">3</span>
+                @if(isset($queries) && !empty($queries))
+                    <span class="wormholeBottomBarCounter">{{ count($queries) }}</span>
                 @endif
             </p>
             <p data-id="wormhole-models">
@@ -94,8 +94,8 @@
                 <svg class="wormholeBottomBarHeaderLeftSvg" viewBox="0 0 32 32">
                     <path d="M28.608 11.246l-12.608-8.632-12.608 8.632 12.608 8.631 12.608-8.631zM16 21.803l-11.129-7.338-1.479 1.535 12.608 8.631 12.608-8.631-1.499-1.568-11.109 7.371zM16 26.559l-11.129-7.338-1.479 1.535 12.608 8.631 12.608-8.631-1.499-1.568-11.109 7.371z"></path>
                 </svg>
-                @if(false)
-                    <span class="wormholeBottomBarCounter">3</span>
+                @if(isset($models) && !empty($models))
+                    <span class="wormholeBottomBarCounter">{{ count($models) }}</span>
                 @endif
             </p>
             <p data-id="wormhole-mails">
@@ -103,8 +103,8 @@
                 <svg class="wormholeBottomBarHeaderLeftSvg" viewBox="0 0 32 32">
                     <path d="M21.6 8h-11l-6.6 9v5c0 1.104 0.896 2 2 2h20c1.104 0 2-0.896 2-2v-5l-6.4-9zM22.465 17.023l-2.052 3.002-8.588-0.020-2.202-2.994-4.086-0.024 5.663-7.974h9.8l5.6 7.975-4.135 0.035z"></path>
                 </svg>
-                @if(false)
-                    <span class="wormholeBottomBarCounter">3</span>
+                @if(isset($mails) && !empty($mails))
+                    <span class="wormholeBottomBarCounter">{{ count($mails) }}</span>
                 @endif
             </p>
             <p data-id="wormhole-gate">
@@ -112,8 +112,8 @@
                 <svg class="wormholeBottomBarHeaderLeftSvg" viewBox="0 0 32 32">
                     <path d="M27 29l-1.999-0.062v2.062h-3v-2h-11.938l-0.062 2h-3v-1.938l-2.001-0.062c-1.104 0-2-0.896-2-2v-24c0-1.104 0.896-2 2-2h22c1.104 0 2 0.896 2 2v24c0 1.104-0.896 2-2 2zM26 4h-20v3.958l-0.979-0.020v3.083h0.979v7.917h-1v3.062h1v4h20v-22zM25 25h-18v-3h1v-3.062h-1v-7.938h1l0.021-3.042h-1.021v-2.958h18v20zM14.562 10.562c-2.209 0-4 1.791-4 4s1.791 4 4 4c2.21 0 4-1.791 4-4s-1.79-4-4-4zM23.5 11.518c0-0.553-0.447-1-1-1-0.552 0-1 0.447-1 1 0 0.366 0.207 0.673 0.5 0.847v5.289c-0.293 0.174-0.5 0.48-0.5 0.847 0 0.552 0.448 1 1 1 0.553 0 1-0.448 1-1 0-0.394-0.232-0.726-0.562-0.889v-5.205c0.33-0.164 0.562-0.496 0.562-0.889zM14.5 16.25c-0.828 0-1.5-0.672-1.5-1.5 0-0.829 0.672-1.5 1.5-1.5 0.829 0 1.5 0.671 1.5 1.5 0 0.828-0.671 1.5-1.5 1.5z"></path>
                 </svg>
-                @if(false)
-                    <span class="wormholeBottomBarCounter">3</span>
+                @if(isset($gates) && !empty($gates))
+                    <span class="wormholeBottomBarCounter">{{ count($gates) }}</span>
                 @endif
             </p>
             <p data-id="wormhole-session">

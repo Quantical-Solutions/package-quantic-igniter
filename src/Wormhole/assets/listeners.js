@@ -53,3 +53,17 @@ if (debuggerShowSession) {
         debuggerShowSession[i].addEventListener('click', wormholeGetArchives);
     }
 }
+
+// Display Containers
+var wormholeOnglets = document.querySelectorAll('#wormholeBottomBarHeaderLeft p');
+if (wormholeOnglets) {
+    for (var i = 0; i < wormholeOnglets.length; i++) {
+        wormholeOnglets[i].addEventListener('click', displayWormholeContainers);
+    }
+}
+
+// Display views params
+var wormholeViewsStack = document.querySelectorAll('#wormholeViewsStack li');
+for (var i = 0; i < wormholeViewsStack.length; i++) {
+    wormholeViewsStack[i].addEventListener('click', displayWormholeViewsStack);
+}
