@@ -7,6 +7,7 @@ use Quantic\Igniter\Spectral\ConstellationCollector as ConstellationCollector;
 use Carbon\Carbon;
 use Jenssegers\Blade\Blade;
 use Illuminate\Database\Capsule\Manager as DB;
+use Quantic\Igniter\Origins\MatrixExpander as Expander;
 
 class Wormhole
 {
@@ -16,6 +17,7 @@ class Wormhole
         if ($state == 'show') {
 
             $queries = DB::getQueryLog();
+            wormAddModel(Expander::$models);
 
             $viewCollector = new ViewsCollector;
             $activeView = $viewCollector->viewParser($array);
@@ -30,6 +32,8 @@ class Wormhole
                 $ux,
                 $exceptions
             );
+
+            dump(wormCollect());
 
             $blade = new Blade(__DIR__ . '/views', __DIR__ . '/cache');
             $render = $blade->render('debugBar', $renderVars);

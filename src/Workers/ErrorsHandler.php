@@ -17,8 +17,6 @@ class ErrorsHandler
         self::ini();
         // Get all queries
         $queries = DB::getQueryLog();
-        // ignite BottomBarDebugger
-        $debug = self::debugger();
         // Translate Severity Error
         $sev = self::severity($severity);
         // Compile error's data

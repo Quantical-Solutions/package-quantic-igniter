@@ -9,6 +9,7 @@ use Quantic\Uxdebugger\Debugger as Uxdebug;
 use Quantic\Igniter\Solutions\Solutions;
 use Quantic\Igniter\Candela\Expander as Database;
 use Illuminate\Database\Capsule\Manager as DB;
+use Quantic\Igniter\Workers\DataCollector;
 
 class Config
 {
@@ -522,5 +523,53 @@ class Config
     {
         new Database();
         DB::connection()->enableQueryLog();
+    }
+
+    /**
+     * addMessage method
+     * Add messages to the collection of DataCollector Object
+     *
+     * @param $data
+     * @param $level
+     * @return void
+     */
+    public static function addMessage($data, $level)
+    {
+        DataCollector::addMessage($data, $level);
+    }
+
+    /**
+     * addModel method
+     * Add models to the collection of DataCollector Object
+     *
+     * @param $data
+     * @return void
+     */
+    public static function addModel($data)
+    {
+        DataCollector::addModel($data);
+    }
+
+    /**
+     * addQuery method
+     * Add queries to the collection of DataCollector Object
+     *
+     * @param $data
+     * @return void
+     */
+    public static function addQuery($data)
+    {
+        DataCollector::addQuery($data);
+    }
+
+    /**
+     * collect method
+     * Return a collection of DataCollector Object
+     *
+     * @return mixed
+     */
+    public static function collect()
+    {
+        return DataCollector::collect();
     }
 }
