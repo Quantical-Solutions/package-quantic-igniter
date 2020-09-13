@@ -1127,3 +1127,8 @@ svg.wormholeWARNING path {
 svg.wormholeERROR path {
     fill: firebrick;
 }
+
+.hljs {
+    background-color: transparent!important;
+    padding: 0 0.5em!important;
+}
