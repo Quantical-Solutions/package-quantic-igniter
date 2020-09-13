@@ -34,7 +34,6 @@
                     <pre><code class="html">{{ $message['message'] }}</code></pre>
                     @else
                     </div>
-                    <div>
                         @if($message['is_string'] == true)
                     <div>
                         <p class="wormhole{{ $message['type'] }}">"{{ $message['message'] }}"</p>
