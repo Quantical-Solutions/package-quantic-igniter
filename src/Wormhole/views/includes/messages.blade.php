@@ -43,8 +43,9 @@
                     <div>
                         <p class="wormhole{{ $message['type'] }}">{{ $message['message'] }}</p>
                     </div>
-                    @else
-                    @php dump($message['message']) @endphp
+                        @else
+                        @php dump($message['message']) @endphp
+                        @endif
                     @endif
                 </li>
             @endforeach
