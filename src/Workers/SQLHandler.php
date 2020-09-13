@@ -105,6 +105,9 @@ class SQLHandler
 
     private static function compileData($exception, $sev)
     {
+        $wormMessage = '[' . date("Y-m-d") . '] ' . $exception->getMessage();
+        wormAddMessage($wormMessage, 3);
+
         return [
             'error' => 'SQLHandler',
             'solution' => Solutions::analyse($exception->getMessage()),

@@ -4,6 +4,13 @@
 * =================================================================
 */
 
+// Load HighLight.js
+document.addEventListener('DOMContentLoaded', (event) => {
+    document.querySelectorAll('pre code').forEach((block) => {
+        hljs.highlightBlock(block);
+    });
+});
+
 // Open Debugger
 var wormholeBottomBarBtn = document.querySelector('#wormholeBottomBarBtn');
 if (wormholeBottomBarBtn) {

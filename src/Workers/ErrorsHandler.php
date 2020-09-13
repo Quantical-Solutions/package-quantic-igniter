@@ -121,6 +121,10 @@ class ErrorsHandler
                 array_push($traces, $trace);
             }
         }
+
+        $wormMessage = '[' . date("Y-m-d") . '] ' . $message;
+        wormAddMessage($wormMessage, 3);
+
         return [
             'error' => 'ErrorsHandler',
             'solution' => Solutions::analyse($message),

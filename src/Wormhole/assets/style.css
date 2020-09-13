@@ -685,6 +685,7 @@
     width: 140px;
     font-family: 'robotothin', Tahoma, Geneva, sans-serif;
     font-size: 14px;
+    word-break: break-all;
 }
 
 .wormholeIncludes ul li>span {
@@ -694,11 +695,19 @@
     min-height: 14px;
 }
 
-#wormholeBottomBar .sf-dump {
+.wormholeIncludes:not(#wormholeIncludeMessages) .sf-dump {
     background-color: transparent;
     margin: 0!important;
     padding: 0!important;
     outline: none;
+}
+
+#wormholeIncludeMessages .sf-dump {
+    background-color: transparent;
+    margin: 10px 0 0 0!important;
+    padding: 0 10px!important;
+    outline: none;
+    border: unset!important;
 }
 
 #wormholeBottomBar .sf-dump-default {
@@ -721,18 +730,78 @@
     font-family: 'robotothin', Tahoma, Geneva, sans-serif;
 }
 
+#wormholeModelsStack li,
+#wormholeMessagesStack li {
+    justify-content: flex-start;
+}
+
 #wormholeViewsStack li {
-    display: flex;
     justify-content: space-between;
+}
+
+#wormholeViewsStack li {
+    cursor: pointer;
+}
+
+#wormholeViewsStack li,
+#wormholeModelsStack li,
+#wormholeMessagesStack li {
+    display: flex;
     align-items: center;
     flex-wrap: wrap;
-    cursor: pointer;
     width: calc(100% - 20px);
     padding: 10px;
 }
 
-#wormholeViewsStack li:nth-child(odd) {
+#wormholeMessagesStack li pre {
+    background-color: #191919;
+    width: calc(100% - 20px);
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    max-height: 200px;
+    overflow: auto;
+}
+
+#wormholeMessagesStack li {
+    flex-wrap: wrap;
+}
+
+#wormholeViewsStack li:nth-child(odd),
+#wormholeModelsStack li:nth-child(odd),
+#wormholeMessagesStack li:nth-child(odd) {
     background-color: #3C3C3C;
+}
+
+#wormholeModelsStack li span {
+    margin-left: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 100px;
+    background-color: #6600cc;
+    width: 20px!important;
+    height: 8px!important;
+    min-width: unset!important;
+    min-height: unset!important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#wormholeMessagesStack li>div:first-of-type {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    padding: 5px 8px;
+    background-color: #191919;
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin-right: 10px;
+}
+
+#wormholeMessagesStack li>div:last-of-type {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
 }
 
 #wormholeViewsStack p {
@@ -1008,4 +1077,53 @@
     min-width: unset!important;
     padding: 0!important;
     border: unset!important;
+}
+
+span.wormholeDUMP {
+    color: forestgreen;
+}
+
+span.wormholeINFO {
+    color: steelblue;
+}
+
+span.wormholeWARNING {
+    color: darkorange;
+}
+
+span.wormholeERROR,
+p.wormholeERROR {
+    color: firebrick;
+}
+
+p.wormholeERROR {
+    background-color: #191919;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+svg.wormholeDUMP,
+svg.wormholeINFO,
+svg.wormholeWARNING,
+svg.wormholeERROR {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+}
+
+svg.wormholeDUMP path {
+    fill: forestgreen;
+}
+
+svg.wormholeINFO path {
+    fill: steelblue;
+}
+
+svg.wormholeWARNING path {
+    fill: darkorange;
+}
+
+svg.wormholeERROR path {
+    fill: firebrick;
 }

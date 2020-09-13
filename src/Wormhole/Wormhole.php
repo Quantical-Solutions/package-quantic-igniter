@@ -18,22 +18,22 @@ class Wormhole
 
             $queries = DB::getQueryLog();
             wormAddModel(Expander::$models);
+            $collector = wormCollect();
 
             $viewCollector = new ViewsCollector;
-            $activeView = $viewCollector->viewParser($array);
+            $collector['views'] = $viewCollector->viewParser($array);
 
             $constellationCollector =  new ConstellationCollector;
             $activeConstellation = $constellationCollector->constellationParser();
 
-            $renderVars = self::renderVars(
-                $activeView,
-                $activeConstellation,
-                $queries,
-                $ux,
-                $exceptions
-            );
+            $collector['exceptions'] = $exceptions;
+            dump($collector);
 
-            dump(wormCollect());
+            $renderVars = self::renderVars(
+                $activeConstellation,
+                $ux,
+                $collector
+            );
 
             $blade = new Blade(__DIR__ . '/views', __DIR__ . '/cache');
             $render = $blade->render('debugBar', $renderVars);
@@ -42,10 +42,10 @@ class Wormhole
         return $render;
     }
 
-    private static function renderVars($activeView, $activeConstellation, $queries, $ux, $exceptions)
+    private static function renderVars($activeConstellation, $ux, $collector)
     {
         $instant = self::getInstantVars(
-            $activeView,
+            $collector['views'],
             $activeConstellation
         );
 
@@ -72,15 +72,13 @@ class Wormhole
             : '<span class="wormhole-redCode">' . $code . '</span>';
         $instant['time'] = Carbon::parse($instant['date'], 'UTC')->isoFormat("HH:mm:ss");
 
-        //dump(get_class_methods(DB::class));
-
         return [
             'data' => $data,
             'instant' => $instant,
             'ux' => $ux,
             'constellation' => $activeConstellation,
             'env' => $_ENV,
-            'queries' => $queries,
+            'queries' => $collector['queries'],
             'session' => $session,
             'headers_list' => $headers_list,
             'cookies' => $cookies,
@@ -91,8 +89,11 @@ class Wormhole
             'status_text' => $status_text,
             'status_code' => $status_code,
             'path_info' => $path_info,
-            'exceptions' => $exceptions,
-            'messages' => ''
+            'exceptions' => $collector['exceptions'],
+            'messages' => $collector['messages'],
+            'models' => $collector['models'],
+            'gate' => $collector['gate'],
+            'mails' => $collector['mails'],
         ];
     }
 

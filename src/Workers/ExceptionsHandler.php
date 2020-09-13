@@ -114,6 +114,10 @@ class ExceptionsHandler
 
     private static function compileData($exception, $sev)
     {
+
+        $wormMessage = '[' . date("Y-m-d") . '] ' . $exception->getMessage();
+        wormAddMessage($wormMessage, 3);
+
         return [
             'error' => 'ExceptionsHandler',
             'solution' => Solutions::analyse($exception->getMessage()),

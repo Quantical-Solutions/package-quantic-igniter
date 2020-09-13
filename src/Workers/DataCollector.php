@@ -4,19 +4,32 @@ namespace Quantic\Igniter\Workers;
 
 class DataCollector
 {
-    public static array $reporter = ['messages' => [], 'models' => [], 'queries' => []];
+    public static array $reporter = ['messages' => [], 'models' => [], 'queries' => [], 'mails' => [], 'gate' => []];
 
     public static function addMessage($data, $level)
     {
         if (is_int($level) && $level >= 0 && $level <= 3) {
 
-            $response = [
-                'message' => $data,
-                'is_html' => self::is_html($data),
-                'is_string' => self::is_string($data),
-                'type' => self::type($level),
-                'time' => self::setTimeStamp()
-            ];
+            if (!is_array($data) && !is_object($data)) {
+
+                $response = [
+                    'message' => $data,
+                    'is_html' => self::is_html($data),
+                    'is_string' => self::is_string($data),
+                    'type' => self::type($level),
+                    'time' => self::setTimeStamp()
+                ];
+
+            } else {
+
+                $response = [
+                    'message' => $data,
+                    'is_html' => false,
+                    'is_string' => false,
+                    'type' => self::type($level),
+                    'time' => self::setTimeStamp()
+                ];
+            }
 
             array_push(self::$reporter['messages'], $response);
 
