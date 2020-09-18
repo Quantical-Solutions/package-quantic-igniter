@@ -7,6 +7,11 @@ use Quantic\Igniter\Workers\SQLHandler;
 use Quantic\Igniter\Solutions\Solutions;
 use Quantic\Igniter\Workers\SwiftMailerCollector as Mail;
 
+session_start();
+define('QUANTIC_START', microtime(true));
+$path = explode('/vendor' , __DIR__)[0];
+define('ROOTDIR', $path);
+
 /**
  * redirectTo404ErrorPage function
  *
