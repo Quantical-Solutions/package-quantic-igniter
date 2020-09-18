@@ -563,6 +563,18 @@ class Config
     }
 
     /**
+     * addGates method
+     * Add gates to the collection of DataCollector Object
+     *
+     * @param $data
+     * @return void
+     */
+    public static function addGates($data)
+    {
+        DataCollector::addGates($data);
+    }
+
+    /**
      * addQuery method
      * Add queries to the collection of DataCollector Object
      *

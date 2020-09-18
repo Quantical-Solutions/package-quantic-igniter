@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Jenssegers\Blade\Blade;
 use Quantic\Igniter\Origins\MatrixExpander as Expander;
 use Quantic\Igniter\Workers\SwiftMailerCollector as Mail;
+use Quantic\Igniter\Workers\Gate;
 
 class Wormhole
 {
@@ -22,6 +23,7 @@ class Wormhole
             wormAddQueries($queries, $traces);
             wormAddMail(Mail::$report);
             wormAddModel(Expander::$models);
+            wormAddGates(Gate::$report);
             $collector = wormCollect();
 
             $viewCollector = new ViewsCollector;

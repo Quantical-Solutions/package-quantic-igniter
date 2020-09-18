@@ -79,6 +79,13 @@ class DataCollector
         }
     }
 
+    public static function addGates($data)
+    {
+        if (!empty($data)) {
+            self::$reporter['gate'] = $data;
+        }
+    }
+
     public static function addQueries($queries, $traces)
     {
         $data = [];
