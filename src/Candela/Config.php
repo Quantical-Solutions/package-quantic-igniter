@@ -9,7 +9,7 @@ use Quantic\Uxdebugger\Debugger as Uxdebug;
 use Quantic\Igniter\Solutions\Solutions;
 use Quantic\Igniter\Candela\Expander as Database;
 use Illuminate\Database\Capsule\Manager as DB;
-use Quantic\Igniter\Workers\DataCollector;
+use Quantic\Igniter\Spectral\DataCollector;
 
 class Config
 {
@@ -551,15 +551,28 @@ class Config
     }
 
     /**
-     * addQuery method
-     * Add queries to the collection of DataCollector Object
+     * addMails method
+     * Add mails to the collection of DataCollector Object
      *
      * @param $data
      * @return void
      */
-    public static function addQuery($data)
+    public static function addMails($data)
     {
-        DataCollector::addQuery($data);
+        DataCollector::addMails($data);
+    }
+
+    /**
+     * addQuery method
+     * Add queries to the collection of DataCollector Object
+     *
+     * @param $queries
+     * @param $traces
+     * @return void
+     */
+    public static function addQueries($queries, $traces)
+    {
+        DataCollector::addQueries($queries, $traces);
     }
 
     /**

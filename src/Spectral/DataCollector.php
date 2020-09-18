@@ -1,6 +1,6 @@
 <?php
 
-namespace Quantic\Igniter\Workers;
+namespace Quantic\Igniter\Spectral;
 
 class DataCollector
 {
@@ -67,21 +67,75 @@ class DataCollector
 
     public static function addModel($data)
     {
-        $response = [
-            'test' => $data
-        ];
-
         if (!empty($data)) {
             array_push(self::$reporter['models'], $data);
         }
     }
 
-    public static function addQuery($data)
+    public static function addMails($data)
     {
-        $response = [
-            'test' => $data
-        ];
-        array_push(self::$reporter['queries'], $response);
+        if (!empty($data)) {
+            self::$reporter['mails'] = $data;
+        }
+    }
+
+    public static function addQueries($queries, $traces)
+    {
+        $data = [];
+        $groups = [];
+        for ($i = 1; $i < count($queries); $i++) {
+            $data[$i-1]['queries'] = $queries[$i];
+            $data[$i-1]['traces'] = $traces[$i-1];
+        }
+        foreach ($data as $datum) {
+            $group = [];
+            $bindings = $datum['queries']['bindings'];
+            $count = count($datum['queries']['bindings']);
+            $bindedQuery = $datum['queries']['query'];
+
+            if ($count > 0) {
+
+                $cnt = substr_count($datum['queries']['query'], '?');
+                $binds = [];
+                for ($i = 0; $i < $cnt; $i++) {
+                    array_push($binds, '?');
+                }
+                foreach ($bindings as $key => $binding) {
+                    $b = (is_string($binding)) ? "' . $binding . '" : $binding;
+                    $bindings[$key] = $b;
+                }
+                $bindedQuery = str_replace($binds, $bindings, $datum['queries']['query']);
+            }
+
+            $group['query'] = $bindedQuery;
+            $group['time'] = $datum['queries']['time'];
+            foreach ($datum['traces'] as $key => $trace) {
+                if ($key == 'file') {
+                    $datum['traces'][$key] = str_replace(ROOTDIR . '/', '', $trace);
+                }
+                $group['func'] = $datum['traces']['function'] . '(<span class="wormArgs">' . implode('</span>, <span class="wormArgs">', $datum['traces']['args']) . '</span>)';
+
+                $group['loc'] = $datum['traces']['file'] . ':' . $datum['traces']['line'];
+
+                $group['db'] = config('database.connections')[config('database.default')]['database'];
+
+                if ($key == 'class' && $key == 'type') {
+
+                    $group[$key] = $trace;
+                }
+            }
+            array_push($groups, $group);
+        }
+        $array = array_values(
+            array_map(
+                "unserialize", array_unique(
+                    array_map(
+                        "serialize", $groups
+                    )
+                )
+            )
+        );
+        self::$reporter['queries'] = $array;
     }
 
     private static function setTimeStamp()
@@ -91,7 +145,7 @@ class DataCollector
 
     public static function collect()
     {
-        self::trimModels();
+        self::trimArray('models');
         return self::$reporter;
     }
 
@@ -122,13 +176,13 @@ class DataCollector
         return $final;
     }
 
-    private static function trimModels()
+    private static function trimArray($type)
     {
         $array = array_values(
             array_map(
                 "unserialize", array_unique(
                     array_map(
-                        "serialize", self::$reporter['models']
+                        "serialize", self::$reporter[$type]
                     )
                 )
             )
@@ -136,6 +190,6 @@ class DataCollector
 
         $final = end($array);
         $unique = self::arrayUnique($final);
-        self::$reporter['models'] = $unique;
+        self::$reporter[$type] = $unique;
     }
 }

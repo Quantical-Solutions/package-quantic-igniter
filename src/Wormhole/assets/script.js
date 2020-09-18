@@ -289,5 +289,19 @@ function displayWormholeViewsStack(ev) {
     }
 }
 
+function displayBodyPreview(elmt, mode) {
+
+    if (mode == 'show') {
+
+        var div = elmt.nextElementSibling;
+        div.classList.add('displayWormholePreviewBody');
+
+    } else if (mode == 'hide') {
+
+        var div = elmt.closest('.wormholePreviewBody');
+        div.classList.remove('displayWormholePreviewBody');
+    }
+}
+
 
 
