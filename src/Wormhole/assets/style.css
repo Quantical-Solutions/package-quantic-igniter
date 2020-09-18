@@ -1358,3 +1358,7 @@ svg.wormholeERROR path {
 .openWormholePreviewMailCode svg path {
     fill: #6600cc;
 }
+
+pre.sf-dump {
+    max-height: unset!important;
+}

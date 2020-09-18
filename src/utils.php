@@ -40,6 +40,7 @@ if (!function_exists('terminate')) {
         if (!defined('CHECKRENDER')) {
             redirectTo404ErrorPage();
         }
+        $_SESSION['_previous'] = (($_SERVER['HTTPS']) ? 'https://' : 'http://') . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
     }
 }
 
@@ -348,6 +349,7 @@ if (!function_exists('tracer')) {
     }
 }
 
+if (!isset($_SESSION['_previous'])) { $_SESSION['_previous'] = ''; }
 symlinker();
 set_exception_handler('exception_handler');
 set_error_handler('error_handler');
