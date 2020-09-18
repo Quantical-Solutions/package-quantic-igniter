@@ -418,7 +418,7 @@ class Config
      */
     public static function config($str)
     {
-        $globals = ROOTDIR . '/globals/';
+        $globals = ROOTDIR . '/config/';
         $response = 'Wrong string parameter format in config() function : ' . $str . ' isn\'t a valid argument.';
 
         if (count(explode('.', $str)) == 2) {

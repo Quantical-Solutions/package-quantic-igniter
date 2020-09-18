@@ -9,8 +9,12 @@ use Quantic\Igniter\Workers\SwiftMailerCollector as Mail;
 
 session_start();
 define('QUANTIC_START', microtime(true));
+
 $path = explode('/vendor' , __DIR__)[0];
 define('ROOTDIR', $path);
+
+include_once ROOTDIR .'/vendor/owasp/csrf-protector-php/libs/csrf/csrfprotector.php';
+csrfProtector::init();
 
 /**
  * redirectTo404ErrorPage function
@@ -349,7 +353,46 @@ if (!function_exists('tracer')) {
     }
 }
 
-if (!isset($_SESSION['_previous'])) { $_SESSION['_previous'] = ''; }
+/**
+ * csrf_token function
+ *
+ * Return CSRF Token
+ */
+if (!function_exists('csrf_token')) {
+    function csrf_token()
+    {
+        return end($_SESSION['_token']);
+    }
+}
+
+/**
+ * csrf_field function
+ *
+ * Return <input> HTML Tag for Blade @csrf call
+ */
+if (!function_exists('csrf_field')) {
+    function csrf_field()
+    {
+        return '<input type="hidden" name="_token" value="' . csrf_token() . '">';
+    }
+}
+
 symlinker();
+
+/*
+ * ==================================================================
+ * ===================== Set Session attributes =====================
+ * ==================================================================
+ */
+
+if (!isset($_SESSION['_previous'])) { $_SESSION['_previous'] = ''; }
+$_SESSION['locale'] = config('app.locale');
+
+/*
+ * ==================================================================
+ * ========================== Set Handlers ==========================
+ * ==================================================================
+ */
+
 set_exception_handler('exception_handler');
 set_error_handler('error_handler');
