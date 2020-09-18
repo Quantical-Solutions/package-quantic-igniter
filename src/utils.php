@@ -342,3 +342,7 @@ if (!function_exists('tracer')) {
         return $debug[$index]['file'];
     }
 }
+
+symlinker();
+set_exception_handler('exception_handler');
+set_error_handler('error_handler');
