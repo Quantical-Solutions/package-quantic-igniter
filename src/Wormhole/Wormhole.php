@@ -33,7 +33,6 @@ class Wormhole
             $activeConstellation = $constellationCollector->constellationParser();
 
             $collector['exceptions'] = $exceptions;
-            dump($collector['gate']);
 
             $renderVars = self::renderVars(
                 $activeConstellation,
