@@ -6,6 +6,7 @@ use Quantic\Igniter\Workers\ExceptionsHandler;
 use Quantic\Igniter\Workers\SQLHandler;
 use Quantic\Igniter\Solutions\Solutions;
 use Quantic\Igniter\Workers\SwiftMailerCollector as Mail;
+use Quantic\Igniter\ErrorDocument\ErrorsPage;
 
 session_start();
 define('QUANTIC_START', microtime(true));
@@ -25,8 +26,8 @@ if (!function_exists('redirectTo404ErrorPage')) {
     function redirectTo404ErrorPage()
     {
         http_response_code(404);
-        require_once(ROOTDIR . '/vendor/quantic/igniter/src/ErrorDocument/errorView.php');
-        exit;
+        $error = new ErrorsPage;
+        $error->ignite(404);
     }
 }
 

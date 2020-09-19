@@ -11,29 +11,7 @@ class Constellation
 
     public function __construct($nav)
     {
-        $extra = [
-            'xhr_post' => [
-                'uri' => '/xmlhttprequests',
-                'controller' => 'XhrController',
-                'method' => 'index',
-                'request' => 'post',
-                'as' => 'XHR'
-            ],
-            'xhr_get' => [
-                'uri' => '/xmlhttprequests',
-                'controller' => 'XhrController',
-                'method' => 'index',
-                'request' => 'get',
-                'as' => 'XHR'
-            ],
-            'visio' => [
-                'uri' => '/' . config('app.visio'),
-                'controller' => 'Visio',
-                'method' => 'ignite',
-                'request' => 'get',
-                'as' => 'Visio'
-            ]
-        ];
+        $extra = require_once __DIR__ . '/DeclaredLinks.php';
         foreach ($extra as $key => $ex) {
             $nav[$key] = $ex;
         }
@@ -167,6 +145,8 @@ class Constellation
     private function cleanRequest_uri()
     {
         $clean = substr($_SERVER['REQUEST_URI'], 1);
+        $clean = explode('#', $clean)[0];
+        $clean = explode('?', $clean)[0];
         $clean = (substr($clean, -1) != '/') ? $clean : substr($clean, 0, strlen($clean)-1);
         $explode = explode('/', $clean);
         return $explode;
@@ -175,7 +155,9 @@ class Constellation
     private function segmentCounter($segments)
     {
         $response = false;
-        $explode = explode('/', substr($_SERVER['REQUEST_URI'], 1));
+        $clean = explode('#', $_SERVER['REQUEST_URI'])[0];
+        $clean = explode('?', $clean)[0];
+        $explode = explode('/', substr($clean, 1));
 
         if (count($segments) == count($explode)) {
             foreach ($segments as $key => $segment) {
@@ -249,6 +231,8 @@ class Constellation
             $controller = 'Quantic\\Igniter\\Workers\\' . $class;
         } else if ($class == 'Visio') {
             $controller = 'Quantic\\Visio\\' . $class;
+        } else if ($class == 'ErrorsPage') {
+            $controller = 'Quantic\\Igniter\\ErrorDocument\\' . $class;
         } else {
             $controller = 'App\\Http\\Controllers\\' . $class;
         }

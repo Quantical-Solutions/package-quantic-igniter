@@ -61,7 +61,9 @@ class Config
     public static function uriSegments()
     {
         $uris = $_SERVER['REQUEST_URI'];
-        $explode = explode('/', $uris);
+        $clean = explode('#', $uris)[0];
+        $clean = explode('?', $clean)[0];
+        $explode = explode('/', $clean);
         return $explode;
     }
 
