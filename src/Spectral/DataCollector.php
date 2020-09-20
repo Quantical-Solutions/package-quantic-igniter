@@ -133,6 +133,7 @@ class DataCollector
             }
             array_push($groups, $group);
         }
+
         $array = array_values(
             array_map(
                 "unserialize", array_unique(
@@ -170,14 +171,14 @@ class DataCollector
                     $final[$cle]['class'] = $model['class'];
                     $final[$cle]['objects'] = [];
                 }
-
-                foreach ($model['objects'] as $object) {
+                array_push($final[$cle]['objects'], $model['objects']);
+                /*foreach ($model['objects'] as $object) {
 
                     if (!in_array($object, $final[$cle]['objects'])) {
 
                         array_push($final[$cle]['objects'], $object);
                     }
-                }
+                }*/
             }
         }
         return $final;
@@ -197,6 +198,49 @@ class DataCollector
 
         $final = end($array);
         $unique = self::arrayUnique($final);
-        self::$reporter[$type] = $unique;
+        $u = self::trimFinalArray($unique);
+        dump($u);
+        self::$reporter[$type] = $u;
+    }
+
+    private static function trimFinalArray($array)
+    {
+        $final = [];
+        foreach ($array as $class => $item) {
+            foreach ($item as $cle => $index) {
+                if ($cle == 'class') {
+                    $final[$class][$cle] = $index;
+                }
+                if ($cle == 'objects') {
+                    $trim = array_values(
+                        array_map(
+                            "unserialize", array_unique(
+                                array_map(
+                                    "serialize", $index
+                                )
+                            )
+                        )
+                    );
+                    $final[$class][$cle] = $trim;
+                }
+            }
+        }
+
+        $countArray = [];
+        foreach ($final as $cle => $item) {
+            foreach ($item as $key => $value) {
+                if ($key == 'class') {
+                    $countArray[$cle][$key] = $value;
+                }
+                if ($key == 'objects') {
+                    $cnt = 0;
+                    foreach ($value as $arr) {
+                        $cnt += count($arr);
+                    }
+                    $countArray[$cle][$key] = $cnt;
+                }
+            }
+        }
+        return $countArray;
     }
 }

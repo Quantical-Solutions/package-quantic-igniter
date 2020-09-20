@@ -5,7 +5,7 @@
             @foreach($models as $model)
                 <li>
                     <p>{{ $model['class'] }}</p>
-                    <span>{{ count($model['objects']) }}</span>
+                    <span>{{ $model['objects'] }}</span>
                 </li>
             @endforeach
         </ul>

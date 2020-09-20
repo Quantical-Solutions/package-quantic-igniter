@@ -55,9 +55,9 @@ class MatrixExpander extends Model
 
         array_push(self::$queries, $arrayQueries);
         $arrayTraces = [];
-
         foreach ($traces as $trace) {
-            if (isset($trace['class']) && strpos($trace['class'], 'App\Http\Controllers') !== false) {
+            if (isset($trace['class'])
+                && ($trace['class'] == 'Quantic\Chosen\Matrix\Auth' || strpos($trace['class'], 'App\Http\Controllers') !== false)) {
                 foreach ($trace as $key => $value) {
                     $arrayTraces[$key] = $value;
                 }
