@@ -257,7 +257,8 @@
                     <dd><?php
                         $code = http_response_code();
                         echo ($code == '200') ? $code . '<span class="greenCode"></span>' : $code . '<span class="redCode"></span>';
-                        ?></dd>
+                        ?>
+                    </dd>
                 </dl>
                 <dl>
                     <dt>Remote Address :</dt>
@@ -289,23 +290,12 @@
             </div>
             <div class="stdContent">
                 <h3>Query String</h3>
-                <?php if (!empty($_POST)) { ?>
-                    <?php foreach ($_POST as $key => $value) { ?>
-                        <dl>
-                            <dt><?= $key ?> :</dt>
-                            <dd><?php if (is_string($value)) { echo $value; } else { r($value); } ?></dd>
-                        </dl>
-                    <?php } ?>
-                <?php } ?>
                 <?php if (!empty($_GET)) { ?>
-                    <?php foreach ($_GET as $key => $value) { ?>
-                        <dl>
-                            <dt><?= $key ?> :</dt>
-                            <dd><?php if (is_string($value)) { echo $value; } else { r($value); } ?></dd>
-                        </dl>
-                    <?php } ?>
-                <?php } ?>
-                <?php if (empty($_POST) && empty($_GET)) { ?>
+                    <dl>
+                        <dt>String :</dt>
+                        <dd><?= '?' . implode('&', $_GET) ?></dd>
+                    </dl>
+                <?php } else { ?>
                     <p>No query attached to the request</p>
                 <?php } ?>
             </div>
@@ -464,8 +454,8 @@
                 <dl>
                     <dt>Data :</dt>
                     <dd>
-                        <?php if (isset($_SESSION['user']) && !empty($_SESSION['user'])) {
-                            r($_SESSION['user']);
+                        <?php if (!empty($authUser)) {
+                            r($authUser);
                         } else { ?>
                             <pre></pre>
                         <?php } ?>

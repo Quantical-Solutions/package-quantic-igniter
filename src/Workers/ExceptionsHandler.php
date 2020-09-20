@@ -7,6 +7,7 @@ use Quantic\Igniter\Wormhole\Wormhole;
 use Quantic\Uxdebugger\Debugger as Uxdebug;
 use Quantic\Igniter\Solutions\Solutions;
 use Illuminate\Database\Capsule\Manager as DB;
+use Quantic\Chosen\Matrix\Auth;
 
 class ExceptionsHandler
 {
@@ -33,6 +34,8 @@ class ExceptionsHandler
         $ide = self::getIDE();
         // Get IDE name
         $ideTitle = self::getIDEName();
+        // Get User
+        $authUser = Auth::$user;
         // Display Error View
         ob_start();
         require_once(ROOTDIR . '/vendor/quantic/igniter/src/Workers/handlerAssets/head.php');

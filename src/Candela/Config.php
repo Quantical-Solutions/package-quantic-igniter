@@ -142,9 +142,20 @@ class Config
                 'paths' => $resources
             ));
 
-            $content = explode('</body>', $original)[0] . PHP_EOL;
-            $closure = $debug . PHP_EOL . '</body>' . explode('</body>', $original)[1];
-            echo $content . $closure;
+            if (isset(explode('</body>', $original)[1])) {
+
+                $content = explode('</body>', $original)[0] . PHP_EOL;
+                $closure = $debug . PHP_EOL . '</body>' . explode('</body>', $original)[1];
+                echo $content . $closure;
+
+            } else {
+
+                $head = (strpos($original, '<head>') === false)
+                    ?  '<head><meta charset="UTF-8"><title>Empty view...</title><link rel="icon" href="/vendor/quantic/igniter/src/ErrorDocument/assets/favicon.png"></head>'
+                    : '';
+                $content = $head . PHP_EOL . $original . PHP_EOL . $debug;
+                echo $content;
+            }
 
         } else {
             trigger_error('The Blade\'s view [ ' . $view . ' ] doesn\'t exist.');

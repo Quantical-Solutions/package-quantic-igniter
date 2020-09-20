@@ -14,13 +14,11 @@ time, mark, audio, video {
     margin: 0;
     padding: 0;
     border: 0;
-    font: inherit;
     vertical-align: baseline;
     outline: none;
     text-decoration: none;
     resize: none;
     list-style: none;
-    color: inherit;
 }
 
 /* HTML5 display-role reset for older browsers */

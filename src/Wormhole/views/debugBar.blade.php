@@ -18,6 +18,7 @@
 @endif
 <div id="wormholeBottomBar">
     <style>
+        {!! require_once(dirname(__DIR__) . '/assets/reset.css') !!}
         {!! require_once(dirname(__DIR__) . '/assets/debugFonts.css') !!}
         {!! require_once(dirname(__DIR__) . '/assets/responsive.css') !!}
         {!! require_once(dirname(__DIR__) . '/assets/styles/ocean.css') !!}}

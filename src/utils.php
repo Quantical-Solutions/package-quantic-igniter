@@ -8,12 +8,40 @@ use Quantic\Igniter\Solutions\Solutions;
 use Quantic\Igniter\Workers\SwiftMailerCollector as Mail;
 use Quantic\Igniter\ErrorDocument\ErrorsPage;
 use Quantic\Chosen\Matrix\Deploy;
+use Quantic\Chosen\Matrix\Auth;
 
-session_start();
 define('QUANTIC_START', microtime(true));
 
 $path = explode('/vendor' , __DIR__)[0];
 define('ROOTDIR', $path);
+
+/**
+ * init function
+ *
+ * Convert all .init file data to be accessible in all the app
+ */
+if (!function_exists('init')) {
+    function init($declaration, $default = null)
+    {
+        return Config::init($declaration, $default);
+    }
+}
+
+/**
+ * config function
+ *
+ * Convert all global folder files array to be accessible in all the app
+ */
+if (!function_exists('config')) {
+    function config($str)
+    {
+        return Config::config($str);
+    }
+}
+
+$newSessionName = str_replace('-', '_', str_replace(' ', '_', strtolower(config('app.name'))) . '_session');
+if (session_name() != $newSessionName) { session_name($newSessionName); }
+session_start();
 
 if (class_exists(Deploy::class)) {
     new Deploy;
@@ -129,30 +157,6 @@ if (!function_exists('old')) {
             }
         }
         return $return;
-    }
-}
-
-/**
- * init function
- *
- * Convert all .init file data to be accessible in all the app
- */
-if (!function_exists('init')) {
-    function init($declaration, $default = null)
-    {
-        return Config::init($declaration, $default);
-    }
-}
-
-/**
- * config function
- *
- * Convert all global folder files array to be accessible in all the app
- */
-if (!function_exists('config')) {
-    function config($str)
-    {
-        return Config::config($str);
     }
 }
 
