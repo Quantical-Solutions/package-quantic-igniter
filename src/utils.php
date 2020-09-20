@@ -8,7 +8,6 @@ use Quantic\Igniter\Solutions\Solutions;
 use Quantic\Igniter\Workers\SwiftMailerCollector as Mail;
 use Quantic\Igniter\ErrorDocument\ErrorsPage;
 use Quantic\Chosen\Matrix\Deploy;
-use Quantic\Chosen\Matrix\Auth;
 
 define('QUANTIC_START', microtime(true));
 
