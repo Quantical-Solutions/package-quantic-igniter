@@ -55,6 +55,18 @@ if (!function_exists('terminate')) {
 }
 
 /**
+ * constellation function
+ *
+ * Translated to URL relative path.
+ */
+if (!function_exists('constellation')) {
+    function constellation($uri)
+    {
+        return '/' . $uri;
+    }
+}
+
+/**
  * session function
  *
  * Convert all $_SESSION data to be accessible in all the app
@@ -70,6 +82,50 @@ if (!function_exists('session')) {
                 $return = $_SESSION[$key];
             } else {
                 trigger_error('$_SESSION[\'' . $key . '\'] does not exist');
+            }
+        }
+        return $return;
+    }
+}
+
+/**
+ * newer function
+ *
+ * Get $_SESSION['new'] array.
+ */
+if (!function_exists('new')) {
+    function newer($key = false)
+    {
+        $return = [];
+        if ($key == false) {
+            $return = $_SESSION['new'];
+        } else {
+            if (isset($_SESSION['new'][$key])) {
+                $return = $_SESSION['new'][$key];
+            } else {
+                trigger_error('$_SESSION[\'new\'][\'' . $key . '\'] does not exist');
+            }
+        }
+        return $return;
+    }
+}
+
+/**
+ * old function
+ *
+ * Get $_SESSION['old'] array.
+ */
+if (!function_exists('old')) {
+    function old($key = false)
+    {
+        $return = [];
+        if ($key == false) {
+            $return = $_SESSION['old'];
+        } else {
+            if (isset($_SESSION['old'][$key])) {
+                $return = $_SESSION['old'][$key];
+            } else {
+                trigger_error('$_SESSION[\'old\'][\'' . $key . '\'] does not exist');
             }
         }
         return $return;
@@ -415,6 +471,7 @@ symlinker();
 
 if (!isset($_SESSION['_previous'])) { $_SESSION['_previous'] = ''; }
 $_SESSION['locale'] = config('app.locale');
+if (!isset($_SESSION['_flash'])) { $_SESSION['_flash'] = ['old' => [], 'new' => []]; }
 
 /*
  * ==================================================================
