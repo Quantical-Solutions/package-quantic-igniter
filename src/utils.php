@@ -50,6 +50,28 @@ if (!function_exists('terminate')) {
 }
 
 /**
+ * session function
+ *
+ * Convert all $_SESSION data to be accessible in all the app
+ */
+if (!function_exists('session')) {
+    function session($key = false)
+    {
+        $return = [];
+        if ($key == false) {
+            $return = $_SESSION;
+        } else {
+            if (isset($_SESSION[$key])) {
+                $return = $_SESSION[$key];
+            } else {
+                trigger_error('$_SESSION[\'' . $key . '\'] does not exist');
+            }
+        }
+        return $return;
+    }
+}
+
+/**
  * init function
  *
  * Convert all .init file data to be accessible in all the app
