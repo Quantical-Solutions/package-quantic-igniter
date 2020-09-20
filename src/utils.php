@@ -7,12 +7,17 @@ use Quantic\Igniter\Workers\SQLHandler;
 use Quantic\Igniter\Solutions\Solutions;
 use Quantic\Igniter\Workers\SwiftMailerCollector as Mail;
 use Quantic\Igniter\ErrorDocument\ErrorsPage;
+use Quantic\Chosen\Matrix\Deploy;
 
 session_start();
 define('QUANTIC_START', microtime(true));
 
 $path = explode('/vendor' , __DIR__)[0];
 define('ROOTDIR', $path);
+
+if (class_exists(Deploy::class)) {
+    new Deploy;
+}
 
 include_once ROOTDIR .'/vendor/owasp/csrf-protector-php/libs/csrf/csrfprotector.php';
 csrfProtector::init();
