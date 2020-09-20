@@ -199,7 +199,6 @@ class DataCollector
         $final = end($array);
         $unique = self::arrayUnique($final);
         $u = self::trimFinalArray($unique);
-        dump($u);
         self::$reporter[$type] = $u;
     }
 
