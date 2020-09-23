@@ -4,6 +4,7 @@ namespace Quantic\Igniter\Workers;
 
 use Quantic\Igniter\Workers\Request;
 use ReflectionClass;
+use Quantic\Chosen\Matrix\Auth;
 
 class Constellation
 {
@@ -11,9 +12,13 @@ class Constellation
 
     public function __construct($nav)
     {
+        $chosen = (class_exists(Auth::class)) ? Auth::addLinks() : [];
         $extra = require_once __DIR__ . '/DeclaredLinks.php';
         foreach ($extra as $key => $ex) {
             $nav[$key] = $ex;
+        }
+        foreach ($chosen as $key => $ch) {
+            $nav[$key] = $ch;
         }
         $this->parseNavigation($nav);
     }

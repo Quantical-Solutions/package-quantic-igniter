@@ -19,8 +19,14 @@ class ErrorsPage
             403 => 'Forbidden',
             404 => 'Not Found',
             406 => 'Not Acceptable',
+            408 => 'Request Time-out',
+            409 => 'Conflict',
             413 => 'Payload Too Large',
-            500 => 'Server Error'
+            500 => 'Server Error',
+            502 => 'Bad Gateway',
+            503 => 'Service Temporarily Unavailable',
+            504 => 'Gateway Time-out',
+            507 => 'Insufficient Storage'
         ];
 
         $source_url = 'http'.((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? 's' : '').'://'.$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];

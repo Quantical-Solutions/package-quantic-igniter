@@ -432,7 +432,6 @@ class Config
     public static function config($str)
     {
         $globals = ROOTDIR . '/config/';
-        $response = 'Wrong string parameter format in config() function : ' . $str . ' isn\'t a valid argument.';
 
         if (count(explode('.', $str)) == 2) {
 
@@ -449,12 +448,14 @@ class Config
 
                     $content = require($globals . $file);
                     $response = $content[$index];
-                    break;
+                    return $response;
                 }
             }
-        }
 
-        return $response;
+        } else {
+
+            trigger_error('Wrong string parameter format in config(). Argument : "' . $str . '" is not valid');
+        }
     }
 
     /**
