@@ -378,8 +378,19 @@ class Config
     public static function symlinker()
     {
         $symlinks = require_once(ROOTDIR . '/constellations/symlinks.php');
+        $vendorLinks = require_once(dirname(__DIR__) . '/symlinks.php');
         foreach ($symlinks as $link => $target) {
-            if (!file_exists($link)) {
+            if (!file_exists($link) && file_exists($target)) {
+                if (isset($_SERVER['WINDIR']) && ($_SERVER['WINDIR'] || $_SERVER['windir'])) {
+                    exec('junction "' . $link . '" "' . $target . '"');
+                } else {
+                    symlink($target, $link);
+                }
+            }
+            self::interceptor($link);
+        }
+        foreach ($vendorLinks as $link => $target) {
+            if (!file_exists($link) && file_exists($target)) {
                 if (isset($_SERVER['WINDIR']) && ($_SERVER['WINDIR'] || $_SERVER['windir'])) {
                     exec('junction "' . $link . '" "' . $target . '"');
                 } else {
@@ -399,6 +410,17 @@ class Config
             $rest = explode($link . '/', $uri)[1];
             $new = $link . '/' . $rest;
             if (file_exists($new)) {
+                $split = explode('.', $new);
+                $ext = end($split);
+                if ($ext == 'css' || $ext == 'html' || $ext == 'json') {
+                    header('Content-Type: text/' . $ext);
+                } else if ($ext == 'js') {
+                    header('Content-Type: text/javascript');
+                } else if ($ext == 'json') {
+                    header('Content-Type: text/' . $ext);
+                } else {
+                    header('Content-Type: application/octet-stream');
+                }
                 readfile($new);
                 exit();
             }

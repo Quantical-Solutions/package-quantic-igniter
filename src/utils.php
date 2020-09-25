@@ -8,6 +8,7 @@ use Quantic\Igniter\Solutions\Solutions;
 use Quantic\Igniter\Workers\SwiftMailerCollector as Mail;
 use Quantic\Igniter\ErrorDocument\ErrorsPage;
 use Quantic\Chosen\Matrix\Deploy;
+use Quantic\Chosen\Matrix\Auth;
 
 define('QUANTIC_START', microtime(true));
 
@@ -89,7 +90,7 @@ if (!function_exists('terminate')) {
 if (!function_exists('constellation')) {
     function constellation($uri)
     {
-        return '/' . $uri;
+        return '/' . urlencode($uri);
     }
 }
 
@@ -464,6 +465,19 @@ if (!function_exists('csrf_field')) {
     }
 }
 
+/**
+ * redirectTo function
+ *
+ * Redirect to domain.com/uri
+ */
+if (!function_exists('redirectTo')) {
+    function redirectTo($uri)
+    {
+        $slice = (strpos($uri, '/') === 0) ? substr($uri, 1) : $uri;
+        header('Location: /' . $slice);
+    }
+}
+
 /*
  * ==================================================================
  * ============================ Set Links ===========================
@@ -471,6 +485,9 @@ if (!function_exists('csrf_field')) {
  */
 
 symlinker();
+
+//Auth::set(1);
+Auth::reset();
 
 /*
  * ==================================================================

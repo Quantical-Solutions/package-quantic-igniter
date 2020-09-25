@@ -41,7 +41,6 @@ class Constellation
 
     private function requestType($page, $requestType)
     {
-        $response = false;
         if (!defined('VIEWINIT')) {
 
             $url = $this->analyseUri($page['uri']);
@@ -51,29 +50,19 @@ class Constellation
                 $segments = $url[0];
                 $options = $url[1];
                 $controls = $url[2];
-                $check = $this->where($controls, $page);
+                $this->where($controls, $page);
 
-                if (!is_string($check)) {
+                $type = Request::all();
 
-                    $type = Request::all();
+                $this->page = [
+                    'request_string' => '/' . $segments,
+                    'request_type' => ($_SERVER['REQUEST_METHOD'] == $requestType) ? $requestType : $_SERVER['REQUEST_METHOD'],
+                    'request_url' => $_SERVER['REQUEST_URI']
+                ];
 
-                    $this->page = [
-                        'request_string' => '/' . $segments,
-                        'request_type' => ($_SERVER['REQUEST_METHOD'] == $requestType) ? $requestType : $_SERVER['REQUEST_METHOD'],
-                        'request_url' => $_SERVER['REQUEST_URI']
-                    ];
-
-                    $this->splitString($page, $options);
-                    $response = true;
-
-                } else {
-
-                    $response = $check;
-                }
+                $this->splitString($page, $options);
             }
         }
-
-        return $response;
     }
 
     private function group($page)
@@ -198,7 +187,6 @@ class Constellation
 
     public function where($controls, $page)
     {
-        $response = true;
         if (isset($page['where']) && is_array($page['where']) && !empty($page['where'])) {
 
             $where = $page['where'];
@@ -226,7 +214,6 @@ class Constellation
                 }
             }
         }
-        return $response;
     }
 
     private function execute($class, $method, $options)
@@ -238,6 +225,8 @@ class Constellation
             $controller = 'Quantic\\Visio\\' . $class;
         } else if ($class == 'ErrorsPage') {
             $controller = 'Quantic\\Igniter\\ErrorDocument\\' . $class;
+        } else if (class_exists(config('chosen.namespace') . $class)) {
+            $controller = config('chosen.namespace') . $class;
         } else {
             $controller = 'App\\Http\\Controllers\\' . $class;
         }
