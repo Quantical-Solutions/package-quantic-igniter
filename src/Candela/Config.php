@@ -132,9 +132,9 @@ class Config
             $_ENV['constellation']['main']['view'] = $view;
             $_ENV['constellation']['main']['data'] = $data;
             $_ENV['constellation']['main']['file'] = $file;
+
             $blade = new Blade(ROOTDIR . $resources, ROOTDIR . $cache);
             $original = $blade->render($view, $data);
-
             $uxDebugger = (class_exists('Quantic\Uxdebugger\Debugger')) ? Uxdebug::ignite() : false;
             $debug = Wormhole::BottomBar(config('wormhole.bottombar'), $uxDebugger, array(
                 'view' => $view,

@@ -192,7 +192,7 @@
                                         onclick="window.location = '<?= $ide ?><?= urlencode($data['file'])
                                         ?>&line=<?= $nb + 1 ?>'">
                                         <td class="lines"><code><?= $nb + 1 ?></code></td>
-                                        <td><pre><code class="php"><?= $line ?></code></pre></td>
+                                        <td><pre><code class="php"><?= htmlspecialchars($line) ?></code></pre></td>
                                     </tr>
                                 <?php } ?>
                             </table>
@@ -228,7 +228,7 @@
                                                 ($datum['file'])
                                                 ?>&line=<?= $nb + 1 ?>'">
                                                 <td class="lines"><code><?= $nb + 1 ?></code></td>
-                                                <td><pre><code class="php"><?= $line ?></code></pre></td>
+                                                <td><pre><code class="php"><?= htmlspecialchars($line) ?></code></pre></td>
                                             </tr>
                                         <?php } ?>
                                     </table>

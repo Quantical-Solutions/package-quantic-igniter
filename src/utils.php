@@ -90,7 +90,12 @@ if (!function_exists('terminate')) {
 if (!function_exists('constellation')) {
     function constellation($uri)
     {
-        return '/' . urlencode($uri);
+        $explode = explode('/', $uri);
+        $recomp = [];
+        foreach ($explode as $segment) {
+            array_push($recomp, urlencode($segment));
+        }
+        return '/' . implode('/', $recomp);
     }
 }
 
@@ -216,6 +221,7 @@ if (!function_exists('resource_path')) {
 if (!function_exists('exception_handler')) {
     function exception_handler($exception)
     {
+        ob_clean();
         ExceptionsHandler::HTMLBuilder($exception);
         exit();
     }
@@ -229,6 +235,7 @@ if (!function_exists('exception_handler')) {
 if (!function_exists('error_handler')) {
     function error_handler($severity, $message, $file, $line)
     {
+        ob_clean();
         ErrorsHandler::HTMLBuilder($severity, $message, $file, $line);
         exit();
     }
@@ -242,6 +249,7 @@ if (!function_exists('error_handler')) {
 if (!function_exists('sql_handler')) {
     function sql_handler($error)
     {
+        ob_clean();
         SQLHandler::HTMLBuilder($error);
         exit();
     }
