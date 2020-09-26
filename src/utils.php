@@ -114,7 +114,7 @@ if (!function_exists('session')) {
             if (isset($_SESSION[$key])) {
                 $return = $_SESSION[$key];
             } else {
-                trigger_error('$_SESSION[\'' . $key . '\'] does not exist');
+                $return = false;
             }
         }
         return $return;
