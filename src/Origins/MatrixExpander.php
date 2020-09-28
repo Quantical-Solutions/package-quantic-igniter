@@ -4,10 +4,13 @@ namespace Quantic\Igniter\Origins;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Capsule\Manager as DB;
+use Quantic\Igniter\Covalent\Traits\MatrixTraits;
+use Quantic\Igniter\Covalent\Traits\VortexTraits;
 
 class MatrixExpander extends Model
 {
-    use \Quantic\Igniter\Covalent\Traits\MatrixTraits;
+    use MatrixTraits;
+    use VortexTraits;
 
     public static array $models = [];
     public static array $queries = [];
