@@ -26,6 +26,7 @@
     "illuminate/database": ">=7.22",
     "maximebf/cachecache": ">=0.1.0",
     "swiftmailer/swiftmailer":">=6.2.3",
+    "owasp/csrf-protector-php": "1.0.2",
     "monolog/monolog": ">=2.1.1",
     "egulias/email-validator": "^2.1.10",
     "symfony/http-foundation": "^5.1",
