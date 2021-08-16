@@ -27,7 +27,6 @@
     "maximebf/cachecache": ">=0.1.0",
     "swiftmailer/swiftmailer":">=6.2.3",
     "monolog/monolog": ">=2.1.1",
-    "owasp/csrf-protector-php": "dev-master",
     "egulias/email-validator": "^2.1.10",
     "symfony/http-foundation": "^5.1",
     "symfony/mime": "^5.1"
