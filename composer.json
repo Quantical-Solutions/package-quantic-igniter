@@ -46,5 +46,6 @@
     "psr-4": {
       "Quantic\\Igniter\\Tests": "tests/"
     }
-  }
+  },
+  "minimum-stability": "dev"
 }
